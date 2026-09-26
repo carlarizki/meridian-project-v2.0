@@ -17,77 +17,43 @@ interface FutureRolesViewProps {
   onNavigate: (tab: NavTab) => void;
 }
 
+// One icon + a couple of framing pills per real RECEIVING_CLUSTERS entry
+// (id -> presentation only; the underlying name/capacity/roles/skills all
+// come from meridianData.ts, not invented here).
+const CLUSTER_PRESENTATION: Record<string, { icon: React.ElementType; badge: string; demand: string }> = {
+  'smart-grid': { icon: Zap, badge: 'Growth Role', demand: 'High' },
+  'solar-om': { icon: Sun, badge: 'High Growth', demand: 'Critical' },
+  'customer-energy': { icon: Users, badge: 'Strategic Role', demand: 'High' },
+  'facility-vers': { icon: Users, badge: 'Dignified Transition', demand: 'Low' },
+};
+
 export const FutureRolesView: React.FC<FutureRolesViewProps> = ({ onNavigate }) => {
   const [selectedClusterIndex, setSelectedClusterIndex] = useState(0);
 
-  const growthClusters = [
-    {
-      id: 1,
-      name: 'Smart Energy & Grid Digitalization',
-      icon: Zap,
-      capacity: '~1,800 Staf',
-      role: 'Smart Meter Operations Specialist',
-      badge: 'Growth Role',
-      description: 'Operate and monitor smart metering systems, analyze telemetry data, and ensure AMI grid service reliability.',
+  // Previously this view had its own 3 fully-invented clusters (capacities
+  // summing to 4,000, roles/skills made up) while the real RECEIVING_CLUSTERS
+  // data sat imported but unused. Now sourced directly from it.
+  const growthClusters = RECEIVING_CLUSTERS.map((cluster) => {
+    const presentation = CLUSTER_PRESENTATION[cluster.id] || { icon: Layers, badge: 'Growth Role', demand: 'Medium' };
+    return {
+      id: cluster.id,
+      name: cluster.name,
+      icon: presentation.icon,
+      capacity: `~${cluster.capacity.toLocaleString('id-ID')} Staf`,
+      role: cluster.targetRoles[0],
+      badge: presentation.badge,
+      description: cluster.adjacencyReason,
       pills: {
-        family: 'Operations',
-        level: 'L3',
-        demand: 'High',
-        timeline: '0-2 years',
+        targetRoles: cluster.targetRoles.join(', '),
+        curriculum: cluster.curriculumWeeks,
+        demand: presentation.demand,
+        capacity: `${cluster.capacity.toLocaleString('id-ID')} Staf`,
       },
-      capabilitiesRequired: [
-        { name: 'Field Operations', level: 'L3' },
-        { name: 'Digital Monitoring', level: 'L3' },
-        { name: 'Data Analysis', level: 'L3' },
-        { name: 'Troubleshooting', level: 'L3' },
-        { name: 'Customer Communication', level: 'L2' },
-      ],
-    },
-    {
-      id: 2,
-      name: 'Renewable Energy & Green Solutions',
-      icon: Sun,
-      capacity: '~1,400 Staf',
-      role: 'Solar PV Maintenance Specialist',
-      badge: 'High Growth',
-      description: 'Install, inspect, and maintain decentralized rooftop and ground-mounted photovoltaic systems across regional units.',
-      pills: {
-        family: 'Engineering & Renewables',
-        level: 'L2-L3',
-        demand: 'Critical',
-        timeline: '1-3 years',
-      },
-      capabilitiesRequired: [
-        { name: 'PV Rooftop Safety & K3', level: 'L4' },
-        { name: 'Inverter Diagnostics', level: 'L3' },
-        { name: 'Thermal Imaging Inspection', level: 'L3' },
-        { name: 'Preventive Asset Maintenance', level: 'L3' },
-        { name: 'Site Dispatch Protocol', level: 'L2' },
-      ],
-    },
-    {
-      id: 3,
-      name: 'Customer Experience & Energy Services',
-      icon: Users,
-      capacity: '~800 Staf',
-      role: 'Customer Energy Advisor',
-      badge: 'Strategic Role',
-      description: 'Consult residential and commercial clients on time-of-use tariffs, smart portal adoption, and billing resolutions.',
-      pills: {
-        family: 'Commercial & Customer',
-        level: 'L2-L3',
-        demand: 'High',
-        timeline: '0-1 year',
-      },
-      capabilitiesRequired: [
-        { name: 'Customer Communication', level: 'L4' },
-        { name: 'Smart Billing Dispute Resolution', level: 'L3' },
-        { name: 'Peak-Hour Demand Auditing', level: 'L3' },
-        { name: 'Digital App Guidance', level: 'L3' },
-        { name: 'Energy Conservation Advice', level: 'L2' },
-      ],
-    },
-  ];
+      capabilitiesRequired: cluster.keySkillsTrained.map((name) => ({ name })),
+    };
+  });
+
+  const totalCapacity = RECEIVING_CLUSTERS.reduce((sum, c) => sum + c.capacity, 0);
 
   const current = growthClusters[selectedClusterIndex];
   const CurrentIcon = current.icon;
@@ -106,9 +72,9 @@ export const FutureRolesView: React.FC<FutureRolesViewProps> = ({ onNavigate }) 
         </div>
 
         <div className="flex items-center gap-2 text-xs">
-          <span className="text-slate-500">Total Absorbing Target:</span>
+          <span className="text-slate-500">Total Kapasitas Klaster Penerima:</span>
           <span className="font-mono font-bold text-blue-600 bg-blue-50 px-2.5 py-1 rounded border border-blue-200">
-            ~4,200 Pegawai Metering
+            ~{totalCapacity.toLocaleString('id-ID')} Staf
           </span>
         </div>
       </div>
@@ -118,7 +84,7 @@ export const FutureRolesView: React.FC<FutureRolesViewProps> = ({ onNavigate }) 
         {/* Left Column: Business Growth Clusters (4 cols) */}
         <div className="lg:col-span-4 bg-white rounded-xl p-4 border border-slate-200 shadow-2xs space-y-2">
           <div className="px-2 py-1 text-xs font-bold text-slate-900 border-b border-slate-100 pb-2">
-            Business Growth Clusters (3)
+            Business Growth Clusters ({growthClusters.length})
           </div>
 
           <div className="space-y-1.5">
@@ -178,27 +144,30 @@ export const FutureRolesView: React.FC<FutureRolesViewProps> = ({ onNavigate }) 
           {/* Role Metadata Pills */}
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
             <div className="p-3 bg-slate-50 rounded-lg border border-slate-200 text-xs">
-              <span className="text-slate-500 text-[10px] block">Job Family</span>
-              <span className="font-bold text-slate-900">{current.pills.family}</span>
+              <span className="text-slate-500 text-[10px] block">Target Roles</span>
+              <span className="font-bold text-slate-900">{current.pills.targetRoles}</span>
             </div>
             <div className="p-3 bg-slate-50 rounded-lg border border-slate-200 text-xs">
-              <span className="text-slate-500 text-[10px] block">Level</span>
-              <span className="font-bold text-slate-900 font-mono">{current.pills.level}</span>
+              <span className="text-slate-500 text-[10px] block">Kurikulum</span>
+              <span className="font-bold text-slate-900 font-mono">{current.pills.curriculum}</span>
             </div>
             <div className="p-3 bg-slate-50 rounded-lg border border-slate-200 text-xs">
               <span className="text-slate-500 text-[10px] block">Market Demand</span>
               <span className="font-bold text-rose-600">{current.pills.demand}</span>
             </div>
             <div className="p-3 bg-slate-50 rounded-lg border border-slate-200 text-xs">
-              <span className="text-slate-500 text-[10px] block">Target Timeline</span>
-              <span className="font-bold text-slate-900 font-mono">{current.pills.timeline}</span>
+              <span className="text-slate-500 text-[10px] block">Kapasitas</span>
+              <span className="font-bold text-slate-900 font-mono">{current.pills.capacity}</span>
             </div>
           </div>
 
-          {/* Key Capabilities Required matching Screen 7 */}
+          {/* Key Skills Trained — sourced from RECEIVING_CLUSTERS.keySkillsTrained.
+              No per-skill proficiency level shown: the underlying data doesn't
+              define one, and inventing L1-L5 badges here would repeat the same
+              fabrication pattern already fixed elsewhere in the app. */}
           <div className="space-y-3 pt-2">
             <h3 className="text-xs font-bold text-slate-900 uppercase tracking-wider">
-              Key Capabilities Required
+              Key Skills Trained
             </h3>
 
             <div className="flex flex-wrap gap-2">
@@ -208,9 +177,6 @@ export const FutureRolesView: React.FC<FutureRolesViewProps> = ({ onNavigate }) 
                   className="flex items-center gap-2 px-3 py-2 rounded-lg bg-blue-50/70 border border-blue-200 text-xs"
                 >
                   <span className="font-medium text-slate-800">{cap.name}</span>
-                  <span className="font-mono font-bold text-blue-700 bg-white px-1.5 py-0.2 rounded border border-blue-200 text-[11px]">
-                    {cap.level}
-                  </span>
                 </div>
               ))}
             </div>

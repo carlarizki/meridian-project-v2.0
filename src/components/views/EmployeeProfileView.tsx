@@ -381,7 +381,7 @@ export const EmployeeProfileView: React.FC<EmployeeProfileViewProps> = ({
                 </span>
               </div>
               <p className="text-xs text-slate-500 mt-0.5">
-                Basis data terpadu 6.000 pegawai unit operasional lapangan (Field Metering & Manual Operations) dengan integrasi NIK Kependudukan & Single Employee ID lintas SAP HCM, Moodle LMS, dan Taleo ATS.
+                Basis data terpadu 6.000 pegawai lintas 5 Job Family (mayoritas Field Metering & Manual Operations) dengan integrasi NIK Kependudukan & Single Employee ID lintas SAP HCM, Moodle LMS, dan Taleo ATS.
               </p>
             </div>
           </div>
@@ -1367,17 +1367,28 @@ export const EmployeeProfileView: React.FC<EmployeeProfileViewProps> = ({
                     </div>
                   </div>
 
-                  {/* Clarification on where 8.5 - 10 million comes from */}
+                  {/* Breakdown now derives from this employee's actual reskillingCostJt
+                      instead of a static "8.5-10 Juta" range that ignored who was selected. */}
                   <div className="p-3 bg-white rounded-lg border border-blue-200 text-slate-600 space-y-1.5 text-[11px]">
                     <div className="font-semibold text-slate-900 flex items-center gap-1.5">
                       <Info className="w-3.5 h-3.5 text-blue-600" />
-                      <span>Rincian Komponen Biaya Rp 8,5 – 10 Juta per Kapita:</span>
+                      <span>
+                        Rincian Komponen Biaya (~Rp {(currentSelectedEmployee.reskillingCostJt || 10.0).toFixed(1)} Juta per Kapita):
+                      </span>
                     </div>
-                    <ul className="list-disc pl-4 space-y-0.5 text-slate-600">
-                      <li><strong>Modul Teknis & Sertifikasi BNSP:</strong> Lisensi Smart Metering, kalibrasi RF Mesh gateway (~Rp 4,5 – 5,0 Juta).</li>
-                      <li><strong>Instruktur Praktisi & Lab Simulator:</strong> Sesi praktik langsung di PLN Udiklat / workshop gardu (~Rp 2,5 – 3,0 Juta).</li>
-                      <li><strong>Manajemen Perubahan & Mentorship Lapangan:</strong> Pendampingan on-the-job oleh teknisi senior selama 60 hari (~Rp 1,5 – 2,0 Juta).</li>
-                    </ul>
+                    {(() => {
+                      const total = currentSelectedEmployee.reskillingCostJt || 10.0;
+                      const teknis = total * 0.514;
+                      const instruktur = total * 0.297;
+                      const mentorship = total * 0.189;
+                      return (
+                        <ul className="list-disc pl-4 space-y-0.5 text-slate-600">
+                          <li><strong>Modul Teknis & Sertifikasi BNSP:</strong> Lisensi Smart Metering, kalibrasi RF Mesh gateway (~Rp {teknis.toFixed(1)} Juta).</li>
+                          <li><strong>Instruktur Praktisi & Lab Simulator:</strong> Sesi praktik langsung di PLN Udiklat / workshop gardu (~Rp {instruktur.toFixed(1)} Juta).</li>
+                          <li><strong>Manajemen Perubahan & Mentorship Lapangan:</strong> Pendampingan on-the-job oleh teknisi senior selama 60 hari (~Rp {mentorship.toFixed(1)} Juta).</li>
+                        </ul>
+                      );
+                    })()}
                   </div>
                 </div>
               </div>
@@ -1518,10 +1529,10 @@ export const EmployeeProfileView: React.FC<EmployeeProfileViewProps> = ({
                   <div className="p-3.5 rounded-xl border border-emerald-200 bg-emerald-50/60 space-y-1">
                     <span className="text-[11px] text-emerald-800 font-semibold block">Proyeksi Kompensasi PP 35/2021</span>
                     <div className="font-bold text-emerald-900 text-sm font-mono">
-                      Rp {(currentSelectedEmployee.tenureYears * 4.5).toFixed(1)} Juta
+                      ~Rp 19,0 Juta
                     </div>
                     <p className="text-[10px] text-emerald-700">
-                      Kompensasi masa kerja wajib jika tidak dilakukan reskilling / penempatan.
+                      Estimasi proxy benchmark grade (Pesangon Normatif), bukan formula per-tenure — lihat rincian di Economics/Impact.
                     </p>
                   </div>
                 </div>
