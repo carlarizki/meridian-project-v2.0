@@ -114,7 +114,7 @@ export const FutureRolesView: React.FC<FutureRolesViewProps> = ({ onNavigate }) 
       </div>
 
       {/* Main Grid: Clusters on Left, Role Details on Right */}
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-4">
         {/* Left Column: Business Growth Clusters (4 cols) */}
         <div className="lg:col-span-4 bg-white rounded-xl p-4 border border-slate-200 shadow-2xs space-y-2">
           <div className="px-2 py-1 text-xs font-bold text-slate-900 border-b border-slate-100 pb-2">
@@ -155,7 +155,7 @@ export const FutureRolesView: React.FC<FutureRolesViewProps> = ({ onNavigate }) 
         </div>
 
         {/* Right Column: Growth Role Card matching Screen 7 (8 cols) */}
-        <div className="lg:col-span-8 bg-white rounded-xl p-6 border border-slate-200 shadow-2xs space-y-5">
+        <div className="lg:col-span-8 bg-white rounded-xl p-4 border border-slate-200 shadow-2xs space-y-5">
           <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-3 border-b border-slate-100 pb-4">
             <div className="space-y-1">
               <div className="flex items-center gap-2">

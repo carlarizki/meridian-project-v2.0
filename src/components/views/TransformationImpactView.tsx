@@ -53,17 +53,17 @@ const SCENARIOS: Record<'base' | 'conservative' | 'aggressive', ScenarioData> = 
     description: 'Adopsi smart meter 3 tahun dengan kurikulum 8-12 minggu. Payback cepat dan nol konflik hubungan industrial.',
     statusQuoCostMiliar: 224.6,
     meridianCostMiliar: 54.0,
-    netBenefitMiliar: 84.6,
-    savingsPercent: 61.0,
+    netBenefitMiliar: 170.6,
+    savingsPercent: 76.0,
     paybackMonths: 11.4,
     costPerCapitaJt: 9.0,
-    retentionPercent: 78.0,
+    retentionPercent: 75.0,
     outcomes: {
-      redeploy: { count: 1260, percent: 21 },
-      reskillRedeploy: { count: 2640, percent: 44 },
-      upskill: { count: 780, percent: 13 },
-      assessment: { count: 840, percent: 14 },
-      voluntary: { count: 480, percent: 8 },
+      redeploy: { count: 1200, percent: 20 },
+      reskillRedeploy: { count: 1800, percent: 30 },
+      upskill: { count: 1500, percent: 25 },
+      assessment: { count: 900, percent: 15 },
+      voluntary: { count: 600, percent: 10 },
     },
     costBreakdown: {
       hardwareLab: { nominalM: 19.2, percent: 35.6 },
@@ -79,11 +79,11 @@ const SCENARIOS: Record<'base' | 'conservative' | 'aggressive', ScenarioData> = 
     description: 'Perundingan bipartit lebih panjang dan diperlukan kelas remedial tambahan bagi teknisi senior, biaya membengkak ke Rp 11,2 Jt/kapita.',
     statusQuoCostMiliar: 238.0,
     meridianCostMiliar: 67.2,
-    netBenefitMiliar: 42.8,
-    savingsPercent: 38.9,
+    netBenefitMiliar: 170.8,
+    savingsPercent: 71.8,
     paybackMonths: 16.8,
     costPerCapitaJt: 11.2,
-    retentionPercent: 66.0,
+    retentionPercent: 68.0,
     outcomes: {
       redeploy: { count: 960, percent: 16 },
       reskillRedeploy: { count: 2220, percent: 37 },
@@ -105,8 +105,8 @@ const SCENARIOS: Record<'base' | 'conservative' | 'aggressive', ScenarioData> = 
     description: 'Pemasangan massal Smart Meter dalam 18 bulan dengan diskon vendor volume besar (Rp 8,1 Jt/kapita).',
     statusQuoCostMiliar: 215.0,
     meridianCostMiliar: 48.6,
-    netBenefitMiliar: 112.4,
-    savingsPercent: 69.8,
+    netBenefitMiliar: 166.4,
+    savingsPercent: 77.4,
     paybackMonths: 8.2,
     costPerCapitaJt: 8.1,
     retentionPercent: 88.0,
@@ -176,7 +176,7 @@ export const TransformationImpactView: React.FC<TransformationImpactViewProps> =
               Worst Case
             </span>
           </div>
-          <div className="text-3xl font-extrabold text-rose-600 font-mono tracking-tight">
+          <div className="text-2xl font-extrabold text-rose-600 font-mono tracking-tight">
             Rp {scenario.statusQuoCostMiliar.toFixed(1)} M
           </div>
           <p className="text-[11px] text-slate-500 leading-relaxed">
@@ -194,7 +194,7 @@ export const TransformationImpactView: React.FC<TransformationImpactViewProps> =
               Rp {scenario.costPerCapitaJt.toFixed(1)} Jt / Kapita
             </span>
           </div>
-          <div className="text-3xl font-extrabold text-blue-600 font-mono tracking-tight">
+          <div className="text-2xl font-extrabold text-blue-600 font-mono tracking-tight">
             Rp {scenario.meridianCostMiliar.toFixed(1)} M
           </div>
           <p className="text-[11px] text-slate-500 leading-relaxed">
@@ -212,7 +212,7 @@ export const TransformationImpactView: React.FC<TransformationImpactViewProps> =
               {scenario.savingsPercent}% Efisiensi
             </span>
           </div>
-          <div className="text-3xl font-extrabold text-emerald-700 font-mono tracking-tight">
+          <div className="text-2xl font-extrabold text-emerald-700 font-mono tracking-tight">
             +Rp {scenario.netBenefitMiliar.toFixed(1)} M
           </div>
           <div className="flex items-center gap-2 pt-1 text-[11px] text-emerald-800 font-semibold">
@@ -224,7 +224,7 @@ export const TransformationImpactView: React.FC<TransformationImpactViewProps> =
       </div>
 
       {/* Main Grid: Reactive Workforce Outcomes on Left, Itemized Cost Breakdown on Right */}
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-4">
         {/* Left: Workforce Outcomes (6 cols) */}
         <div className="lg:col-span-6 bg-white rounded-xl p-5 border border-slate-200 shadow-2xs space-y-4">
           <div className="border-b border-slate-100 pb-3 flex items-center justify-between">
@@ -264,7 +264,7 @@ export const TransformationImpactView: React.FC<TransformationImpactViewProps> =
             <div className="flex items-center justify-between p-3 rounded-lg bg-amber-50 border border-amber-200">
               <span className="flex items-center gap-2 font-semibold text-amber-900">
                 <span className="w-2.5 h-2.5 rounded-full bg-amber-600"></span>
-                <span>Upskill in Place (Digitalisasi Peran)</span>
+                <span>Reskill (Rule #5, Program Komprehensif)</span>
               </span>
               <span className="font-mono font-bold text-amber-800">
                 {scenario.outcomes.upskill.count.toLocaleString('id-ID')} ({scenario.outcomes.upskill.percent}%)

@@ -123,7 +123,7 @@ export const LearningPlanView: React.FC<LearningPlanViewProps> = ({
   return (
     <div className="space-y-6 pb-12">
       {/* Header Profile Banner matching Screen 9 */}
-      <div className="bg-white rounded-xl p-6 border border-slate-200 shadow-2xs flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+      <div className="bg-white rounded-xl p-4 border border-slate-200 shadow-2xs flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div className="flex items-center gap-4">
           <div className="w-14 h-14 rounded-full bg-blue-100 text-blue-700 font-bold text-lg flex items-center justify-center border-2 border-blue-200 shadow-2xs">
             {employee.name.split(' ').map((n) => n[0]).join('')}
@@ -234,7 +234,7 @@ export const LearningPlanView: React.FC<LearningPlanViewProps> = ({
       </div>
 
       {/* Capability Gaps Table matching Screen 9 */}
-      <div className="bg-white rounded-xl p-6 border border-slate-200 shadow-2xs space-y-4">
+      <div className="bg-white rounded-xl p-4 border border-slate-200 shadow-2xs space-y-4">
         <div className="border-b border-slate-100 pb-3 flex items-center justify-between">
           <div>
             <h2 className="text-sm font-bold text-slate-900">Capability Gaps Analysis</h2>
@@ -296,7 +296,7 @@ export const LearningPlanView: React.FC<LearningPlanViewProps> = ({
       </div>
 
       {/* Recommended Learning Journey (8 weeks) matching Screen 9 */}
-      <div className="bg-white rounded-xl p-6 border border-slate-200 shadow-2xs space-y-4">
+      <div className="bg-white rounded-xl p-4 border border-slate-200 shadow-2xs space-y-4">
         <div className="border-b border-slate-100 pb-3 flex items-center justify-between">
           <div>
             <h2 className="text-sm font-bold text-slate-900">

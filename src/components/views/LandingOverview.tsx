@@ -161,7 +161,7 @@ export const LandingOverview: React.FC<LandingOverviewProps> = ({ onNavigate }) 
       </div>
 
       {/* Key Outcomes (Target 90 Days) matching Screen 1 */}
-      <div className="bg-white rounded-xl p-6 border border-slate-200 shadow-2xs space-y-4">
+      <div className="bg-white rounded-xl p-4 border border-slate-200 shadow-2xs space-y-4">
         <div className="flex items-center justify-between">
           <div className="space-y-0.5">
             <h2 className="text-sm font-bold text-slate-900 uppercase tracking-wider">

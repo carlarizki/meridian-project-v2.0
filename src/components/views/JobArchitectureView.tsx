@@ -141,17 +141,17 @@ export const JobArchitectureView: React.FC<JobArchitectureViewProps> = ({ onNavi
         <div className="flex items-center gap-2 text-xs text-slate-600">
           <span>Struktur Arsitektur:</span>
           <span className="font-semibold text-slate-900">
-            14 Job Families · 42 Sub-Families · 120+ Jabatan Spesifik
+            9 Job Families · 42 Sub-Families · 120+ Jabatan Spesifik
           </span>
         </div>
       </div>
 
       {/* Main Grid */}
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-4">
         {/* Left Column: Job Families (4 cols) */}
         <div className="lg:col-span-4 bg-white rounded-xl p-4 border border-slate-200 shadow-2xs space-y-2">
           <div className="px-2 py-1 text-xs font-bold text-slate-900 border-b border-slate-100 pb-2">
-            Level 1: Job Families (14)
+            Level 1: Job Families (9)
           </div>
 
           <div className="space-y-1">
@@ -186,7 +186,7 @@ export const JobArchitectureView: React.FC<JobArchitectureViewProps> = ({ onNavi
         </div>
 
         {/* Right Column: Role Details & Tasks (8 cols) */}
-        <div className="lg:col-span-8 bg-white rounded-xl p-6 border border-slate-200 shadow-2xs space-y-5">
+        <div className="lg:col-span-8 bg-white rounded-xl p-4 border border-slate-200 shadow-2xs space-y-5">
           {/* Hierarchical Breadcrumb Clarifying L1, L2, L3 */}
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-slate-100 pb-4">
             <div>

@@ -61,7 +61,7 @@ export const Roadmap90DayView: React.FC<Roadmap90DayViewProps> = ({ onNavigate }
   return (
     <div className="space-y-6 pb-12">
       {/* Header Context matching Screen 12 */}
-      <div className="bg-white rounded-xl p-6 border border-slate-200 shadow-2xs flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+      <div className="bg-white rounded-xl p-4 border border-slate-200 shadow-2xs flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
           <h2 className="text-base font-bold text-slate-900 tracking-tight">
             90-Day Implementation Plan
@@ -82,7 +82,7 @@ export const Roadmap90DayView: React.FC<Roadmap90DayViewProps> = ({ onNavigate }
         {phases.map((p, idx) => (
           <div
             key={idx}
-            className="bg-white rounded-xl p-6 border border-slate-200 shadow-2xs flex flex-col justify-between space-y-5 relative overflow-hidden"
+            className="bg-white rounded-xl p-4 border border-slate-200 shadow-2xs flex flex-col justify-between space-y-5 relative overflow-hidden"
           >
             {/* Top Phase Header */}
             <div className="space-y-2">
@@ -130,7 +130,7 @@ export const Roadmap90DayView: React.FC<Roadmap90DayViewProps> = ({ onNavigate }
       </div>
 
       {/* Governance & Stakeholder Alignment Summary */}
-      <div className="bg-white rounded-xl p-6 border border-slate-200 shadow-2xs space-y-4">
+      <div className="bg-white rounded-xl p-4 border border-slate-200 shadow-2xs space-y-4">
         <h3 className="text-xs font-bold text-slate-900 uppercase tracking-wider">
           Strategi Penyelarasan Pemangku Kepentingan (Stakeholder Alignment)
         </h3>

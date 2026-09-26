@@ -412,7 +412,7 @@ export const CapabilityLibraryView: React.FC<CapabilityLibraryViewProps> = ({ on
       </div>
 
       {/* Main Layout */}
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-4">
         {/* Left: 5 Domains & Capability List (4 cols) */}
         <div className="lg:col-span-4 space-y-4">
           {/* Domains Selector */}
@@ -489,7 +489,7 @@ export const CapabilityLibraryView: React.FC<CapabilityLibraryViewProps> = ({ on
         </div>
 
         {/* Right: Capability Detail & 5-Level Proficiency Ladder (8 cols) */}
-        <div className="lg:col-span-8 bg-white rounded-xl p-6 border border-slate-200 shadow-2xs space-y-5">
+        <div className="lg:col-span-8 bg-white rounded-xl p-4 border border-slate-200 shadow-2xs space-y-5">
           {activeCapability && (
             <>
               {/* Header */}

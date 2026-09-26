@@ -17,7 +17,7 @@ import {
   Save,
 } from 'lucide-react';
 import { EmployeeRecord, EvidenceLevel, FeasibilityLevel } from '../types/meridian';
-import { evaluateDecision } from '../utils/decisionEngine';
+import { evaluateDecision, EVIDENCE_TYPE_BASELINE_CONFIDENCE } from '../utils/decisionEngine';
 import { useToast } from '../context/ToastContext';
 
 interface EmployeeDetailModalProps {
@@ -307,8 +307,11 @@ export const EmployeeDetailModal: React.FC<EmployeeDetailModalProps> = ({
 
                   <div className="flex items-center gap-3">
                     {skill.confidence !== undefined && (
-                      <span className="font-mono text-[10px] text-slate-500">
-                        Confidence: {skill.confidence}%
+                      <span className="font-mono text-[10px] text-slate-500" title="Baseline = prior kebijakan per Type (Measured 90% / Inferred 65%); nilai di sini adalah hasil kalibrasi aktual per skill (disesuaikan recency & kualitas sumber).">
+                        Confidence: {skill.confidence}%{' '}
+                        <span className="text-slate-400">
+                          (baseline {EVIDENCE_TYPE_BASELINE_CONFIDENCE[skill.type]}%)
+                        </span>
                       </span>
                     )}
                     <span className="font-mono text-xs font-bold text-slate-800 bg-white border border-slate-200 px-2 py-0.5 rounded shadow-2xs">

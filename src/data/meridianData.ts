@@ -54,7 +54,7 @@ export const MACRO_SPLIT_DATA: MacroSplit[] = [
     color: 'text-violet-400',
     bgLight: 'bg-violet-500/10 text-violet-400 border-violet-500/30',
     borderLight: 'border-violet-500/30',
-    description: 'Rule #1: Evidence Low atau Unknown (merepresentasikan 45% skill field kosong / data pre-2023). Fast-track 14 hari.',
+    description: 'Rule #1: Evidence Low atau Unknown — 15% populasi ini di-flag; di dalamnya, rata-rata 45% field skill kosong / skor pre-2023 (metrik kelengkapan data, denominator berbeda dari 15% populasi). Fast-track 14 hari.',
   },
   {
     category: 'Voluntary Transition Review',

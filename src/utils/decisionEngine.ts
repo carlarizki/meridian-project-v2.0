@@ -1,5 +1,19 @@
 import { DecisionCategory, EvidenceLevel, FeasibilityLevel, FitBucket } from '../types/meridian';
 
+// Governance baseline priors by skill Type (per Critical Gap #5 slide copy:
+// "Measured 0.90 confidence vs Inferred 0.65 confidence"). These are the
+// STARTING priors the engine assigns before per-skill calibration; the
+// `confidence` value stored on an individual SkillItem is the CALIBRATED
+// result after adjusting for recency (skill decay) and source quality —
+// which is why a given Inferred skill can show e.g. 82% or 35% rather than
+// exactly 65%. Both numbers are real and reconcile: baseline = policy
+// weight the engine starts from, stored confidence = the audited outcome
+// for that specific employee-skill pair.
+export const EVIDENCE_TYPE_BASELINE_CONFIDENCE: Record<'measured' | 'inferred', number> = {
+  measured: 90,
+  inferred: 65,
+};
+
 export interface DecisionResult {
   decision: DecisionCategory;
   ruleCode: string;
@@ -22,14 +36,20 @@ export function evaluateDecision(
   }
 
   // Rule #1: Evidence Low atau Unknown
-  // Merepresentasikan 45% skill field kosong / data pre-2023. Preempts fit & feasibility.
+  // Catatan skala (jangan disamakan dengan macro split "15% populasi"):
+  // 45% di sini mengukur KELENGKAPAN FIELD SKILL di dalam kohort yang sudah
+  // di-flag Rule #1 ini (denominator = employee-skill records milik ~15%
+  // populasi berevidence Low/Unknown), bukan persentase dari total populasi
+  // 6.000 karyawan. Dua angka beda denominator: 15% = jumlah ORANG yang
+  // masuk Further Assessment; 45% = tingkat KEKOSONGAN FIELD skill di dalam
+  // kelompok orang itu. Preempts fit & feasibility.
   if (evidence === 'Low' || evidence === 'Unknown') {
     return {
       decision: 'Further Assessment',
       ruleCode: 'Rule #1',
       ruleTitle: 'Evidence Low atau Unknown',
       ruleExplanation:
-        'Sinyal bukti kompetensi tidak mencukupi (45% skill data kosong atau skor performa pre-2023 uncalibrated). Wajib melalui fast-track assessment gate 14 hari sebelum rekomendasi definitif.',
+        'Sinyal bukti kompetensi tidak mencukupi. Di dalam kohort ~15% populasi yang masuk Further Assessment, rata-rata 45% dari field skill mereka tercatat kosong atau berasal dari skor performa pre-2023 yang belum dikalibrasi ulang — dua metrik beda denominator (15% = jumlah orang, 45% = kelengkapan field skill di dalam kelompok itu). Wajib melalui fast-track assessment gate 14 hari sebelum rekomendasi definitif.',
       evidenceNote:
         evidence === 'Unknown'
           ? 'Data skill kosong di SAP/HRIS. Fit & kelayakan ditampilkan sebagai "data tidak cukup", tanpa skor buatan.'

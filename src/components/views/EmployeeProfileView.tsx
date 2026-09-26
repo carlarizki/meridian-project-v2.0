@@ -1074,7 +1074,7 @@ export const EmployeeProfileView: React.FC<EmployeeProfileViewProps> = ({
           </div>
 
           {/* Employee Hero Profile & Identity Banner */}
-          <div className="bg-white rounded-xl p-6 border border-slate-200 shadow-2xs space-y-5">
+          <div className="bg-white rounded-xl p-4 border border-slate-200 shadow-2xs space-y-5">
             <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4 border-b border-slate-100 pb-5">
               <div className="flex items-start sm:items-center gap-4">
                 <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-blue-600 to-indigo-700 text-white font-bold text-xl flex items-center justify-center shadow-xs shrink-0">

@@ -53,28 +53,38 @@ export const DecisionEngineView: React.FC<DecisionEngineViewProps> = ({
   // 6,000 workforce sample and search
   const allEmployees = useMemo(() => getWorkforce6000(), []);
 
-  // Macro Calculation based on live sliders
+  // Macro Calculation: re-runs the REAL rules engine (evaluateDecision) across all 6,000
+  // employees, with the fit-threshold slider applied as a uniform recalibration offset to
+  // every employee's fit score. At baseline (minFitThreshold = 60, i.e. offset 0) this always
+  // reconciles exactly with each employee's stored officialDecision and with the table below.
   const macroStats = useMemo(() => {
-    // Dynamic calculation formula reacting to sliders
-    const total = 6000;
-    const exposureFactor = (exposureCutoff - 70) * 15; // shifting threshold
-    const fitFactor = (minFitThreshold - 60) * 12;
+    const total = allEmployees.length;
+    const fitOffset = minFitThreshold - 60;
+    const tally: Record<DecisionCategory, number> = {
+      'Redeploy': 0,
+      'Reskill -> Redeploy': 0,
+      'Reskill': 0,
+      'Further Assessment': 0,
+      'Voluntary Transition Review': 0,
+    };
 
-    const redeployCount = Math.max(800, Math.min(1800, Math.round(1260 - fitFactor * 0.8)));
-    const reskillCount = Math.max(1800, Math.min(3200, Math.round(2640 + exposureFactor * 0.6 + fitFactor * 0.5)));
-    const upskillCount = Math.max(500, Math.min(1100, Math.round(780 - exposureFactor * 0.4)));
-    const assessmentCount = Math.max(600, Math.min(1200, Math.round(840)));
-    const voluntaryCount = Math.max(300, Math.min(800, total - (redeployCount + reskillCount + upskillCount + assessmentCount)));
+    allEmployees.forEach((emp) => {
+      const adjustedFit = emp.fit !== null ? Math.max(0, Math.min(100, emp.fit + fitOffset)) : null;
+      const result = evaluateDecision(adjustedFit, emp.feasibility, emp.evidence);
+      tally[result.decision]++;
+    });
+
+    const pct = (n: number) => ((n / total) * 100).toFixed(1);
 
     return {
       total,
-      redeploy: { count: redeployCount, percent: ((redeployCount / total) * 100).toFixed(1) },
-      reskill: { count: reskillCount, percent: ((reskillCount / total) * 100).toFixed(1) },
-      upskill: { count: upskillCount, percent: ((upskillCount / total) * 100).toFixed(1) },
-      assessment: { count: assessmentCount, percent: ((assessmentCount / total) * 100).toFixed(1) },
-      voluntary: { count: voluntaryCount, percent: ((voluntaryCount / total) * 100).toFixed(1) },
+      redeploy: { count: tally['Redeploy'], percent: pct(tally['Redeploy']) },
+      reskillRedeploy: { count: tally['Reskill -> Redeploy'], percent: pct(tally['Reskill -> Redeploy']) },
+      reskill: { count: tally['Reskill'], percent: pct(tally['Reskill']) },
+      assessment: { count: tally['Further Assessment'], percent: pct(tally['Further Assessment']) },
+      voluntary: { count: tally['Voluntary Transition Review'], percent: pct(tally['Voluntary Transition Review']) },
     };
-  }, [exposureCutoff, minFitThreshold, reskillPassRate]);
+  }, [allEmployees, minFitThreshold]);
 
   // Selected employee for deep audit
   const activeEmployee = useMemo(() => {
@@ -156,7 +166,7 @@ export const DecisionEngineView: React.FC<DecisionEngineViewProps> = ({
               Workforce Decision Engine: Deterministic Triage (6.000 Staf Pilot)
             </h2>
             <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-blue-100 text-blue-800 border border-blue-200">
-              Rule #1 s/d #8 Auditable
+              Rule #1 s/d #5 Auditable
             </span>
           </div>
           <p className="text-xs text-slate-500 mt-0.5">
@@ -207,7 +217,7 @@ export const DecisionEngineView: React.FC<DecisionEngineViewProps> = ({
               </div>
               <div className="flex items-center gap-2">
                 <span className="text-[11px] text-slate-300">
-                  Uji dampak perubahan cutoff threshold terhadap pergeseran 6.000 staf:
+                  Geser "Minimum Fit Score Threshold" untuk melihat 5 kartu di bawah dihitung ulang live dari engine (Rule #1-#5) atas 6.000 staf. Exposure cutoff & reskill pass rate adalah asumsi perencanaan terpisah, belum memengaruhi triase ini.
                 </span>
                 <button
                   onClick={handleResetMacroSliders}
@@ -296,7 +306,7 @@ export const DecisionEngineView: React.FC<DecisionEngineViewProps> = ({
               <div className="flex items-center justify-between">
                 <span className="w-2.5 h-2.5 rounded-full bg-emerald-500"></span>
                 <span className="text-[10px] font-mono bg-emerald-100 text-emerald-800 font-bold px-1.5 py-0.2 rounded">
-                  Rule #1, #2
+                  Rule #2
                 </span>
               </div>
               <div>
@@ -318,16 +328,16 @@ export const DecisionEngineView: React.FC<DecisionEngineViewProps> = ({
               <div className="flex items-center justify-between">
                 <span className="w-2.5 h-2.5 rounded-full bg-blue-500"></span>
                 <span className="text-[10px] font-mono bg-blue-100 text-blue-800 font-bold px-1.5 py-0.2 rounded">
-                  Rule #3, #4
+                  Rule #4
                 </span>
               </div>
               <div>
                 <span className="text-xs font-bold text-blue-950 block">Reskill &rarr; Redeploy</span>
                 <div className="text-2xl font-extrabold text-blue-700 font-mono mt-1">
-                  {macroStats.reskill.count.toLocaleString('id-ID')}
+                  {macroStats.reskillRedeploy.count.toLocaleString('id-ID')}
                 </div>
                 <span className="text-[11px] text-blue-800 font-semibold">
-                  {macroStats.reskill.percent}% dari populasi
+                  {macroStats.reskillRedeploy.percent}% dari populasi
                 </span>
               </div>
               <p className="text-[10px] text-slate-500 border-t border-slate-100 pt-1.5">
@@ -335,25 +345,25 @@ export const DecisionEngineView: React.FC<DecisionEngineViewProps> = ({
               </p>
             </div>
 
-            {/* 3. Upskill in Place */}
+            {/* 3. Reskill */}
             <div className="bg-white rounded-xl p-4 border border-amber-200 shadow-2xs space-y-2">
               <div className="flex items-center justify-between">
                 <span className="w-2.5 h-2.5 rounded-full bg-amber-500"></span>
                 <span className="text-[10px] font-mono bg-amber-100 text-amber-800 font-bold px-1.5 py-0.2 rounded">
-                  Rule #6
+                  Rule #5 (Default)
                 </span>
               </div>
               <div>
-                <span className="text-xs font-bold text-amber-950 block">Upskill in Place</span>
+                <span className="text-xs font-bold text-amber-950 block">Reskill</span>
                 <div className="text-2xl font-extrabold text-amber-700 font-mono mt-1">
-                  {macroStats.upskill.count.toLocaleString('id-ID')}
+                  {macroStats.reskill.count.toLocaleString('id-ID')}
                 </div>
                 <span className="text-[11px] text-amber-800 font-semibold">
-                  {macroStats.upskill.percent}% dari populasi
+                  {macroStats.reskill.percent}% dari populasi
                 </span>
               </div>
               <p className="text-[10px] text-slate-500 border-t border-slate-100 pt-1.5">
-                Exposure sedang (&lt;70%). Peran dipertahankan dengan alat bantu digital.
+                Kombinasi fit/feasibility menengah, evidence terverifikasi. Program komprehensif 12-24 minggu.
               </p>
             </div>
 
@@ -362,7 +372,7 @@ export const DecisionEngineView: React.FC<DecisionEngineViewProps> = ({
               <div className="flex items-center justify-between">
                 <span className="w-2.5 h-2.5 rounded-full bg-purple-500"></span>
                 <span className="text-[10px] font-mono bg-purple-100 text-purple-800 font-bold px-1.5 py-0.2 rounded">
-                  Rule #5 (Safety)
+                  Rule #1 (Gate)
                 </span>
               </div>
               <div>
@@ -384,7 +394,7 @@ export const DecisionEngineView: React.FC<DecisionEngineViewProps> = ({
               <div className="flex items-center justify-between">
                 <span className="w-2.5 h-2.5 rounded-full bg-rose-500"></span>
                 <span className="text-[10px] font-mono bg-rose-100 text-rose-800 font-bold px-1.5 py-0.2 rounded">
-                  Rule #7, #8
+                  Rule #3
                 </span>
               </div>
               <div>
@@ -427,7 +437,7 @@ export const DecisionEngineView: React.FC<DecisionEngineViewProps> = ({
                   <option value="all">Semua Keputusan (5 Jalur)</option>
                   <option value="Redeploy">Redeploy</option>
                   <option value="Reskill -> Redeploy">Reskill &rarr; Redeploy</option>
-                  <option value="Reskill">Reskill (Upskill)</option>
+                  <option value="Reskill">Reskill</option>
                   <option value="Further Assessment">Further Assessment</option>
                   <option value="Voluntary Transition Review">Voluntary Transition</option>
                 </select>

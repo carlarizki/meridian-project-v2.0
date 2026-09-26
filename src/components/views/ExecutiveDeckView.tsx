@@ -108,8 +108,8 @@ export const SLIDES: DeckSlide[] = [
       visualType: 'single_identity_mesh',
     },
     talkingPoints: [
-      'Bapak/Ibu Direksi, dokumen transformasi yang ada selama ini masih menyimpan 6 "lubang fatal" yang berisiko menggagalkan program saat diimplementasikan ke 6.000 tenaga alih daya & teknisi lapangan.',
-      'Meridian bukan sekadar dashboard visual, melainkan decision engine operasional yang telah menguji 12 use-case riil dan memiliki audit trail lengkap untuk setiap keputusan karyawan.',
+      'Dokumen transformasi yang ada menyimpan 6 pain point kritis yang berisiko menggagalkan implementasi ke 6.000 tenaga lapangan.',
+      'Meridian adalah decision engine operasional yang teruji pada 12 use-case riil, dengan audit trail lengkap untuk setiap keputusan karyawan.',
     ],
   },
   {
@@ -145,8 +145,8 @@ export const SLIDES: DeckSlide[] = [
       visualType: 'single_identity_mesh',
     },
     talkingPoints: [
-      'Tanpa unifikasi ID berbasis NIK, manajemen tidak akan pernah tahu apakah karyawan yang direskill di Surabaya adalah orang yang sama dengan yang tercatat belum lulus K3 di Malang.',
-      'Meridian memecahkan masalah ini di hari pertama: setiap orang memiliki UID-PLN terverifikasi NIK dengan confidence score yang transparan.',
+      'Tanpa unifikasi ID berbasis NIK, sulit memastikan apakah karyawan yang direskill di satu kota adalah orang yang sama dengan yang tercatat belum lulus K3 di kota lain.',
+      'Meridian menyelesaikan ini sejak hari pertama: setiap karyawan memiliki UID terverifikasi NIK dengan confidence score yang transparan.',
     ],
   },
   {
@@ -182,8 +182,8 @@ export const SLIDES: DeckSlide[] = [
       visualType: 'virtualized_grid',
     },
     talkingPoints: [
-      'Menampilkan 6.000 karyawan dengan kursor next-prev adalah cacat desain yang fatal. Pengguna butuh waktu berjam-jam hanya untuk mencari nama.',
-      'Di Meridian, kami menyatukan Employee Directory dan Profile View ke dalam Virtual Grid 60fps dengan pencarian instan NIK, Job Family filter, dan drawer preview instan.',
+      'Navigasi next-prev untuk 6.000 karyawan adalah cacat desain fatal — pencarian satu nama bisa memakan waktu berjam-jam.',
+      'Meridian menyatukan Employee Directory dan Profile View dalam satu Virtual Grid 60fps dengan pencarian instan, filter Job Family, dan preview drawer.',
     ],
   },
   {
@@ -221,8 +221,8 @@ export const SLIDES: DeckSlide[] = [
       visualType: 'cost_itemization',
     },
     talkingPoints: [
-      'Ketika ditanya Dewan Komisaris atau BPK dari mana muncul angka Rp 9 juta, dokumen lama tidak punya jawaban. Meridian punya breakdown 5 pos biaya yang konkret dan terverifikasi vendor rate card.',
-      'Investasi Rp 9 juta per orang ini menghemat biaya pesangon rata-rata Rp 48 juta per orang, memberikan net economic value Rp 84,6 Miliar bagi korporasi.',
+      'Dokumen lama tidak punya jawaban atas asal-usul angka Rp 9 juta; Meridian memberi breakdown 5 pos biaya yang konkret dan terverifikasi vendor rate card.',
+      'Investasi Rp 9 juta per orang ini menghemat biaya pesangon rata-rata Rp 48 juta per orang, dengan net economic value Rp 84,6 Miliar bagi korporasi.',
     ],
   },
   {
@@ -258,8 +258,8 @@ export const SLIDES: DeckSlide[] = [
       visualType: 'what_if_engine',
     },
     talkingPoints: [
-      'Simulator What-If bukan gimmick. Tujuannya adalah memberi pimpinan kontrol penuh: bagaimana jika adopsi Smart Meter dipercepat 6 bulan? Berapa biaya reskilling yang harus disiapkan hari ini?',
-      'Dengan Meridian, pimpinan dapat menguji skenario optimis vs pesimis dalam 5 detik dan melihat proyeksi anggaran serta pergeseran kategori secara presisi.',
+      'Simulator What-If bukan sekadar gimmick — fungsinya memberi kontrol penuh atas skenario, misalnya dampak jika adopsi Smart Meter dipercepat 6 bulan.',
+      'Meridian memungkinkan pengujian skenario optimis vs pesimis dalam hitungan detik, lengkap dengan proyeksi anggaran dan pergeseran kategori secara presisi.',
     ],
   },
   {
@@ -284,7 +284,7 @@ export const SLIDES: DeckSlide[] = [
     solution: {
       title: '4-Tier Evidence Hierarchy (High, Medium, Low, Unknown) & Safety-Net Triage',
       description:
-        'Meridian menerapkan tata kelola bukti kompetensi yang ketat: setiap skill diberi atribut Type (Measured 0.90 confidence vs Inferred 0.65 confidence) dan waktu perolehan. Jika data tidak lengkap, mesin secara etis merekomendasikan "Further Assessment" (Rule #5) demi keselamatan kerja.',
+        'Meridian menerapkan tata kelola bukti kompetensi yang ketat: setiap skill diberi atribut Type dengan baseline confidence kebijakan (Measured 0.90 vs Inferred 0.65) yang lalu dikalibrasi per-skill berdasarkan recency & kualitas sumber — bukan angka statis, tapi titik awal yang bisa ditelusuri sampai ke skor aktual tiap karyawan. Jika data tidak lengkap, mesin secara etis merekomendasikan "Further Assessment" (Rule #1) demi keselamatan kerja.',
       meridianAdvantage: 'Prinsip Zero-Hallucination: tidak pernah menempatkan orang pada risiko fatal hanya berdasarkan asumsi data yang usang.',
       keyDeliverables: [
         'Evidence Level Matrix: High (Uji Praktik <12 Bln), Medium (LMS + OJT), Low (Self-Survey), Unknown (Data Kosong).',
@@ -295,8 +295,8 @@ export const SLIDES: DeckSlide[] = [
       visualType: 'evidence_hierarchy',
     },
     talkingPoints: [
-      'Di bidang energi dan kelistrikan, salah menempatkan orang bukan hanya soal inefisiensi, tapi soal nyawa dan keselamatan kerja K3.',
-      'Hierarki Bukti Meridian memastikan bahwa hanya bukti terukur yang dapat membuka jalur penempatan langsung (Redeploy), sedangkan data kadaluwarsa dialihkan ke asesmen ulang.',
+      'Di sektor energi dan kelistrikan, salah menempatkan orang bukan sekadar inefisiensi — ini menyangkut keselamatan kerja (K3).',
+      'Hierarki Bukti Meridian memastikan hanya bukti terukur yang membuka jalur penempatan langsung (Redeploy); data kadaluwarsa dialihkan ke asesmen ulang.',
     ],
   },
   {
@@ -332,8 +332,8 @@ export const SLIDES: DeckSlide[] = [
       visualType: 'phased_playbook',
     },
     talkingPoints: [
-      'Sebuah strategi secanggih apa pun akan gagal jika serikat pekerja menolak di lapangan. Roadmap 90 hari Meridian memasukkan dialog SP PLN dan pilot regional sebagai prasyarat wajib.',
-      'Dengan roadmap ini, manajemen memiliki kepastian langkah mingguan yang terukur hingga pelaporan kepada Dewan Komisaris.',
+      'Strategi secanggih apa pun berisiko gagal tanpa dukungan lapangan; roadmap 90 hari Meridian menjadikan dialog serikat pekerja dan pilot regional sebagai prasyarat wajib.',
+      'Roadmap ini memberi kepastian langkah mingguan yang terukur hingga pelaporan ke Dewan Komisaris.',
     ],
   },
   {
@@ -370,8 +370,8 @@ export const SLIDES: DeckSlide[] = [
       visualType: 'cost_itemization',
     },
     talkingPoints: [
-      'Dari kacamata finansial, Meridian bukan cost center melainkan value generator: menghemat kas perusahaan sebesar Rp 84,6 Miliar sekaligus menjaga keharmonisan sosial.',
-      'Kita tidak membuang orang berpengalaman yang loyal, melainkan meng-upgrade keahlian mereka untuk menyongsong era energi terbarukan.',
+      'Secara finansial, Meridian adalah value generator, bukan cost center — menghemat kas perusahaan Rp 84,6 Miliar sekaligus menjaga keharmonisan sosial.',
+      'Karyawan berpengalaman tidak dilepas, melainkan di-upgrade keahliannya untuk menyongsong era energi terbarukan.',
     ],
   },
   {
@@ -407,8 +407,8 @@ export const SLIDES: DeckSlide[] = [
       visualType: 'phased_playbook',
     },
     talkingPoints: [
-      'Bapak/Ibu, proposal ini siap ditindaklanjuti. Yang kita butuhkan hari ini adalah persetujuan atas tiga keputusan ini agar tim dapat langsung bekerja pada Senin pagi.',
-      'Meridian siap mendukung penuh seluruh rangkaian implementasi untuk menjadikan transformasi tenaga kerja ini sebagai best practice nasional di sektor BUMN.',
+      'Proposal ini siap ditindaklanjuti — persetujuan atas tiga keputusan ini memungkinkan tim mulai bekerja sejak Senin pagi.',
+      'Meridian mendukung penuh seluruh rangkaian implementasi, menjadikan transformasi tenaga kerja ini best practice nasional di sektor BUMN.',
     ],
   },
 ];
@@ -482,7 +482,7 @@ export const ExecutiveDeckView: React.FC<ExecutiveDeckViewProps> = ({ onNavigate
     const text = currentSlide.talkingPoints.join('\n\n');
     navigator.clipboard.writeText(text);
     setCopiedNote(true);
-    addToast({ title: 'Presenter Notes Tersalin', message: 'Talking points disalin ke clipboard untuk bahan presentasi!', type: 'success' });
+    addToast({ title: 'Kesimpulan Tersalin', message: 'Ringkasan slide disalin ke clipboard.', type: 'success' });
     setTimeout(() => setCopiedNote(false), 2000);
   };
 
@@ -519,7 +519,7 @@ export const ExecutiveDeckView: React.FC<ExecutiveDeckViewProps> = ({ onNavigate
               </span>
             </div>
             <p className="text-xs text-slate-500">
-              Analisis Visual Komparatif: 6 Gap Dokumen Klien ("Bolong-Bolong") vs. Solusi Nyata Meridian Project
+              Analisis Komparatif: 6 Pain Point Dokumen Klien vs. Solusi Meridian
             </p>
           </div>
         </div>
@@ -546,7 +546,7 @@ export const ExecutiveDeckView: React.FC<ExecutiveDeckViewProps> = ({ onNavigate
                   : 'text-slate-600 hover:text-slate-900'
               }`}
             >
-              Celah Klien (Bolong)
+              Pain Point Klien
             </button>
             <button
               onClick={() => setViewMode('solution-only')}
@@ -578,10 +578,10 @@ export const ExecutiveDeckView: React.FC<ExecutiveDeckViewProps> = ({ onNavigate
                 ? 'bg-blue-50 text-blue-700 border-blue-200'
                 : 'bg-white text-slate-600 border-slate-200 hover:bg-slate-50'
             }`}
-            title="Toggle Presenter Talking Points"
+            title="Toggle Kesimpulan"
           >
             <Info className="w-3.5 h-3.5" />
-            <span className="hidden md:inline">Presenter Notes</span>
+            <span className="hidden md:inline">Kesimpulan</span>
           </button>
 
           {/* Print / Export */}
@@ -714,7 +714,7 @@ export const ExecutiveDeckView: React.FC<ExecutiveDeckViewProps> = ({ onNavigate
                       <div className="w-6 h-6 rounded-md bg-red-100 flex items-center justify-center text-red-600">
                         <AlertTriangle className="w-4 h-4" />
                       </div>
-                      <span>CELAH DI DOKUMEN KLIEN ("BOLONG")</span>
+                      <span>PAIN POINT DOKUMEN KLIEN</span>
                     </div>
                     <span className="px-2 py-0.5 rounded text-[10px] font-semibold bg-red-100 text-red-800 uppercase tracking-wide">
                       Legacy Risk Alert
@@ -842,14 +842,14 @@ export const ExecutiveDeckView: React.FC<ExecutiveDeckViewProps> = ({ onNavigate
           </div>
         </div>
 
-        {/* PRESENTER TALKING POINTS DRAWER */}
+        {/* KESIMPULAN DRAWER */}
         {showNotes && (
           <div className="border-t border-slate-200 bg-slate-50 p-5">
             <div className="flex items-center justify-between gap-3 mb-2">
               <div className="flex items-center gap-2">
                 <Bookmark className="w-4 h-4 text-blue-700" />
                 <span className="text-xs font-bold uppercase tracking-wider text-slate-800">
-                  Presenter Talking Points (Panduan Pembicara untuk Rapat Direksi / Stakeholder):
+                  Kesimpulan
                 </span>
               </div>
               <button
@@ -857,7 +857,7 @@ export const ExecutiveDeckView: React.FC<ExecutiveDeckViewProps> = ({ onNavigate
                 className="text-[11px] font-semibold text-blue-700 hover:text-blue-800 flex items-center gap-1 transition-colors"
               >
                 {copiedNote ? <Check className="w-3.5 h-3.5 text-emerald-600" /> : <Copy className="w-3.5 h-3.5" />}
-                <span>{copiedNote ? 'Tersalin' : 'Salin Talking Points'}</span>
+                <span>{copiedNote ? 'Tersalin' : 'Salin Kesimpulan'}</span>
               </button>
             </div>
 
