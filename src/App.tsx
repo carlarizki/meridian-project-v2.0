@@ -6,8 +6,6 @@
 import React, { useState } from 'react';
 import { Sidebar } from './components/Sidebar';
 import { TopHeader } from './components/TopHeader';
-import { ExecutiveDeckView } from './components/views/ExecutiveDeckView';
-import { PasswordGate } from './components/PasswordGate';
 import { WorkforceOverview } from './components/views/WorkforceOverview';
 import { AIExposureAnalysis } from './components/views/AIExposureAnalysis';
 import { JobArchitectureView } from './components/views/JobArchitectureView';
@@ -37,7 +35,7 @@ export default function App() {
   const [isBriefingOpen, setIsBriefingOpen] = useState(false);
   const [isRoadmapOpen, setIsRoadmapOpen] = useState(false);
   const [isLegalOpen, setIsLegalOpen] = useState(false);
-  const [isDeckUnlocked, setIsDeckUnlocked] = useState(false);
+  const [isMobileNavOpen, setIsMobileNavOpen] = useState(false);
 
   const handleSelectEmployee = (emp: EmployeeRecord) => {
     setSelectedEmployeeId(emp.id);
@@ -46,7 +44,7 @@ export default function App() {
 
   return (
     <ToastProvider>
-      <div className="min-h-screen bg-slate-50 text-slate-800 flex font-sans antialiased">
+      <div className="flex min-h-screen overflow-x-hidden bg-slate-50 font-sans text-slate-800 antialiased">
         {/* Fixed Left Sidebar with clean, focused navigation */}
         <Sidebar
           activeTab={activeTab}
@@ -54,23 +52,25 @@ export default function App() {
           onOpenBriefing={() => setIsBriefingOpen(true)}
           onOpenRoadmap={() => setIsRoadmapOpen(true)}
           onOpenLegal={() => setIsLegalOpen(true)}
+          isMobileOpen={isMobileNavOpen}
+          onMobileClose={() => setIsMobileNavOpen(false)}
         />
+        {isMobileNavOpen && (
+          <button
+            type="button"
+            aria-label="Tutup navigasi"
+            className="fixed inset-0 z-40 bg-slate-900/50 backdrop-blur-xs md:hidden"
+            onClick={() => setIsMobileNavOpen(false)}
+          />
+        )}
 
         {/* Main Content Area */}
-        <div className="flex-1 flex flex-col min-w-0 h-screen overflow-y-auto">
+        <div className="flex h-dvh min-w-0 flex-1 flex-col overflow-y-auto">
           {/* Top Header with Breadcrumb & Module indicator */}
-          <TopHeader activeTab={activeTab} setActiveTab={setActiveTab} />
+          <TopHeader activeTab={activeTab} setActiveTab={setActiveTab} onOpenMenu={() => setIsMobileNavOpen(true)} />
 
           {/* Viewport Content */}
-          <main className="flex-1 p-6 max-w-7xl w-full mx-auto">
-            {activeTab === 'deck' && (
-              isDeckUnlocked ? (
-                <ExecutiveDeckView onNavigate={(tab) => setActiveTab(tab)} />
-              ) : (
-                <PasswordGate onUnlock={() => setIsDeckUnlocked(true)} />
-              )
-            )}
-
+          <main className="mx-auto w-full max-w-7xl flex-1 p-3 sm:p-5 lg:p-6">
             {activeTab === 'workforce' && (
               <WorkforceOverview onNavigate={(tab) => setActiveTab(tab)} />
             )}

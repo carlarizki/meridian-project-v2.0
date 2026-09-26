@@ -88,7 +88,7 @@ export const DecisionEngineView: React.FC<DecisionEngineViewProps> = ({
 
   // Selected employee for deep audit
   const activeEmployee = useMemo(() => {
-    return getEmployeeById(selectedEmployeeId) || allEmployees[0];
+    return getEmployeeById(selectedEmployeeId) || allEmployees[0]!;
   }, [allEmployees, selectedEmployeeId]);
 
   // Individual What-If simulation state

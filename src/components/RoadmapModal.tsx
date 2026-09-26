@@ -19,16 +19,16 @@ export const RoadmapModal: React.FC<RoadmapModalProps> = ({ isOpen, onClose }) =
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 bg-slate-900/60 backdrop-blur-xs overflow-y-auto">
-      <div className="relative w-full max-w-4xl bg-white border border-slate-200 rounded-2xl shadow-2xl overflow-hidden my-auto max-h-[92vh] flex flex-col animate-in fade-in duration-150">
+    <div className="fixed inset-0 z-50 flex items-stretch justify-center bg-slate-900/60 p-0 backdrop-blur-xs sm:items-center sm:p-6">
+      <div className="relative flex h-dvh w-full max-w-4xl flex-col overflow-hidden bg-white shadow-2xl animate-in fade-in duration-150 sm:my-auto sm:h-auto sm:max-h-[92vh] sm:rounded-2xl sm:border sm:border-slate-200">
         {/* Header */}
-        <div className="bg-gradient-to-r from-blue-700 via-indigo-800 to-slate-900 px-6 py-4.5 text-white flex items-center justify-between">
-          <div className="flex items-center gap-3">
+        <div className="grid grid-cols-[minmax(0,1fr)_auto] items-start gap-3 bg-gradient-to-r from-blue-700 via-indigo-800 to-slate-900 px-4 py-4 text-white sm:px-6">
+          <div className="flex min-w-0 items-start gap-3">
             <div className="w-10 h-10 rounded-xl bg-white/10 flex items-center justify-center text-blue-200">
               <Calendar className="w-5 h-5" />
             </div>
             <div>
-              <div className="flex items-center gap-2">
+              <div className="flex flex-col items-start gap-1 sm:flex-row sm:items-center sm:gap-2">
                 <h3 className="text-base font-bold">90-Day Implementation Playbook (Rencana Eksekusi 12 Minggu)</h3>
                 <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-white/20 text-white">
                   3 Phased Gates
@@ -48,7 +48,7 @@ export const RoadmapModal: React.FC<RoadmapModalProps> = ({ isOpen, onClose }) =
         </div>
 
         {/* Content */}
-        <div className="p-6 overflow-y-auto space-y-6 text-xs text-slate-700 leading-relaxed">
+        <div className="flex-1 space-y-6 overflow-y-auto p-4 text-xs leading-relaxed text-slate-700 sm:p-6">
           {/* 3 Sprints Overview */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
             {/* Sprint 1 */}
@@ -165,8 +165,8 @@ export const RoadmapModal: React.FC<RoadmapModalProps> = ({ isOpen, onClose }) =
         </div>
 
         {/* Footer */}
-        <div className="bg-slate-50 px-6 py-3 border-t border-slate-200 flex items-center justify-between">
-          <span className="text-[11px] text-slate-500">
+        <div className="flex items-center justify-end border-t border-slate-200 bg-slate-50 px-4 py-3 sm:justify-between sm:px-6">
+          <span className="hidden text-[11px] text-slate-500 sm:block">
             Jadwal Operasional Eksekusi Terakreditasi
           </span>
           <button

@@ -213,7 +213,7 @@ export const EmployeeProfileView: React.FC<EmployeeProfileViewProps> = ({
 
   // Current selected employee record
   const currentSelectedEmployee = useMemo(() => {
-    return allEmployees.find((e) => e.id === selectedEmployeeId) || allEmployees[0];
+    return allEmployees.find((e) => e.id === selectedEmployeeId) || allEmployees[0]!;
   }, [allEmployees, selectedEmployeeId]);
 
   // Index in current sorted list
@@ -246,13 +246,13 @@ export const EmployeeProfileView: React.FC<EmployeeProfileViewProps> = ({
   // Prev / Next in inspector
   const handlePrevEmployee = () => {
     if (currentFilteredIndex > 0) {
-      setSelectedEmployeeId(sortedEmployees[currentFilteredIndex - 1].id);
+      setSelectedEmployeeId(sortedEmployees[currentFilteredIndex - 1]!.id);
     }
   };
 
   const handleNextEmployee = () => {
     if (currentFilteredIndex < sortedEmployees.length - 1) {
-      setSelectedEmployeeId(sortedEmployees[currentFilteredIndex + 1].id);
+      setSelectedEmployeeId(sortedEmployees[currentFilteredIndex + 1]!.id);
     }
   };
 

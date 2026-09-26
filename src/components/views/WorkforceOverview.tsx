@@ -66,7 +66,7 @@ export const WorkforceOverview: React.FC<WorkforceOverviewProps> = ({ onNavigate
       bgColor: 'bg-emerald-50/60 hover:bg-emerald-50',
       borderColor: 'border-emerald-200',
       textColor: 'text-emerald-800',
-      description: 'Fit ≥75%, feasibility High (Rule #2). Siap mutasi langsung.',
+      description: 'Kompetensi sudah memenuhi syarat. Siap mutasi tanpa pelatihan tambahan.',
       targetRole: 'Teknisi Smart Grid & Gardu',
       actionTab: 'redeployment' as NavTab,
     },
@@ -79,7 +79,7 @@ export const WorkforceOverview: React.FC<WorkforceOverviewProps> = ({ onNavigate
       bgColor: 'bg-sky-50/60 hover:bg-sky-50',
       borderColor: 'border-sky-200',
       textColor: 'text-sky-800',
-      description: 'Gap terukur (Rule #4). Pelatihan intensif 8-12 minggu.',
+      description: 'Kurang sedikit keahlian. Pelatihan 8-12 minggu, lalu pindah peran.',
       targetRole: 'Operator Gateway IoT & PLTS',
       actionTab: 'learning' as NavTab,
     },
@@ -92,7 +92,7 @@ export const WorkforceOverview: React.FC<WorkforceOverviewProps> = ({ onNavigate
       bgColor: 'bg-amber-50/60 hover:bg-amber-50',
       borderColor: 'border-amber-200',
       textColor: 'text-amber-800',
-      description: 'Fit/feasibility menengah (Rule #5). Pelatihan 12-24 minggu.',
+      description: 'Butuh pelatihan lebih panjang, 12-24 minggu, di unit saat ini.',
       targetRole: 'Inspektur Sambungan & K3',
       actionTab: 'jobs' as NavTab,
     },
@@ -105,7 +105,7 @@ export const WorkforceOverview: React.FC<WorkforceOverviewProps> = ({ onNavigate
       bgColor: 'bg-purple-50/60 hover:bg-purple-50',
       borderColor: 'border-purple-200',
       textColor: 'text-purple-800',
-      description: 'Evidence Low/Unknown (Rule #1). Data belum lengkap, re-assessment cepat.',
+      description: 'Data kompetensi belum lengkap. Perlu asesmen ulang sebelum diputuskan.',
       targetRole: 'Asesmen Ulang SKTTK',
       actionTab: 'capabilities' as NavTab,
     },
@@ -118,7 +118,7 @@ export const WorkforceOverview: React.FC<WorkforceOverviewProps> = ({ onNavigate
       bgColor: 'bg-rose-50/60 hover:bg-rose-50',
       borderColor: 'border-rose-200',
       textColor: 'text-rose-800',
-      description: 'Fit & feasibility rendah (Rule #3). Transisi sukarela, PP 35/2021.',
+      description: 'Pilihan sukarela: pensiun dini atau alih profesi, dengan pendampingan.',
       targetRole: 'Konseling & Outplacement Pensiun',
       actionTab: 'impact' as NavTab,
     },
@@ -206,7 +206,7 @@ export const WorkforceOverview: React.FC<WorkforceOverviewProps> = ({ onNavigate
             <Radio className="w-4 h-4 text-emerald-400 shrink-0" />
             <div>
               <div className="flex items-center gap-2">
-                <span className="text-[11px] font-semibold text-slate-200 tracking-wide uppercase">
+                <span className="text-[11px] font-semibold text-slate-200 tracking-wide uppercase font-jakarta">
                   Live Operational Pulse
                 </span>
                 <span className="text-[11px] text-slate-500 font-mono">
@@ -220,10 +220,11 @@ export const WorkforceOverview: React.FC<WorkforceOverviewProps> = ({ onNavigate
           </div>
 
           {/* Right: 3 Metric Counters with Interactive Hover Tooltips */}
-          <div className="flex items-center gap-2 sm:gap-3 text-xs shrink-0 flex-wrap sm:flex-nowrap">
+          <div className="grid w-full grid-cols-1 gap-2 text-xs sm:grid-cols-3 lg:w-auto">
             {/* Metric 1: Smart Meter Terpasang */}
             <div
               className="relative group bg-white/5 hover:bg-white/10 rounded-lg px-3 py-2 cursor-pointer transition-colors"
+              onClick={() => setActiveTooltip(activeTooltip === 'meter' ? null : 'meter')}
               onMouseEnter={() => setActiveTooltip('meter')}
               onMouseLeave={() => setActiveTooltip(null)}
             >
@@ -238,7 +239,7 @@ export const WorkforceOverview: React.FC<WorkforceOverviewProps> = ({ onNavigate
 
               {/* Tooltip Card */}
               {activeTooltip === 'meter' && (
-                <div className="absolute right-0 sm:right-auto sm:left-0 top-full mt-2 w-72 bg-white text-slate-800 p-3 rounded-xl shadow-xl border border-slate-200 z-50 text-xs animate-in fade-in zoom-in-95 duration-150">
+                <div className="absolute left-0 top-full z-50 mt-2 w-[min(18rem,calc(100vw-3rem))] rounded-xl border border-slate-200 bg-white p-3 text-xs text-slate-800 shadow-xl animate-in fade-in zoom-in-95 duration-150">
                   <div className="font-bold text-slate-900 flex items-center gap-1.5 border-b border-slate-100 pb-1.5">
                     <span className="w-2 h-2 rounded-full bg-amber-500"></span>
                     <span>Smart Meter Terpasang</span>
@@ -256,6 +257,7 @@ export const WorkforceOverview: React.FC<WorkforceOverviewProps> = ({ onNavigate
             {/* Metric 2: Rute Manual Teralihkan */}
             <div
               className="relative group bg-white/5 hover:bg-white/10 rounded-lg px-3 py-2 cursor-pointer transition-colors"
+              onClick={() => setActiveTooltip(activeTooltip === 'route' ? null : 'route')}
               onMouseEnter={() => setActiveTooltip('route')}
               onMouseLeave={() => setActiveTooltip(null)}
             >
@@ -269,7 +271,7 @@ export const WorkforceOverview: React.FC<WorkforceOverviewProps> = ({ onNavigate
 
               {/* Tooltip Card */}
               {activeTooltip === 'route' && (
-                <div className="absolute right-0 sm:right-auto sm:left-0 top-full mt-2 w-72 bg-white text-slate-800 p-3 rounded-xl shadow-xl border border-slate-200 z-50 text-xs animate-in fade-in zoom-in-95 duration-150">
+                <div className="absolute left-0 top-full z-50 mt-2 w-[min(18rem,calc(100vw-3rem))] rounded-xl border border-slate-200 bg-white p-3 text-xs text-slate-800 shadow-xl animate-in fade-in zoom-in-95 duration-150">
                   <div className="font-bold text-slate-900 flex items-center gap-1.5 border-b border-slate-100 pb-1.5">
                     <span className="w-2 h-2 rounded-full bg-emerald-500"></span>
                     <span>Rute Manual Teralihkan</span>
@@ -287,6 +289,7 @@ export const WorkforceOverview: React.FC<WorkforceOverviewProps> = ({ onNavigate
             {/* Metric 3: Total Output Pelatihan */}
             <div
               className="relative group bg-white/5 hover:bg-white/10 rounded-lg px-3 py-2 cursor-pointer transition-colors"
+              onClick={() => setActiveTooltip(activeTooltip === 'training' ? null : 'training')}
               onMouseEnter={() => setActiveTooltip('training')}
               onMouseLeave={() => setActiveTooltip(null)}
             >
@@ -300,7 +303,7 @@ export const WorkforceOverview: React.FC<WorkforceOverviewProps> = ({ onNavigate
 
               {/* Tooltip Card */}
               {activeTooltip === 'training' && (
-                <div className="absolute right-0 top-full mt-2 w-72 bg-white text-slate-800 p-3 rounded-xl shadow-xl border border-slate-200 z-50 text-xs animate-in fade-in zoom-in-95 duration-150">
+                <div className="absolute left-0 top-full z-50 mt-2 w-[min(18rem,calc(100vw-3rem))] rounded-xl border border-slate-200 bg-white p-3 text-xs text-slate-800 shadow-xl animate-in fade-in zoom-in-95 duration-150">
                   <div className="font-bold text-slate-900 flex items-center gap-1.5 border-b border-slate-100 pb-1.5">
                     <span className="w-2 h-2 rounded-full bg-sky-500"></span>
                     <span>Total Output Pelatihan</span>
@@ -321,14 +324,14 @@ export const WorkforceOverview: React.FC<WorkforceOverviewProps> = ({ onNavigate
       {/* ========================================================================= */}
       {/* 2. 4 CLEAN HIGH-LEVEL METRICS (CLEAR & LIGHT, NO JARGON)                 */}
       {/* ========================================================================= */}
-      <div className="bg-white rounded-xl border border-slate-200 grid grid-cols-2 lg:grid-cols-4 divide-x divide-y lg:divide-y-0 divide-slate-100">
+      <div className="grid grid-cols-1 divide-y divide-slate-100 rounded-xl border border-slate-200 bg-white sm:grid-cols-2 sm:divide-x lg:grid-cols-4 lg:divide-y-0">
         {/* Metric 1: Total Tenaga Kerja */}
         <div className="p-5">
           <div className="flex items-center gap-1.5 text-slate-500 text-xs font-medium">
             <Users className="w-3.5 h-3.5 text-blue-600" />
             <span>Total Tenaga Kerja</span>
           </div>
-          <div className="text-3xl font-semibold text-slate-900 tracking-tight mt-1.5">
+          <div className="text-3xl font-semibold text-slate-900 tracking-tight mt-1.5 font-jakarta">
             52.000
           </div>
           <p className="text-xs text-slate-500 mt-1">
@@ -342,7 +345,7 @@ export const WorkforceOverview: React.FC<WorkforceOverviewProps> = ({ onNavigate
             <Building className="w-3.5 h-3.5 text-blue-600" />
             <span>Populasi Pilot Fokus</span>
           </div>
-          <div className="text-3xl font-semibold text-slate-900 tracking-tight mt-1.5">
+          <div className="text-3xl font-semibold text-slate-900 tracking-tight mt-1.5 font-jakarta">
             6.000 <span className="text-sm text-slate-400 font-normal">staf</span>
           </div>
           <p className="text-xs text-slate-500 mt-1">
@@ -353,6 +356,7 @@ export const WorkforceOverview: React.FC<WorkforceOverviewProps> = ({ onNavigate
         {/* Metric 3: Retensi Karyawan (Tanpa PHK) */}
         <div
           className="relative p-5 cursor-pointer group"
+          onClick={() => setActiveTooltip(activeTooltip === 'retention' ? null : 'retention')}
           onMouseEnter={() => setActiveTooltip('retention')}
           onMouseLeave={() => setActiveTooltip(null)}
         >
@@ -361,7 +365,7 @@ export const WorkforceOverview: React.FC<WorkforceOverviewProps> = ({ onNavigate
             <span>Pekerja Lolos Alih Tugas</span>
             <HelpCircle className="w-3 h-3 text-slate-400" />
           </div>
-          <div className="text-3xl font-semibold text-emerald-600 tracking-tight mt-1.5">
+          <div className="text-3xl font-semibold text-emerald-600 tracking-tight mt-1.5 font-jakarta">
             75,0%
           </div>
           <p className="text-xs text-slate-500 mt-1">
@@ -370,7 +374,7 @@ export const WorkforceOverview: React.FC<WorkforceOverviewProps> = ({ onNavigate
 
           {/* Explainer Tooltip for Retensi Modal Insani */}
           {activeTooltip === 'retention' && (
-            <div className="absolute left-0 top-full mt-2 w-80 bg-white text-slate-800 p-3.5 rounded-xl shadow-xl border border-slate-200 z-50 text-xs animate-in fade-in zoom-in-95 duration-150">
+            <div className="absolute left-0 top-full z-50 mt-2 w-[min(20rem,calc(100vw-3rem))] rounded-xl border border-slate-200 bg-white p-3.5 text-xs text-slate-800 shadow-xl animate-in fade-in zoom-in-95 duration-150">
               <div className="font-bold text-slate-900 flex items-center gap-1.5 border-b border-slate-100 pb-1.5">
                 <CheckCircle2 className="w-4 h-4 text-emerald-600" />
                 <span>Rincian Retensi (75%)</span>
@@ -405,7 +409,7 @@ export const WorkforceOverview: React.FC<WorkforceOverviewProps> = ({ onNavigate
             <Briefcase className="w-3.5 h-3.5 text-blue-600" />
             <span>Keluarga Jabatan</span>
           </div>
-          <div className="text-3xl font-semibold text-slate-900 tracking-tight mt-1.5">
+          <div className="text-3xl font-semibold text-slate-900 tracking-tight mt-1.5 font-jakarta">
             9 <span className="text-sm text-slate-400 font-normal">families</span>
           </div>
           <p className="text-xs text-slate-500 mt-1">
@@ -415,17 +419,106 @@ export const WorkforceOverview: React.FC<WorkforceOverviewProps> = ({ onNavigate
       </div>
 
       {/* ========================================================================= */}
+      {/* 2B. THE SHIFT: JOB TITLE LENS VS CAPABILITY LENS (AHA MOMENT)            */}
+      {/* ========================================================================= */}
+      <div className="bg-white rounded-xl border border-slate-200 overflow-hidden">
+        <div className="px-5 py-4 border-b border-slate-100 flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+          <div>
+            <h2 className="text-sm font-bold text-slate-900 flex items-center gap-1.5 font-jakarta">
+              <Sparkles className="w-4 h-4 text-amber-500" />
+              <span>Orang yang sama, dibaca dengan dua cara berbeda</span>
+            </h2>
+            <p className="text-xs text-slate-500 mt-0.5">
+              Yang berubah bukan orangnya, tapi cara kita menilai mereka.
+            </p>
+          </div>
+          <button
+            onClick={() => onNavigate('capabilities')}
+            className="text-xs text-blue-600 hover:text-blue-800 font-semibold flex items-center gap-1 self-start sm:self-auto"
+          >
+            <span>Lihat peta kemampuan</span>
+            <ArrowRight className="w-3.5 h-3.5" />
+          </button>
+        </div>
+
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-0">
+          {/* Lens 1: Job Title */}
+          <div className="lg:col-span-5 p-5 bg-slate-50/70">
+            <div className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-wider text-slate-500">
+              <Briefcase className="w-3.5 h-3.5" />
+              <span>Dibaca dari nama jabatan</span>
+            </div>
+            <div className="mt-3 text-3xl font-semibold text-rose-600 tracking-tight font-jakarta">
+              4.200 <span className="text-sm text-slate-400 font-normal">staf dianggap habis perannya</span>
+            </div>
+            <p className="text-xs text-slate-600 mt-2 leading-relaxed">
+              Jabatan &ldquo;Petugas Catat Meter&rdquo; hilang begitu meteran mengirim angka sendiri.
+              Dengan cara baca ini, tidak ada jalan lain selain pengurangan tenaga kerja.
+            </p>
+            <div className="mt-3 space-y-1.5">
+              {['Nama jabatan hilang dari struktur', 'Pengalaman lapangan tidak terhitung', 'Ujungnya: negosiasi pesangon'].map((t) => (
+                <div key={t} className="flex items-start gap-2 text-[11px] text-slate-600">
+                  <span className="w-1.5 h-1.5 rounded-full bg-slate-400 mt-1.5 shrink-0" />
+                  <span>{t}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Arrow */}
+          <div className="lg:col-span-2 flex items-center justify-center py-3 bg-white">
+            <div className="flex flex-col items-center gap-1">
+              <div className="w-9 h-9 rounded-full bg-blue-50 border border-blue-200 flex items-center justify-center">
+                <ArrowRight className="w-4 h-4 text-blue-600 rotate-90 lg:rotate-0" />
+              </div>
+              <span className="text-[9px] font-bold uppercase tracking-wider text-blue-600">Meridian</span>
+            </div>
+          </div>
+
+          {/* Lens 2: Capability */}
+          <div className="lg:col-span-5 p-5 bg-blue-50/50 border-l border-blue-100">
+            <div className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-wider text-blue-700">
+              <Layers className="w-3.5 h-3.5" />
+              <span>Dibaca dari kemampuan nyata</span>
+            </div>
+            <div className="mt-3 text-3xl font-semibold text-emerald-600 tracking-tight font-jakarta">
+              85% <span className="text-sm text-slate-500 font-normal">punya jalur ke peran baru</span>
+            </div>
+            <p className="text-xs text-slate-600 mt-2 leading-relaxed">
+              Keahlian yang sudah mereka pakai tiap hari &mdash; kelistrikan tegangan rendah, keselamatan
+              kerja, hafal wilayah, berhadapan langsung dengan pelanggan &mdash; masih terpakai di unit baru.
+            </p>
+            <div className="mt-3 space-y-1.5">
+              {[
+                { r: 'Teknisi jaringan & gardu cerdas', n: '2.450 kursi' },
+                { r: 'Operator sensor & telemetri', n: '1.350 kursi' },
+                { r: 'Teknisi PLTS atap & energi baru', n: '1.200 kursi' },
+              ].map((x) => (
+                <div key={x.r} className="flex items-center justify-between text-[11px] bg-white border border-blue-100 rounded-md px-2.5 py-1.5">
+                  <span className="flex items-center gap-1.5 font-medium text-slate-800">
+                    <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600" />
+                    {x.r}
+                  </span>
+                  <span className="font-mono font-bold text-slate-700">{x.n}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* ========================================================================= */}
       {/* 3. TRANSITION STATUS SUMMARY (CLEAN PIPELINE BAR + 5 CARDS)               */}
       {/* ========================================================================= */}
       <div className="bg-white rounded-xl p-5 border border-slate-200 space-y-4">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-slate-100 pb-3">
           <div>
-            <h2 className="text-sm font-bold text-slate-900 flex items-center gap-1.5">
+            <h2 className="text-sm font-bold text-slate-900 flex items-center gap-1.5 font-jakarta">
               <GitMerge className="w-4 h-4 text-blue-600" />
-              <span>Status Transisi 6.000 Staf Pilot Lapangan</span>
+              <span>Ke mana 6.000 staf ini akan diarahkan</span>
             </h2>
             <p className="text-xs text-slate-500 mt-0.5">
-              Hasil pemetaan kapabilitas & keputusan jalur alih tugas deterministik:
+              Lima jalur transisi. Tidak ada satu pun yang berujung PHK sepihak.
             </p>
           </div>
 
@@ -471,7 +564,7 @@ export const WorkforceOverview: React.FC<WorkforceOverviewProps> = ({ onNavigate
                   {path.count.toLocaleString('id-ID')}{' '}
                   <span className="text-[10px] text-slate-500 font-normal">Staf</span>
                 </div>
-                <p className="text-[11px] text-slate-600 mt-1 leading-snug line-clamp-2">
+                <p className="text-[11px] text-slate-600 mt-1 leading-snug">
                   {path.description}
                 </p>
               </div>
@@ -492,41 +585,41 @@ export const WorkforceOverview: React.FC<WorkforceOverviewProps> = ({ onNavigate
       {/* ========================================================================= */}
       <div className="bg-white rounded-xl border border-slate-200 overflow-hidden">
         {/* Navigation Tabs */}
-        <div className="flex border-b border-slate-200 bg-slate-50/70 px-4 pt-2 gap-2 text-xs">
+        <div className="flex gap-2 overflow-x-auto border-b border-slate-200 bg-slate-50/70 px-3 pt-2 text-xs sm:px-4">
           <button
             onClick={() => setActiveSubTab('regional')}
-            className={`pb-2.5 px-3 font-semibold transition-colors border-b-2 flex items-center gap-1.5 ${
+            className={`shrink-0 pb-2.5 px-3 font-semibold transition-colors border-b-2 flex items-center gap-1.5 ${
               activeSubTab === 'regional'
                 ? 'border-blue-600 text-blue-700 bg-white rounded-t-lg'
                 : 'border-transparent text-slate-500 hover:text-slate-800'
             }`}
           >
             <MapPin className="w-3.5 h-3.5" />
-            <span>Peta 6 Regional & Formasi Peran Baru</span>
+            <span>Sebaran Wilayah</span>
           </button>
 
           <button
             onClick={() => setActiveSubTab('exposure')}
-            className={`pb-2.5 px-3 font-semibold transition-colors border-b-2 flex items-center gap-1.5 ${
+            className={`shrink-0 pb-2.5 px-3 font-semibold transition-colors border-b-2 flex items-center gap-1.5 ${
               activeSubTab === 'exposure'
                 ? 'border-blue-600 text-blue-700 bg-white rounded-t-lg'
                 : 'border-transparent text-slate-500 hover:text-slate-800'
             }`}
           >
             <Compass className="w-3.5 h-3.5" />
-            <span>AI Exposure & 9 Job Families</span>
+            <span>Dampak Otomasi</span>
           </button>
 
           <button
             onClick={() => setActiveSubTab('process')}
-            className={`pb-2.5 px-3 font-semibold transition-colors border-b-2 flex items-center gap-1.5 ${
+            className={`shrink-0 pb-2.5 px-3 font-semibold transition-colors border-b-2 flex items-center gap-1.5 ${
               activeSubTab === 'process'
                 ? 'border-blue-600 text-blue-700 bg-white rounded-t-lg'
                 : 'border-transparent text-slate-500 hover:text-slate-800'
             }`}
           >
             <GitMerge className="w-3.5 h-3.5" />
-            <span>Proses Bisnis: Sebelum vs Sesudah</span>
+            <span>Sebelum &amp; Sesudah</span>
           </button>
 
           <button
@@ -538,7 +631,7 @@ export const WorkforceOverview: React.FC<WorkforceOverviewProps> = ({ onNavigate
             }`}
           >
             <Activity className="w-3.5 h-3.5" />
-            <span>Log Aktivitas Lapangan Real-Time</span>
+            <span>Aktivitas Lapangan</span>
           </button>
         </div>
 
@@ -547,7 +640,7 @@ export const WorkforceOverview: React.FC<WorkforceOverviewProps> = ({ onNavigate
           <div className="p-5 grid grid-cols-1 lg:grid-cols-12 gap-4 animate-in fade-in duration-150">
             {/* Left: 6 Regional Operating Units */}
             <div className="lg:col-span-7 space-y-3">
-              <div className="flex items-center justify-between pb-1">
+              <div className="flex flex-col gap-2 pb-1 sm:flex-row sm:items-center sm:justify-between">
                 <div>
                   <h3 className="text-xs font-bold text-slate-900 uppercase tracking-wider">
                     Distribusi 6.000 Staf per Regional Operating Unit
@@ -703,7 +796,7 @@ export const WorkforceOverview: React.FC<WorkforceOverviewProps> = ({ onNavigate
               )}
 
               <div className="space-y-2 text-xs">
-                <div className="flex items-center justify-between p-2.5 rounded-lg bg-rose-50/70 border border-rose-100">
+                <div className="flex flex-col gap-1 p-2.5 rounded-lg bg-rose-50/70 border border-rose-100 sm:flex-row sm:items-center sm:justify-between">
                   <span className="flex items-center gap-2 font-medium text-rose-800">
                     <span className="w-2 h-2 rounded-full bg-rose-500"></span>
                     <span>High Exposure (≥70%) — Termasuk 6.000 Staf Pilot</span>
@@ -711,7 +804,7 @@ export const WorkforceOverview: React.FC<WorkforceOverviewProps> = ({ onNavigate
                   <span className="font-mono font-bold text-rose-700">25% (13.000 Staf)</span>
                 </div>
 
-                <div className="flex items-center justify-between p-2.5 rounded-lg bg-amber-50/70 border border-amber-100">
+                <div className="flex flex-col gap-1 p-2.5 rounded-lg bg-amber-50/70 border border-amber-100 sm:flex-row sm:items-center sm:justify-between">
                   <span className="flex items-center gap-2 font-medium text-amber-800">
                     <span className="w-2 h-2 rounded-full bg-amber-500"></span>
                     <span>Medium Exposure (40-69%)</span>
@@ -719,7 +812,7 @@ export const WorkforceOverview: React.FC<WorkforceOverviewProps> = ({ onNavigate
                   <span className="font-mono font-bold text-amber-700">40% (20.800 Staf)</span>
                 </div>
 
-                <div className="flex items-center justify-between p-2.5 rounded-lg bg-emerald-50/70 border border-emerald-100">
+                <div className="flex flex-col gap-1 p-2.5 rounded-lg bg-emerald-50/70 border border-emerald-100 sm:flex-row sm:items-center sm:justify-between">
                   <span className="flex items-center gap-2 font-medium text-emerald-800">
                     <span className="w-2 h-2 rounded-full bg-emerald-500"></span>
                     <span>Low Exposure (&lt;40%)</span>
@@ -747,7 +840,7 @@ export const WorkforceOverview: React.FC<WorkforceOverviewProps> = ({ onNavigate
                 Proses Pencatatan & Rekonsiliasi Meter Pelanggan
               </h3>
               <p className="text-xs text-slate-500">
-                Satu proses bisnis konkret dari pilot Field Metering — langkah demi langkah, bukan cuma angka hasil akhir.
+                Satu contoh nyata: bagaimana pekerjaan ini berubah, langkah demi langkah.
               </p>
             </div>
 
@@ -830,7 +923,7 @@ export const WorkforceOverview: React.FC<WorkforceOverviewProps> = ({ onNavigate
         {/* Tab 3: Real-Time Field Activity Stream */}
         {activeSubTab === 'activity' && (
           <div className="p-5 space-y-3 animate-in fade-in duration-150">
-            <div className="flex items-center justify-between pb-1 border-b border-slate-100">
+            <div className="flex flex-col gap-2 border-b border-slate-100 pb-1 sm:flex-row sm:items-center sm:justify-between">
               <div>
                 <h3 className="text-xs font-bold text-slate-900 uppercase tracking-wider">
                   Aliran Peristiwa Lapangan & Pembaruan Sertifikasi
@@ -844,7 +937,7 @@ export const WorkforceOverview: React.FC<WorkforceOverviewProps> = ({ onNavigate
 
             <div className="divide-y divide-slate-100 text-xs">
               {liveEvents.map((evt) => (
-                <div key={evt.id} className="py-2.5 flex items-start gap-3 hover:bg-slate-50 rounded-lg px-2 transition-colors">
+                <div key={evt.id} className="flex flex-col gap-1 rounded-lg px-2 py-2.5 transition-colors hover:bg-slate-50 sm:flex-row sm:items-start sm:gap-3">
                   <span className="font-mono font-bold text-slate-400 text-[11px] shrink-0 mt-0.5">
                     {evt.time}
                   </span>
@@ -872,6 +965,33 @@ export const WorkforceOverview: React.FC<WorkforceOverviewProps> = ({ onNavigate
             </div>
           </div>
         )}
+      </div>
+
+      {/* ========================================================================= */}
+      {/* 5. METHODOLOGY & INDUSTRIAL RELATIONS NOTE                              */}
+      {/* ========================================================================= */}
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-3">
+        <div className="rounded-xl border border-slate-200 bg-white p-4">
+          <div className="flex items-center gap-1.5 text-xs font-bold text-slate-900">
+            <Info className="w-3.5 h-3.5 text-slate-500" />
+            <span>Dari mana angka biayanya</span>
+          </div>
+          <p className="text-[11px] text-slate-600 leading-relaxed mt-1.5">
+            Kami tidak mengakses data gaji. Semua hitungan biaya memakai angka acuan rata-rata
+            per golongan, jadi sensitif atau tidaknya data payroll tetap aman.
+          </p>
+        </div>
+
+        <div className="rounded-xl border border-emerald-200 bg-emerald-50/60 p-4">
+          <div className="flex items-center gap-1.5 text-xs font-bold text-emerald-900">
+            <ShieldCheck className="w-3.5 h-3.5 text-emerald-600" />
+            <span>Kesepakatan dengan serikat pekerja</span>
+          </div>
+          <p className="text-[11px] text-emerald-900/80 leading-relaxed mt-1.5">
+            Tidak ada PHK sepihak. Setiap keputusan lewat dialog bipartit, pelatihan ulang tanpa
+            potong hak dasar, dan program keluar hanya jika pekerja sendiri yang memilih.
+          </p>
+        </div>
       </div>
     </div>
   );

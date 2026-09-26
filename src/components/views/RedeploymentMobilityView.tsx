@@ -157,7 +157,7 @@ export const RedeploymentMobilityView: React.FC<RedeploymentMobilityViewProps> =
             </p>
           </div>
 
-          <div className="flex items-center gap-3 text-[11px]">
+          <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-[11px]">
             <span className="flex items-center gap-1 font-medium text-emerald-800">
               <span className="w-2.5 h-2.5 rounded-full bg-emerald-500"></span> Redeploy
             </span>
@@ -177,7 +177,7 @@ export const RedeploymentMobilityView: React.FC<RedeploymentMobilityViewProps> =
         </div>
 
         {/* 2D Quadrant Canvas Container */}
-        <div className="relative w-full h-56 bg-slate-50 border border-slate-200 rounded-xl overflow-hidden p-4">
+        <div className="relative h-72 w-full overflow-hidden rounded-xl border border-slate-200 bg-slate-50 p-4 sm:h-56">
           {/* Axis Labels */}
           <div className="absolute left-2 top-2 text-[10px] font-bold text-slate-500 uppercase tracking-wider">
             100% Fit &uarr;
@@ -251,8 +251,8 @@ export const RedeploymentMobilityView: React.FC<RedeploymentMobilityViewProps> =
         </div>
 
         {/* Table Grid */}
-        <div className="overflow-x-auto">
-          <table className="w-full text-left text-xs">
+        <div className="overflow-x-auto overscroll-x-contain">
+          <table className="min-w-[780px] w-full text-left text-xs">
             <thead className="bg-slate-50 text-slate-600 border-b border-slate-200">
               <tr>
                 <th

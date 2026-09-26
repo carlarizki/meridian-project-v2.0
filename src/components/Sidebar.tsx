@@ -10,7 +10,6 @@ import {
   GraduationCap,
   BrainCircuit,
   TrendingUp,
-  Presentation,
   FileText,
   Calendar,
   Scale,
@@ -23,6 +22,8 @@ interface SidebarProps {
   onOpenBriefing: () => void;
   onOpenRoadmap: () => void;
   onOpenLegal: () => void;
+  isMobileOpen?: boolean;
+  onMobileClose?: () => void;
 }
 
 interface NavItem {
@@ -51,9 +52,16 @@ export const Sidebar: React.FC<SidebarProps> = ({
   onOpenBriefing,
   onOpenRoadmap,
   onOpenLegal,
+  isMobileOpen = false,
+  onMobileClose,
 }) => {
   return (
-    <aside className="w-60 bg-navy border-r border-navy-light/70 flex flex-col shrink-0 h-screen sticky top-0 z-30 select-none">
+    <aside
+      id="primary-navigation"
+      className={`fixed inset-y-0 left-0 z-50 flex h-dvh w-64 shrink-0 flex-col border-r border-navy-light/70 bg-navy shadow-2xl transition-transform duration-200 md:sticky md:top-0 md:z-30 md:h-screen md:w-60 md:translate-x-0 md:shadow-none ${
+        isMobileOpen ? 'translate-x-0' : '-translate-x-full'
+      }`}
+    >
       {/* Brand Header */}
       <div className="h-16 flex items-center gap-3 px-5 border-b border-navy-light/70">
         <div className="w-8 h-8 rounded-lg bg-primary flex items-center justify-center text-white font-bold text-sm">
@@ -77,7 +85,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
           return (
             <button
               key={item.id}
-              onClick={() => setActiveTab(item.id)}
+              onClick={() => { setActiveTab(item.id); onMobileClose?.(); }}
               className={`w-full flex items-center gap-2.5 px-3 py-2 rounded-lg text-[13px] font-medium transition-colors text-left ${
                 isActive
                   ? 'bg-navy-light text-white'
@@ -99,19 +107,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
         </div>
 
         <button
-          onClick={() => setActiveTab('deck')}
-          className={`w-full flex items-center gap-2.5 px-3 py-2 rounded-lg text-[13px] font-medium transition-colors text-left ${
-            activeTab === 'deck'
-              ? 'bg-navy-light text-white'
-              : 'text-sidebar-text-muted hover:text-sidebar-text hover:bg-navy-light/60'
-          }`}
-        >
-          <Presentation className={`w-4 h-4 shrink-0 ${activeTab === 'deck' ? 'text-primary' : 'text-sidebar-text-muted'}`} />
-          <span className="truncate">Executive Deck</span>
-        </button>
-
-        <button
-          onClick={onOpenBriefing}
+          onClick={() => { onOpenBriefing(); onMobileClose?.(); }}
           className="w-full flex items-center gap-2.5 px-3 py-2 rounded-lg text-[13px] font-medium text-sidebar-text-muted hover:text-sidebar-text hover:bg-navy-light/60 transition-colors text-left"
         >
           <FileText className="w-4 h-4 text-sidebar-text-muted shrink-0" />
@@ -119,7 +115,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
         </button>
 
         <button
-          onClick={onOpenRoadmap}
+          onClick={() => { onOpenRoadmap(); onMobileClose?.(); }}
           className="w-full flex items-center gap-2.5 px-3 py-2 rounded-lg text-[13px] font-medium text-sidebar-text-muted hover:text-sidebar-text hover:bg-navy-light/60 transition-colors text-left"
         >
           <Calendar className="w-4 h-4 text-sidebar-text-muted shrink-0" />
@@ -127,7 +123,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
         </button>
 
         <button
-          onClick={onOpenLegal}
+          onClick={() => { onOpenLegal(); onMobileClose?.(); }}
           className="w-full flex items-center gap-2.5 px-3 py-2 rounded-lg text-[13px] font-medium text-sidebar-text-muted hover:text-sidebar-text hover:bg-navy-light/60 transition-colors text-left"
         >
           <Scale className="w-4 h-4 text-sidebar-text-muted shrink-0" />

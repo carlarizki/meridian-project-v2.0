@@ -32,16 +32,16 @@ export const StrategicBriefingModal: React.FC<StrategicBriefingModalProps> = ({
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 bg-slate-900/60 backdrop-blur-xs overflow-y-auto">
-      <div className="relative w-full max-w-4xl bg-white border border-slate-200 rounded-2xl shadow-2xl overflow-hidden my-auto max-h-[92vh] flex flex-col animate-in fade-in duration-150">
+    <div className="fixed inset-0 z-50 flex items-stretch justify-center bg-slate-900/60 p-0 backdrop-blur-xs sm:items-center sm:p-6">
+      <div className="relative flex h-dvh w-full max-w-4xl flex-col overflow-hidden bg-white shadow-2xl animate-in fade-in duration-150 sm:my-auto sm:h-auto sm:max-h-[92vh] sm:rounded-2xl sm:border sm:border-slate-200">
         {/* Header */}
-        <div className="bg-gradient-to-r from-blue-700 via-indigo-700 to-slate-900 px-6 py-4.5 text-white flex items-center justify-between">
-          <div className="flex items-center gap-3">
+        <div className="grid grid-cols-[minmax(0,1fr)_auto] items-start gap-3 bg-gradient-to-r from-blue-700 via-indigo-700 to-slate-900 px-4 py-4 text-white sm:px-6">
+          <div className="flex min-w-0 items-start gap-3">
             <div className="w-10 h-10 rounded-xl bg-white/10 flex items-center justify-center text-white">
               <FileText className="w-5 h-5" />
             </div>
             <div>
-              <div className="flex items-center gap-2">
+              <div className="flex flex-col items-start gap-1 sm:flex-row sm:items-center sm:gap-2">
                 <h3 className="text-base font-bold">Ringkasan Eksekutif & Konteks Project Meridian</h3>
                 <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-blue-500/40 text-blue-100">
                   Project Brief & PRD
@@ -61,7 +61,7 @@ export const StrategicBriefingModal: React.FC<StrategicBriefingModalProps> = ({
         </div>
 
         {/* Body */}
-        <div className="p-6 overflow-y-auto space-y-6 text-xs text-slate-700 leading-relaxed">
+        <div className="flex-1 space-y-6 overflow-y-auto p-4 text-xs leading-relaxed text-slate-700 sm:p-6">
           {/* Core Objectives */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
             <div className="p-4 rounded-xl bg-blue-50/80 border border-blue-200 space-y-1.5">
@@ -143,26 +143,13 @@ export const StrategicBriefingModal: React.FC<StrategicBriefingModalProps> = ({
                 </div>
               </button>
 
-              <button
-                onClick={() => handleNavigate('deck')}
-                className="p-3 text-left rounded-xl border border-amber-200 bg-amber-50/30 hover:bg-amber-50 transition-all flex flex-col justify-between space-y-2 group"
-              >
-                <div className="flex items-center justify-between">
-                  <Sparkles className="w-4 h-4 text-amber-600" />
-                  <span className="text-[10px] font-mono text-amber-700 font-bold">SLIDES</span>
-                </div>
-                <div>
-                  <div className="font-bold text-amber-950 group-hover:text-amber-800">Executive Deck</div>
-                  <div className="text-[11px] text-amber-800">Analisis 6 Celah Dokumen & Google Slides</div>
-                </div>
-              </button>
             </div>
           </div>
         </div>
 
         {/* Footer */}
-        <div className="bg-slate-50 px-6 py-3 border-t border-slate-200 flex items-center justify-between">
-          <span className="text-[11px] text-slate-500">
+        <div className="flex items-center justify-end border-t border-slate-200 bg-slate-50 px-4 py-3 sm:justify-between sm:px-6">
+          <span className="hidden text-[11px] text-slate-500 sm:block">
             Project Meridian · Dokumen Konteks & Strategi
           </span>
           <button

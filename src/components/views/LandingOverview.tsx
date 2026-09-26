@@ -13,7 +13,6 @@ import {
   Info,
   Calendar,
   Building2,
-  Presentation,
 } from 'lucide-react';
 import { NavTab } from '../../types/meridian';
 import { PILOT_METRICS, ECONOMICS_DATA } from '../../data/meridianData';
@@ -54,16 +53,6 @@ export const LandingOverview: React.FC<LandingOverviewProps> = ({ onNavigate }) 
           </p>
 
           <div className="pt-2 flex flex-wrap items-center gap-3">
-            <button
-              onClick={() => onNavigate('deck')}
-              className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-amber-400 hover:bg-amber-300 text-slate-950 font-bold text-xs transition-all shadow-md"
-            >
-              <Presentation className="w-4 h-4 text-slate-950" />
-              <span>Buka Executive Deck (Analisis Gap Dokumen Klien)</span>
-              <span className="text-[10px] bg-slate-900 text-amber-300 px-1.5 py-0.5 rounded font-mono">
-                SLIDES
-              </span>
-            </button>
             <button
               onClick={() => onNavigate('workforce')}
               className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-white text-blue-900 font-semibold text-xs hover:bg-blue-50 transition-all shadow-sm"

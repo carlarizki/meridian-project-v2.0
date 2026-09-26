@@ -79,24 +79,24 @@ export const EmployeeDetailModal: React.FC<EmployeeDetailModalProps> = ({
   const nextEmployee = currentIndex < allEmployees.length - 1 ? allEmployees[currentIndex + 1] : null;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 bg-slate-900/60 backdrop-blur-xs overflow-y-auto">
+    <div className="fixed inset-0 z-50 flex items-stretch justify-center bg-slate-900/60 p-0 backdrop-blur-xs sm:items-center sm:p-6">
       <div
-        className="relative w-full max-w-4xl bg-white border border-slate-200 rounded-2xl shadow-xl overflow-hidden my-auto max-h-[92vh] flex flex-col"
+        className="relative flex h-dvh w-full max-w-4xl flex-col overflow-hidden bg-white shadow-xl sm:my-auto sm:h-auto sm:max-h-[92vh] sm:rounded-2xl sm:border sm:border-slate-200"
         role="dialog"
         aria-modal="true"
       >
         {/* Modal Top Bar */}
-        <div className="flex items-center justify-between px-6 py-4 border-b border-slate-100 bg-slate-50/80">
-          <div className="flex items-center gap-3">
+        <div className="grid grid-cols-[minmax(0,1fr)_auto] items-start gap-3 border-b border-slate-100 bg-slate-50/80 px-4 py-3 sm:px-6 sm:py-4">
+          <div className="flex min-w-0 flex-col gap-1 sm:flex-row sm:items-center sm:gap-3">
             <span className="font-mono text-xs font-bold px-2.5 py-0.5 rounded bg-blue-50 border border-blue-200 text-blue-700">
               {employee.id}
             </span>
-            <div className="flex items-center gap-2 text-xs text-slate-500 font-medium">
-              <span className="text-slate-900 font-bold">{employee.name}</span>
+            <div className="flex min-w-0 items-center gap-2 text-xs text-slate-500 font-medium">
+              <span className="truncate text-slate-900 font-bold">{employee.name}</span>
               <span aria-hidden="true">·</span>
-              <span>{employee.role}</span>
+              <span className="hidden truncate sm:inline">{employee.role}</span>
               <span aria-hidden="true">·</span>
-              <span>{employee.regionalUnit}</span>
+              <span className="hidden truncate md:inline">{employee.regionalUnit}</span>
             </div>
           </div>
 
@@ -128,7 +128,7 @@ export const EmployeeDetailModal: React.FC<EmployeeDetailModalProps> = ({
         </div>
 
         {/* Modal Body */}
-        <div className="p-6 overflow-y-auto space-y-6 flex-1 text-xs">
+        <div className="flex-1 space-y-5 overflow-y-auto p-3 text-xs sm:p-6">
           {/* AHA MOMENT HERO BANNER (UC-10: <10 seconds scan) */}
           <div className="bg-slate-50 border border-slate-200 rounded-2xl p-5 space-y-4">
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-slate-200/80 pb-3">
@@ -136,7 +136,7 @@ export const EmployeeDetailModal: React.FC<EmployeeDetailModalProps> = ({
                 <span className="text-[10px] font-bold uppercase tracking-wider text-slate-500">
                   Decision Engine Recommendation
                 </span>
-                <div className="flex items-center gap-3 mt-1">
+                <div className="flex flex-col items-start gap-2 mt-1 sm:flex-row sm:items-center sm:gap-3">
                   <div
                     className={`text-base sm:text-lg font-extrabold px-3 py-1 rounded-xl shadow-xs border ${
                       currentResult.decision === 'Redeploy'
@@ -164,7 +164,7 @@ export const EmployeeDetailModal: React.FC<EmployeeDetailModalProps> = ({
               </div>
 
               {/* AHA 3-Box Fast Scan */}
-              <div className="grid grid-cols-3 gap-2 text-center text-[11px]">
+              <div className="grid w-full grid-cols-3 gap-2 text-center text-[11px] sm:w-auto">
                 <div className="p-2 rounded-lg bg-white border border-slate-200">
                   <span className="text-slate-500 block text-[10px]">Fit Score</span>
                   <span className="font-mono font-bold text-slate-900">
@@ -325,12 +325,12 @@ export const EmployeeDetailModal: React.FC<EmployeeDetailModalProps> = ({
         </div>
 
         {/* Modal Footer */}
-        <div className="flex items-center justify-between px-6 py-3 border-t border-slate-100 bg-slate-50/80">
-          <span className="text-[11px] text-slate-500">
+        <div className="flex flex-col gap-2 border-t border-slate-100 bg-slate-50/80 px-4 py-3 sm:flex-row sm:items-center sm:justify-between sm:px-6">
+          <span className="hidden text-[11px] text-slate-500 sm:block">
             Sistem mematuhi Zero Mass Layoffs dan aturan Triad Architecture BUMN.
           </span>
 
-          <div className="flex items-center gap-2">
+          <div className="grid w-full grid-cols-2 gap-2 sm:flex sm:w-auto sm:items-center">
             <button
               onClick={handleSaveDecision}
               disabled={isSaving}
