@@ -265,7 +265,14 @@ export function generateWorkforce6000(): EmployeeRecord[] {
     // threshold produces a fake-looking 100%/0%/0% split for that family.
     let exposure: number;
     if (jobFamily === 'Field Metering & Manual Operations') {
-      exposure = 55 + Math.floor(rng() * 40); // 55-94% — mostly High, some Medium
+      // A flat 55-94 range structurally guarantees 0% Low (its floor sits above
+      // the <40 threshold), which reads as a suspiciously clean number for a
+      // 3,800+ person population. A small minority (~12%) with older/hybrid
+      // routes get a lower band so Low is a real, if small, bucket like the
+      // other 4 families.
+      exposure = rng() < 0.88
+        ? 58 + Math.floor(rng() * 37) // 88%: 58-94% — mostly High, some Medium
+        : 22 + Math.floor(rng() * 36); // 12%: 22-57% — spans Low and Medium
     } else if (jobFamily === 'Customer Energy Services') {
       exposure = 25 + Math.floor(rng() * 50); // 25-74% — service tasks AI-augmentable, not fully automatable
     } else if (jobFamily === 'Distributed Renewable & Solar O&M') {

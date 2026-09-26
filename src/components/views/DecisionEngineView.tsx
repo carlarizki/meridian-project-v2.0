@@ -103,6 +103,13 @@ export const DecisionEngineView: React.FC<DecisionEngineViewProps> = ({
     };
   }, [allEmployees, minFitThreshold, exposureCutoff, reskillPassRate]);
 
+  // Single headline number that all 3 sliders feed into at once, so the effect of
+  // each one is impossible to miss: direct redeploys (unaffected by pass rate) plus
+  // the projected successful completions from both reskilling pathways, against the
+  // in-scope population (itself set by the exposure cutoff).
+  const projectedRetained = macroStats.redeploy.count + macroStats.reskillRedeploy.projectedPass + macroStats.reskill.projectedPass;
+  const projectedRetainedPercent = macroStats.total > 0 ? ((projectedRetained / macroStats.total) * 100).toFixed(1) : '0.0';
+
   // Selected employee for deep audit
   const activeEmployee = useMemo(() => {
     return getEmployeeById(selectedEmployeeId) || allEmployees[0]!;
@@ -319,6 +326,19 @@ export const DecisionEngineView: React.FC<DecisionEngineViewProps> = ({
                   <span>95% (Optimis)</span>
                 </div>
               </div>
+            </div>
+
+            {/* Combined headline: reacts to all 3 sliders at once (population scope
+                from Exposure Cutoff, mix from Fit Threshold, completion projection
+                from Reskill Pass Rate) so their effect is unmistakable. */}
+            <div className="flex flex-wrap items-center justify-between gap-3 bg-white/10 rounded-xl p-3.5 border border-white/10">
+              <span className="text-xs font-semibold text-slate-200">
+                Proyeksi Total Staf Berhasil Bertahan (Redeploy + lulus Reskill, skenario ini)
+              </span>
+              <span className="font-mono font-extrabold text-xl text-white">
+                {projectedRetained.toLocaleString('id-ID')}
+                <span className="text-sm font-semibold text-emerald-300 ml-1.5">({projectedRetainedPercent}%)</span>
+              </span>
             </div>
           </div>
 
