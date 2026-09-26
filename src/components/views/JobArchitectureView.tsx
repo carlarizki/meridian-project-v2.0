@@ -12,6 +12,7 @@ import {
   Info,
   ShieldCheck,
   Cpu,
+  Database,
 } from 'lucide-react';
 import { NavTab } from '../../types/meridian';
 
@@ -107,6 +108,9 @@ export const JobArchitectureView: React.FC<JobArchitectureViewProps> = ({ onNavi
     },
   ];
 
+  const selectedFamily =
+    jobFamiliesList.find((fam) => fam.id === selectedFamilyId) || jobFamiliesList[0];
+
   const getBadgeColor = (val: string, type: 'freq' | 'ai' | 'crit') => {
     if (type === 'ai') {
       if (val === 'High') return 'bg-rose-50 text-rose-700 border-rose-200';
@@ -186,26 +190,52 @@ export const JobArchitectureView: React.FC<JobArchitectureViewProps> = ({ onNavi
         </div>
 
         {/* Right Column: Role Details & Tasks (8 cols) */}
-        <div className="lg:col-span-8 bg-white rounded-xl p-4 border border-slate-200 shadow-2xs space-y-5">
+        <div className="lg:col-span-8 bg-white rounded-xl p-4 border border-slate-200 shadow-2xs space-y-5 min-w-0">
+          {selectedFamilyId !== 'operations' ? (
+            /* Non-pilot job family: no granular task/capability data exists for
+               these yet — say so plainly instead of silently reusing the pilot
+               family's content, which would misrepresent it as real data. */
+            <div className="flex flex-col items-center justify-center text-center py-16 px-6">
+              <div className="w-12 h-12 rounded-full bg-slate-100 flex items-center justify-center mb-4">
+                <Database className="w-5 h-5 text-slate-400" />
+              </div>
+              <h3 className="text-sm font-bold text-slate-900">
+                Data belum tersedia untuk {selectedFamily.name}
+              </h3>
+              <p className="text-xs text-slate-600 mt-1.5 max-w-sm leading-relaxed">
+                Pemetaan tugas, deskripsi jabatan, dan kebutuhan kapabilitas granular baru dibangun untuk{' '}
+                <strong className="text-slate-800">Operations (Pilot)</strong> — 6.000 tenaga kerja Field Metering & Manual Operations
+                yang menjadi fokus pilot transformasi ini. Job family lain akan disusul setelah pilot ini divalidasi.
+              </p>
+              <button
+                onClick={() => setSelectedFamilyId('operations')}
+                className="mt-4 text-xs font-semibold text-blue-600 hover:text-blue-800 flex items-center gap-1"
+              >
+                <span>Lihat Job Family Pilot</span>
+                <ChevronRight className="w-3.5 h-3.5" />
+              </button>
+            </div>
+          ) : (
+            <>
           {/* Hierarchical Breadcrumb Clarifying L1, L2, L3 */}
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-slate-100 pb-4">
-            <div>
+          <div className="flex flex-col gap-3 border-b border-slate-100 pb-4">
+            <div className="min-w-0">
               {/* Hierarchy tags */}
               <div className="flex flex-wrap items-center gap-1.5 text-[11px] font-semibold text-slate-500 mb-1">
                 <span className="bg-slate-100 px-2 py-0.5 rounded text-slate-700">
                   L1: Operations Family
                 </span>
-                <ChevronRight className="w-3 h-3 text-slate-400" />
+                <ChevronRight className="w-3 h-3 text-slate-400 shrink-0" />
                 <span className="bg-blue-50 text-blue-700 border border-blue-200 px-2 py-0.5 rounded">
                   L2 Sub-Family: Field Metering & Inspection
                 </span>
-                <ChevronRight className="w-3 h-3 text-slate-400" />
+                <ChevronRight className="w-3 h-3 text-slate-400 shrink-0" />
                 <span className="bg-amber-50 text-amber-800 border border-amber-200 px-2 py-0.5 rounded">
                   L3 Role: Grade 2-3 (Pelaksana)
                 </span>
               </div>
 
-              <h2 className="text-lg font-bold text-slate-900 mt-1">
+              <h2 className="text-lg font-bold text-slate-900 mt-1 break-words">
                 Petugas Lapangan (Field Metering & Manual Operations)
               </h2>
               <p className="text-xs text-slate-600">
@@ -213,11 +243,12 @@ export const JobArchitectureView: React.FC<JobArchitectureViewProps> = ({ onNavi
               </p>
             </div>
 
-            {/* View Tabs */}
-            <div className="flex items-center bg-slate-100 p-1 rounded-lg text-xs shrink-0">
+            {/* View Tabs — wraps onto its own line(s) instead of squeezing
+                against the title or overflowing the panel on narrower widths */}
+            <div className="flex flex-wrap items-center gap-1 bg-slate-100 p-1 rounded-lg text-xs w-full sm:w-fit">
               <button
                 onClick={() => setActiveJobTab('tasks')}
-                className={`px-3 py-1 rounded-md transition-all ${
+                className={`px-3 py-1.5 rounded-md transition-all whitespace-nowrap ${
                   activeJobTab === 'tasks' ? 'bg-white text-slate-900 font-semibold shadow-2xs' : 'text-slate-600'
                 }`}
               >
@@ -225,7 +256,7 @@ export const JobArchitectureView: React.FC<JobArchitectureViewProps> = ({ onNavi
               </button>
               <button
                 onClick={() => setActiveJobTab('overview')}
-                className={`px-3 py-1 rounded-md transition-all ${
+                className={`px-3 py-1.5 rounded-md transition-all whitespace-nowrap ${
                   activeJobTab === 'overview' ? 'bg-white text-slate-900 font-semibold shadow-2xs' : 'text-slate-600'
                 }`}
               >
@@ -233,7 +264,7 @@ export const JobArchitectureView: React.FC<JobArchitectureViewProps> = ({ onNavi
               </button>
               <button
                 onClick={() => setActiveJobTab('capabilities')}
-                className={`px-3 py-1 rounded-md transition-all ${
+                className={`px-3 py-1.5 rounded-md transition-all whitespace-nowrap ${
                   activeJobTab === 'capabilities' ? 'bg-white text-slate-900 font-semibold shadow-2xs' : 'text-slate-600'
                 }`}
               >
@@ -422,6 +453,8 @@ export const JobArchitectureView: React.FC<JobArchitectureViewProps> = ({ onNavi
                 </div>
               </div>
             </div>
+          )}
+            </>
           )}
         </div>
       </div>
