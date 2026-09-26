@@ -37,9 +37,30 @@ export default function App() {
   const [isLegalOpen, setIsLegalOpen] = useState(false);
   const [isMobileNavOpen, setIsMobileNavOpen] = useState(false);
 
+  // Which employee Learning Plan should open straight to. Null means the tab
+  // shows the eligibility list first instead of guessing a person — see
+  // handleOpenLearningForEmployee below for the one legitimate way to set it.
+  const [learningFocusEmployeeId, setLearningFocusEmployeeId] = useState<string | null>(null);
+
   const handleSelectEmployee = (emp: EmployeeRecord) => {
     setSelectedEmployeeId(emp.id);
     setModalEmployee(emp);
+  };
+
+  // Generic navigation (Sidebar, breadcrumbs, any "go to tab X" CTA that
+  // isn't about a specific person). Always clears the Learning focus so a
+  // stale employee from a previous deep-link never leaks into a fresh visit.
+  const handleGenericNavigate = (tab: NavTab) => {
+    setLearningFocusEmployeeId(null);
+    setActiveTab(tab);
+  };
+
+  // The one intentional deep-link into Learning Plan: called only from a
+  // context that already knows exactly who (e.g. Employee Profile's "Buka
+  // Rencana Pembelajaran"), so it's safe to skip the eligibility list.
+  const handleOpenLearningForEmployee = (employeeId: string) => {
+    setLearningFocusEmployeeId(employeeId);
+    setActiveTab('learning');
   };
 
   return (
@@ -48,7 +69,7 @@ export default function App() {
         {/* Fixed Left Sidebar with clean, focused navigation */}
         <Sidebar
           activeTab={activeTab}
-          setActiveTab={setActiveTab}
+          setActiveTab={handleGenericNavigate}
           onOpenBriefing={() => setIsBriefingOpen(true)}
           onOpenRoadmap={() => setIsRoadmapOpen(true)}
           onOpenLegal={() => setIsLegalOpen(true)}
@@ -67,41 +88,42 @@ export default function App() {
         {/* Main Content Area */}
         <div className="flex h-dvh min-w-0 flex-1 flex-col overflow-y-auto">
           {/* Top Header with Breadcrumb & Module indicator */}
-          <TopHeader activeTab={activeTab} setActiveTab={setActiveTab} onOpenMenu={() => setIsMobileNavOpen(true)} />
+          <TopHeader activeTab={activeTab} setActiveTab={handleGenericNavigate} onOpenMenu={() => setIsMobileNavOpen(true)} />
 
           {/* Viewport Content */}
           <main className="mx-auto w-full max-w-7xl flex-1 p-3 sm:p-5 lg:p-6">
             {activeTab === 'workforce' && (
-              <WorkforceOverview onNavigate={(tab) => setActiveTab(tab)} />
+              <WorkforceOverview onNavigate={handleGenericNavigate} />
             )}
 
             {activeTab === 'exposure' && (
-              <AIExposureAnalysis onNavigate={(tab) => setActiveTab(tab)} />
+              <AIExposureAnalysis onNavigate={handleGenericNavigate} />
             )}
 
             {activeTab === 'jobs' && (
-              <JobArchitectureView onNavigate={(tab) => setActiveTab(tab)} />
+              <JobArchitectureView onNavigate={handleGenericNavigate} />
             )}
 
             {activeTab === 'capabilities' && (
-              <CapabilityLibraryView onNavigate={(tab) => setActiveTab(tab)} />
+              <CapabilityLibraryView onNavigate={handleGenericNavigate} />
             )}
 
             {activeTab === 'people' && (
               <EmployeeProfileView
-                onNavigate={(tab) => setActiveTab(tab)}
+                onNavigate={handleGenericNavigate}
                 selectedEmployeeId={selectedEmployeeId}
                 setSelectedEmployeeId={setSelectedEmployeeId}
+                onOpenLearningForEmployee={handleOpenLearningForEmployee}
               />
             )}
 
             {activeTab === 'future-roles' && (
-              <FutureRolesView onNavigate={(tab) => setActiveTab(tab)} />
+              <FutureRolesView onNavigate={handleGenericNavigate} />
             )}
 
             {activeTab === 'redeployment' && (
               <RedeploymentMobilityView
-                onNavigate={(tab) => setActiveTab(tab)}
+                onNavigate={handleGenericNavigate}
                 categoryFilter={categoryFilter}
                 setCategoryFilter={setCategoryFilter}
                 onSelectEmployee={handleSelectEmployee}
@@ -110,21 +132,21 @@ export default function App() {
 
             {activeTab === 'learning' && (
               <LearningPlanView
-                onNavigate={(tab) => setActiveTab(tab)}
-                selectedEmployeeId={selectedEmployeeId}
+                onNavigate={handleGenericNavigate}
+                focusEmployeeId={learningFocusEmployeeId}
               />
             )}
 
             {activeTab === 'decision' && (
               <DecisionEngineView
-                onNavigate={(tab) => setActiveTab(tab)}
+                onNavigate={handleGenericNavigate}
                 selectedEmployeeId={selectedEmployeeId}
                 setSelectedEmployeeId={setSelectedEmployeeId}
               />
             )}
 
             {activeTab === 'impact' && (
-              <TransformationImpactView onNavigate={(tab) => setActiveTab(tab)} />
+              <TransformationImpactView onNavigate={handleGenericNavigate} />
             )}
           </main>
         </div>
@@ -147,7 +169,7 @@ export default function App() {
         <StrategicBriefingModal
           isOpen={isBriefingOpen}
           onClose={() => setIsBriefingOpen(false)}
-          onNavigate={(tab) => setActiveTab(tab)}
+          onNavigate={handleGenericNavigate}
         />
 
         {/* 90-Day Implementation Roadmap Modal (On-demand via CTA) */}

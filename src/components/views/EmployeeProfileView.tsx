@@ -41,6 +41,7 @@ interface EmployeeProfileViewProps {
   onNavigate: (tab: NavTab) => void;
   selectedEmployeeId: string;
   setSelectedEmployeeId: (id: string) => void;
+  onOpenLearningForEmployee: (employeeId: string) => void;
 }
 
 const ROW_HEIGHT = 58; // Constant row height in px for 60fps virtualization
@@ -50,6 +51,7 @@ export const EmployeeProfileView: React.FC<EmployeeProfileViewProps> = ({
   onNavigate,
   selectedEmployeeId,
   setSelectedEmployeeId,
+  onOpenLearningForEmployee,
 }) => {
   const { addToast } = useToast();
 
@@ -1562,7 +1564,7 @@ export const EmployeeProfileView: React.FC<EmployeeProfileViewProps> = ({
 
               <div className="flex items-center gap-2">
                 <button
-                  onClick={() => onNavigate('learning')}
+                  onClick={() => onOpenLearningForEmployee(currentSelectedEmployee.id)}
                   className="py-2 px-3 text-xs font-semibold text-slate-700 bg-slate-100 hover:bg-slate-200 rounded-lg transition-colors flex items-center gap-1.5"
                 >
                   <span>Buka Rencana Pembelajaran</span>
