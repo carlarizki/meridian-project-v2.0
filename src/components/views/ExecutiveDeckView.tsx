@@ -67,7 +67,7 @@ export interface DeckSlide {
     meridianAdvantage: string;
     keyDeliverables: string[];
     metricBadge: string;
-    visualType: 'single_identity_mesh' | 'virtualized_grid' | 'cost_itemization' | 'what_if_engine' | 'evidence_hierarchy' | 'phased_playbook';
+    visualType: 'single_identity_mesh' | 'virtualized_grid' | 'cost_itemization' | 'what_if_engine' | 'evidence_hierarchy' | 'phased_playbook' | 'reusable_core';
   };
   talkingPoints: string[];
 }
@@ -334,6 +334,43 @@ export const SLIDES: DeckSlide[] = [
     talkingPoints: [
       'Strategi secanggih apa pun berisiko gagal tanpa dukungan lapangan; roadmap 90 hari Meridian menjadikan dialog serikat pekerja dan pilot regional sebagai prasyarat wajib.',
       'Roadmap ini memberi kepastian langkah mingguan yang terukur hingga pelaporan ke Dewan Komisaris.',
+    ],
+  },
+  {
+    id: 'slide-gap-7',
+    badge: 'Critical Gap #7 · Consulting Scalability',
+    title: 'One-Off Deliverable vs. Reusable Transformation Method',
+    subtitle: 'Bagaimana Meridian Menjadi Kerangka Kerja yang Dipakai Ulang untuk Klien Berikutnya, Bukan Proyek Sekali Pakai',
+    category: 'Strategic',
+    targetTab: 'decision',
+    bolong: {
+      title: 'Nilai Konsultasi yang Habis Begitu Satu Klien Selesai',
+      description:
+        'Menyelesaikan satu kasus transformasi dengan baik tidak otomatis berarti punya metode yang scalable. Jika threshold Decision Engine, model bukti kompetensi, dan playbook implementasi harus dibangun ulang dari nol untuk setiap klien baru, maka yang dijual bukan produk atau IP — hanya jam kerja konsultan per proyek, dan margin konsultasi tetap linear terhadap jumlah klien.',
+      impactRisk: 'Biaya delivery tidak menurun seiring skala portofolio klien, waktu onboarding klien baru tetap ~12 minggu setiap kali, dan kualitas hasil bergantung pada individu konsultan yang menangani, bukan pada sistem yang terstandardisasi dan bisa diwariskan ke konsultan lain.',
+      symptoms: [
+        'Threshold Decision Engine (fit ≥ 75%, evidence Low/Unknown, dst.) di-hardcode khusus konteks satu klien, tanpa parameter yang bisa dikalibrasi ulang.',
+        'Evidence hierarchy dan playbook 90-hari ditulis melekat pada konteks UU Ketenagakerjaan & Serikat Pekerja BUMN spesifik, belum dipisah dari struktur intinya yang generik.',
+        'Tidak ada dokumentasi eksplisit "apa yang tetap dipakai" vs "apa yang harus di-discover ulang" untuk klien kedua, ketiga, dst.',
+      ],
+      visualType: 'vague_timeline',
+    },
+    solution: {
+      title: 'Core Engine Reusable + Client Configuration Layer — Meridian sebagai Starting Kit',
+      description:
+        'Meridian dipisah menjadi dua layer sejak desain awal: (1) Core Engine yang reusable — 5-rule Decision Engine, 4-tier Evidence Hierarchy, dan struktur playbook 3-sprint — dan (2) Client Configuration Layer yang di-discover ulang tiap engagement: threshold spesifik, job architecture, formula kompensasi lokal, dan konteks regulasi/serikat pekerja setempat. Klien kedua tidak mulai dari nol; mereka mulai dari kalibrasi.',
+      meridianAdvantage: 'Estimasi waktu onboarding klien baru turun dari ~12 minggu (build-from-scratch) menjadi ~4 minggu (configure core + discover client layer) — logic inti, model evidence, dan struktur playbook dipakai ulang; hanya parameter yang berganti per klien.',
+      keyDeliverables: [
+        'Core Engine Library: 5-rule Decision Engine dengan threshold yang dapat dikonfigurasi per industri/klien.',
+        'Evidence Governance Framework: 4-tier hierarchy generik yang dapat dipetakan ke sumber data HRIS klien apa pun.',
+        'Client Onboarding Checklist: daftar eksplisit apa yang sudah baked-in vs apa yang wajib di-discover ulang (job architecture, regulasi tenaga kerja lokal, struktur serikat pekerja/hubungan industrial).',
+      ],
+      metricBadge: '~4-Minggu Client Onboarding (vs 12-Minggu Build-from-Scratch) · Core Reusable + Layer Configurable',
+      visualType: 'reusable_core',
+    },
+    talkingPoints: [
+      'Ini bukan cuma soal menyelesaikan satu kasus dengan baik — ini soal apakah metodenya punya IP yang scalable ke portofolio klien, bukan proyek konsultasi yang nilainya linear terhadap jam kerja per klien.',
+      'Meridian didesain dengan pemisahan core-vs-config dari hari pertama, supaya klien kedua, ketiga, dan kelima bisa onboarding dalam hitungan minggu, bukan bulan.',
     ],
   },
   {
@@ -1437,9 +1474,51 @@ const MeridianVisualMockup: React.FC<MeridianVisualMockupProps> = ({
               <span className="text-[9px] text-slate-600 block">Karyawan Tanpa Riwayat Uji Kompetensi Terdata</span>
             </div>
             <span className="px-1.5 py-0.5 bg-slate-200 text-slate-800 rounded font-bold text-[9px]">
-              Rule #5 Assessment
+              Rule #1 Assessment
             </span>
           </div>
+        </div>
+      </div>
+    );
+  }
+
+  if (visualType === 'reusable_core') {
+    return (
+      <div className="bg-white rounded-lg border border-blue-200 p-3 shadow-xs space-y-2">
+        <div className="flex items-center justify-between text-[10px] pb-1.5 border-b border-blue-100 text-blue-900 font-bold">
+          <div className="flex items-center gap-1.5">
+            <Layers className="w-3.5 h-3.5 text-blue-600" />
+            <span>Core Engine (Reusable) vs. Client Configuration Layer</span>
+          </div>
+          <span className="bg-emerald-100 text-emerald-800 px-1.5 py-0.5 rounded font-mono">
+            ~4-Week Onboarding
+          </span>
+        </div>
+
+        <div className="grid grid-cols-2 gap-2 text-[10px]">
+          <div className="p-2 rounded bg-emerald-50 border border-emerald-200 space-y-1">
+            <span className="font-bold text-emerald-900 block text-[9px]">DIPAKAI ULANG (CORE)</span>
+            <ul className="space-y-1 text-[9px] text-emerald-800 list-disc pl-3">
+              <li>5-Rule Decision Engine (fit × feasibility × evidence)</li>
+              <li>4-Tier Evidence Hierarchy & decay flag logic</li>
+              <li>Struktur playbook 3-sprint (Data → Pilot → Scale)</li>
+            </ul>
+          </div>
+
+          <div className="p-2 rounded bg-amber-50 border border-amber-200 space-y-1">
+            <span className="font-bold text-amber-900 block text-[9px]">DI-DISCOVER ULANG (KONFIGURASI)</span>
+            <ul className="space-y-1 text-[9px] text-amber-800 list-disc pl-3">
+              <li>Threshold fit/feasibility spesifik industri klien</li>
+              <li>Job architecture & formula kompensasi lokal</li>
+              <li>Regulasi tenaga kerja & konteks serikat pekerja setempat</li>
+            </ul>
+          </div>
+        </div>
+
+        <div className="flex items-center gap-2 pt-1 text-[9px] text-slate-600">
+          <span className="px-1.5 py-0.5 bg-slate-100 border border-slate-200 rounded font-mono">Klien #1: 12 minggu</span>
+          <ArrowRight className="w-3 h-3 text-slate-400" />
+          <span className="px-1.5 py-0.5 bg-blue-100 border border-blue-200 rounded font-mono text-blue-800 font-bold">Klien #2+: ~4 minggu</span>
         </div>
       </div>
     );
