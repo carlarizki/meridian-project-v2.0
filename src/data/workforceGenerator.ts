@@ -259,18 +259,22 @@ export function generateWorkforce6000(): EmployeeRecord[] {
     // the AMI/vision-meter disruption named in the brief). The rest scale down
     // roughly by how much of the role is routine/manual vs. judgment- or
     // safety-critical.
+    // Ranges are deliberately wide enough to straddle the High/Medium/Low
+    // bucket thresholds used downstream (>=70 / >=40) rather than sitting
+    // entirely inside one bucket — a narrow range that never crosses a
+    // threshold produces a fake-looking 100%/0%/0% split for that family.
     let exposure: number;
     if (jobFamily === 'Field Metering & Manual Operations') {
-      exposure = 68 + Math.floor(rng() * 25); // 68-92%
+      exposure = 55 + Math.floor(rng() * 40); // 55-94% — mostly High, some Medium
     } else if (jobFamily === 'Customer Energy Services') {
-      exposure = 42 + Math.floor(rng() * 24); // 42-65% — service tasks AI-augmentable, not fully automatable
+      exposure = 25 + Math.floor(rng() * 50); // 25-74% — service tasks AI-augmentable, not fully automatable
     } else if (jobFamily === 'Distributed Renewable & Solar O&M') {
-      exposure = 32 + Math.floor(rng() * 24); // 32-55% — physical field maintenance
+      exposure = 18 + Math.floor(rng() * 57); // 18-74% — physical field maintenance
     } else if (jobFamily === 'Smart Grid & Automation') {
-      exposure = 28 + Math.floor(rng() * 22); // 28-49% — already tooling-adjacent, more augmentation than replacement
+      exposure = 12 + Math.floor(rng() * 63); // 12-74% — already tooling-adjacent, more augmentation than replacement
     } else {
       // Grid Protection & Substation Maintenance
-      exposure = 18 + Math.floor(rng() * 20); // 18-37% — safety-critical, judgment-heavy
+      exposure = 8 + Math.floor(rng() * 47); // 8-54% — safety-critical, judgment-heavy
     }
 
     // Evaluate official decision with engine
