@@ -18,6 +18,7 @@ import {
   Layers,
   Award,
   ChevronRight,
+  ChevronDown,
   ShieldCheck,
 } from 'lucide-react';
 import { NavTab } from '../../types/meridian';
@@ -42,6 +43,10 @@ export const WorkforceOverview: React.FC<WorkforceOverviewProps> = ({ onNavigate
 
   // Interactive tooltip state for real-time pulse metrics
   const [activeTooltip, setActiveTooltip] = useState<'meter' | 'route' | 'training' | 'retention' | null>(null);
+
+  // "Job title lens vs capability lens" AHA card starts collapsed to a
+  // compact summary row; expands on click to show the full two-lens detail.
+  const [isShiftExpanded, setIsShiftExpanded] = useState(false);
 
   // Subtle real-time increment for smart meter rollout simulation
   useEffect(() => {
@@ -206,6 +211,10 @@ export const WorkforceOverview: React.FC<WorkforceOverviewProps> = ({ onNavigate
             <Radio className="w-4 h-4 text-emerald-400 shrink-0" />
             <div>
               <div className="flex items-center gap-2">
+                <span className="relative flex h-2 w-2 shrink-0" aria-hidden="true">
+                  <span className="absolute inline-flex h-full w-full motion-safe:animate-ping rounded-full bg-emerald-400 opacity-75" />
+                  <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-500" />
+                </span>
                 <span className="text-[11px] font-semibold text-slate-200 tracking-wide uppercase font-jakarta">
                   Live Operational Pulse
                 </span>
@@ -419,92 +428,127 @@ export const WorkforceOverview: React.FC<WorkforceOverviewProps> = ({ onNavigate
       </div>
 
       {/* ========================================================================= */}
-      {/* 2B. THE SHIFT: JOB TITLE LENS VS CAPABILITY LENS (AHA MOMENT)            */}
+      {/* 2B. THE SHIFT: JOB TITLE LENS VS CAPABILITY LENS — collapsible AHA card   */}
       {/* ========================================================================= */}
       <div className="bg-white rounded-xl border border-slate-200 overflow-hidden">
-        <div className="px-5 py-4 border-b border-slate-100 flex flex-col sm:flex-row sm:items-center justify-between gap-2">
-          <div>
-            <h2 className="text-sm font-bold text-slate-900 flex items-center gap-1.5 font-jakarta">
-              <Sparkles className="w-4 h-4 text-amber-500" />
-              <span>Orang yang sama, dibaca dengan dua cara berbeda</span>
-            </h2>
-            <p className="text-xs text-slate-500 mt-0.5">
-              Yang berubah bukan orangnya, tapi cara kita menilai mereka.
-            </p>
+        <button
+          type="button"
+          onClick={() => setIsShiftExpanded((v) => !v)}
+          aria-expanded={isShiftExpanded}
+          className="w-full px-5 py-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-left hover:bg-slate-50/60 transition-colors"
+        >
+          <div className="flex items-start sm:items-center gap-3 min-w-0">
+            <span className="inline-flex items-center gap-1 shrink-0 text-[10px] font-bold uppercase tracking-wider text-amber-800 bg-amber-100 border border-amber-200 px-2 py-1 rounded-full">
+              <Sparkles className="w-3 h-3" />
+              AHA Moment
+            </span>
+            <div className="min-w-0">
+              <h2 className="text-sm font-bold text-slate-900 font-jakarta truncate">
+                Orang yang sama, dibaca dengan dua cara berbeda
+              </h2>
+              <p className="text-xs text-slate-500 mt-0.5">
+                Yang berubah bukan orangnya, tapi cara kita menilai mereka.
+              </p>
+            </div>
           </div>
-          <button
-            onClick={() => onNavigate('capabilities')}
-            className="text-xs text-blue-600 hover:text-blue-800 font-semibold flex items-center gap-1 self-start sm:self-auto"
-          >
-            <span>Lihat peta kemampuan</span>
-            <ArrowRight className="w-3.5 h-3.5" />
-          </button>
-        </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-0">
-          {/* Lens 1: Job Title */}
-          <div className="lg:col-span-5 p-5 bg-slate-50/70">
-            <div className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-wider text-slate-500">
-              <Briefcase className="w-3.5 h-3.5" />
-              <span>Dibaca dari nama jabatan</span>
+          <div className="flex items-center gap-4 shrink-0 pl-11 sm:pl-0">
+            <div className="flex items-center gap-2 text-xs">
+              <span className="font-bold text-rose-600 font-mono">4.200</span>
+              <span className="text-slate-400">jabatan lama</span>
+              <ArrowRight className="w-3 h-3 text-slate-300" />
+              <span className="font-bold text-emerald-600 font-mono">85%</span>
+              <span className="text-slate-400">punya jalur baru</span>
             </div>
-            <div className="mt-3 text-3xl font-semibold text-rose-600 tracking-tight font-jakarta">
-              4.200 <span className="text-sm text-slate-400 font-normal">staf dianggap habis perannya</span>
-            </div>
-            <p className="text-xs text-slate-600 mt-2 leading-relaxed">
-              Jabatan &ldquo;Petugas Catat Meter&rdquo; hilang begitu meteran mengirim angka sendiri.
-              Dengan cara baca ini, tidak ada jalan lain selain pengurangan tenaga kerja.
-            </p>
-            <div className="mt-3 space-y-1.5">
-              {['Nama jabatan hilang dari struktur', 'Pengalaman lapangan tidak terhitung', 'Ujungnya: negosiasi pesangon'].map((t) => (
-                <div key={t} className="flex items-start gap-2 text-[11px] text-slate-600">
-                  <span className="w-1.5 h-1.5 rounded-full bg-slate-400 mt-1.5 shrink-0" />
-                  <span>{t}</span>
+            <ChevronDown
+              className={`w-4 h-4 text-slate-400 transition-transform shrink-0 ${
+                isShiftExpanded ? 'rotate-180' : ''
+              }`}
+            />
+          </div>
+        </button>
+
+        {isShiftExpanded && (
+          <div className="border-t border-slate-100">
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-0">
+              {/* Lens 1: Job Title */}
+              <div className="lg:col-span-5 p-5 bg-slate-50/70">
+                <div className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-wider text-slate-500">
+                  <Briefcase className="w-3.5 h-3.5" />
+                  <span>Dibaca dari nama jabatan</span>
                 </div>
-              ))}
-            </div>
-          </div>
-
-          {/* Arrow */}
-          <div className="lg:col-span-2 flex items-center justify-center py-3 bg-white">
-            <div className="flex flex-col items-center gap-1">
-              <div className="w-9 h-9 rounded-full bg-blue-50 border border-blue-200 flex items-center justify-center">
-                <ArrowRight className="w-4 h-4 text-blue-600 rotate-90 lg:rotate-0" />
+                <div className="mt-3 text-3xl font-semibold text-rose-600 tracking-tight font-jakarta">
+                  4.200 <span className="text-sm text-slate-400 font-normal">staf dianggap habis perannya</span>
+                </div>
+                <p className="text-xs text-slate-600 mt-2 leading-relaxed">
+                  Jabatan &ldquo;Petugas Catat Meter&rdquo; hilang begitu meteran mengirim angka sendiri.
+                  Dengan cara baca ini, tidak ada jalan lain selain pengurangan tenaga kerja.
+                </p>
+                <div className="mt-3 space-y-1.5">
+                  {['Nama jabatan hilang dari struktur', 'Pengalaman lapangan tidak terhitung', 'Ujungnya: negosiasi pesangon'].map((t) => (
+                    <div key={t} className="flex items-start gap-2 text-[11px] text-slate-600">
+                      <span className="w-1.5 h-1.5 rounded-full bg-slate-400 mt-1.5 shrink-0" />
+                      <span>{t}</span>
+                    </div>
+                  ))}
+                </div>
               </div>
-              <span className="text-[9px] font-bold uppercase tracking-wider text-blue-600">Meridian</span>
-            </div>
-          </div>
 
-          {/* Lens 2: Capability */}
-          <div className="lg:col-span-5 p-5 bg-blue-50/50 border-l border-blue-100">
-            <div className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-wider text-blue-700">
-              <Layers className="w-3.5 h-3.5" />
-              <span>Dibaca dari kemampuan nyata</span>
-            </div>
-            <div className="mt-3 text-3xl font-semibold text-emerald-600 tracking-tight font-jakarta">
-              85% <span className="text-sm text-slate-500 font-normal">punya jalur ke peran baru</span>
-            </div>
-            <p className="text-xs text-slate-600 mt-2 leading-relaxed">
-              Keahlian yang sudah mereka pakai tiap hari &mdash; kelistrikan tegangan rendah, keselamatan
-              kerja, hafal wilayah, berhadapan langsung dengan pelanggan &mdash; masih terpakai di unit baru.
-            </p>
-            <div className="mt-3 space-y-1.5">
-              {[
-                { r: 'Teknisi jaringan & gardu cerdas', n: '2.450 kursi' },
-                { r: 'Operator sensor & telemetri', n: '1.350 kursi' },
-                { r: 'Teknisi PLTS atap & energi baru', n: '1.200 kursi' },
-              ].map((x) => (
-                <div key={x.r} className="flex items-center justify-between text-[11px] bg-white border border-blue-100 rounded-md px-2.5 py-1.5">
-                  <span className="flex items-center gap-1.5 font-medium text-slate-800">
-                    <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600" />
-                    {x.r}
-                  </span>
-                  <span className="font-mono font-bold text-slate-700">{x.n}</span>
+              {/* Arrow */}
+              <div className="lg:col-span-2 flex items-center justify-center py-3 bg-white">
+                <div className="flex flex-col items-center gap-1">
+                  <div className="w-9 h-9 rounded-full bg-blue-50 border border-blue-200 flex items-center justify-center">
+                    <ArrowRight className="w-4 h-4 text-blue-600 rotate-90 lg:rotate-0" />
+                  </div>
+                  <span className="text-[9px] font-bold uppercase tracking-wider text-blue-600">Meridian</span>
                 </div>
-              ))}
+              </div>
+
+              {/* Lens 2: Capability */}
+              <div className="lg:col-span-5 p-5 bg-blue-50/50 border-l border-blue-100">
+                <div className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-wider text-blue-700">
+                  <Layers className="w-3.5 h-3.5" />
+                  <span>Dibaca dari kemampuan nyata</span>
+                </div>
+                <div className="mt-3 text-3xl font-semibold text-emerald-600 tracking-tight font-jakarta">
+                  85% <span className="text-sm text-slate-500 font-normal">punya jalur ke peran baru</span>
+                </div>
+                <p className="text-xs text-slate-600 mt-2 leading-relaxed">
+                  Keahlian yang sudah mereka pakai tiap hari &mdash; kelistrikan tegangan rendah, keselamatan
+                  kerja, hafal wilayah, berhadapan langsung dengan pelanggan &mdash; masih terpakai di unit baru.
+                </p>
+                <div className="mt-3 space-y-1.5">
+                  {[
+                    { r: 'Teknisi jaringan & gardu cerdas', n: '2.450 kursi' },
+                    { r: 'Operator sensor & telemetri', n: '1.350 kursi' },
+                    { r: 'Teknisi PLTS atap & energi baru', n: '1.200 kursi' },
+                  ].map((x) => (
+                    <div key={x.r} className="flex items-center justify-between text-[11px] bg-white border border-blue-100 rounded-md px-2.5 py-1.5">
+                      <span className="flex items-center gap-1.5 font-medium text-slate-800">
+                        <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600" />
+                        {x.r}
+                      </span>
+                      <span className="font-mono font-bold text-slate-700">{x.n}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+
+            <div className="px-5 py-3 border-t border-slate-100 flex justify-end">
+              <button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  onNavigate('capabilities');
+                }}
+                className="text-xs text-blue-600 hover:text-blue-800 font-semibold flex items-center gap-1"
+              >
+                <span>Lihat peta kemampuan</span>
+                <ArrowRight className="w-3.5 h-3.5" />
+              </button>
             </div>
           </div>
-        </div>
+        )}
       </div>
 
       {/* ========================================================================= */}
