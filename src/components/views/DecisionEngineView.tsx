@@ -53,12 +53,19 @@ export const DecisionEngineView: React.FC<DecisionEngineViewProps> = ({
   // 6,000 workforce sample and search
   const allEmployees = useMemo(() => getWorkforce6000(), []);
 
-  // Macro Calculation: re-runs the REAL rules engine (evaluateDecision) across all 6,000
-  // employees, with the fit-threshold slider applied as a uniform recalibration offset to
-  // every employee's fit score. At baseline (minFitThreshold = 60, i.e. offset 0) this always
-  // reconciles exactly with each employee's stored officialDecision and with the table below.
+  // Macro Calculation: re-runs the REAL rules engine (evaluateDecision) across the in-scope
+  // population, with all 3 sliders actually feeding the numbers below (previously only the
+  // fit-threshold slider did anything, which is the "sliders don't work" bug this fixes):
+  //  - Exposure cutoff narrows the population in scope to employees whose task exposure
+  //    clears the bar (staff below it aren't automated enough yet to warrant a transition call).
+  //  - Fit threshold is applied as a uniform recalibration offset to every in-scope employee's
+  //    fit score. At baseline (60, offset 0) with cutoff at baseline (70) this reconciles
+  //    exactly with each employee's stored officialDecision and the table below.
+  //  - Reskill pass rate projects how many of the Reskill / Reskill->Redeploy cohort are
+  //    expected to actually complete their curriculum, shown as a projected-success count.
   const macroStats = useMemo(() => {
-    const total = allEmployees.length;
+    const inScope = allEmployees.filter((emp) => (emp.exposure ?? 0) >= exposureCutoff);
+    const total = inScope.length;
     const fitOffset = minFitThreshold - 60;
     const tally: Record<DecisionCategory, number> = {
       'Redeploy': 0,
@@ -68,23 +75,33 @@ export const DecisionEngineView: React.FC<DecisionEngineViewProps> = ({
       'Voluntary Transition Review': 0,
     };
 
-    allEmployees.forEach((emp) => {
+    inScope.forEach((emp) => {
       const adjustedFit = emp.fit !== null ? Math.max(0, Math.min(100, emp.fit + fitOffset)) : null;
       const result = evaluateDecision(adjustedFit, emp.feasibility, emp.evidence);
       tally[result.decision]++;
     });
 
-    const pct = (n: number) => ((n / total) * 100).toFixed(1);
+    const pct = (n: number) => (total > 0 ? ((n / total) * 100).toFixed(1) : '0.0');
+    const projectPass = (n: number) => Math.round(n * (reskillPassRate / 100));
 
     return {
       total,
+      totalOutOfAll: allEmployees.length,
       redeploy: { count: tally['Redeploy'], percent: pct(tally['Redeploy']) },
-      reskillRedeploy: { count: tally['Reskill -> Redeploy'], percent: pct(tally['Reskill -> Redeploy']) },
-      reskill: { count: tally['Reskill'], percent: pct(tally['Reskill']) },
+      reskillRedeploy: {
+        count: tally['Reskill -> Redeploy'],
+        percent: pct(tally['Reskill -> Redeploy']),
+        projectedPass: projectPass(tally['Reskill -> Redeploy']),
+      },
+      reskill: {
+        count: tally['Reskill'],
+        percent: pct(tally['Reskill']),
+        projectedPass: projectPass(tally['Reskill']),
+      },
       assessment: { count: tally['Further Assessment'], percent: pct(tally['Further Assessment']) },
       voluntary: { count: tally['Voluntary Transition Review'], percent: pct(tally['Voluntary Transition Review']) },
     };
-  }, [allEmployees, minFitThreshold]);
+  }, [allEmployees, minFitThreshold, exposureCutoff, reskillPassRate]);
 
   // Selected employee for deep audit
   const activeEmployee = useMemo(() => {
@@ -178,25 +195,31 @@ export const DecisionEngineView: React.FC<DecisionEngineViewProps> = ({
         <div className="flex items-center w-full sm:w-auto bg-slate-100 p-1 rounded-lg border border-slate-200 text-xs font-semibold shrink-0">
           <button
             onClick={() => setEngineMode('macro')}
-            className={`flex-1 sm:flex-initial min-h-9 px-3 py-1.5 rounded-md transition-all flex items-center justify-center gap-1.5 ${
+            className={`flex-1 sm:flex-initial min-w-0 min-h-9 px-2.5 sm:px-3 py-1.5 rounded-md transition-all flex items-center justify-center gap-1.5 ${
               engineMode === 'macro'
                 ? 'bg-white text-blue-700 shadow-2xs font-bold'
                 : 'text-slate-600 hover:text-slate-900'
             }`}
           >
             <Users className="w-3.5 h-3.5 shrink-0" />
-            <span className="truncate">Triage Makro 6.000 Staf</span>
+            <span className="truncate">
+              <span className="sm:hidden">Triage Makro</span>
+              <span className="hidden sm:inline">Triage Makro 6.000 Staf</span>
+            </span>
           </button>
           <button
             onClick={() => setEngineMode('individual')}
-            className={`flex-1 sm:flex-initial min-h-9 px-3 py-1.5 rounded-md transition-all flex items-center justify-center gap-1.5 ${
+            className={`flex-1 sm:flex-initial min-w-0 min-h-9 px-2.5 sm:px-3 py-1.5 rounded-md transition-all flex items-center justify-center gap-1.5 ${
               engineMode === 'individual'
                 ? 'bg-white text-blue-700 shadow-2xs font-bold'
                 : 'text-slate-600 hover:text-slate-900'
             }`}
           >
             <Eye className="w-3.5 h-3.5 shrink-0" />
-            <span className="truncate">Audit Individual Pegawai</span>
+            <span className="truncate">
+              <span className="sm:hidden">Audit Individual</span>
+              <span className="hidden sm:inline">Audit Individual Pegawai</span>
+            </span>
           </button>
         </div>
       </div>
@@ -215,9 +238,9 @@ export const DecisionEngineView: React.FC<DecisionEngineViewProps> = ({
                   Interactive Sensitivity Simulation Engine (Strategic What-If Sandbox)
                 </h3>
               </div>
-              <div className="flex items-center gap-2">
+              <div className="flex flex-wrap items-center gap-2">
                 <span className="text-[11px] text-slate-300">
-                  Geser "Minimum Fit Score Threshold" untuk melihat 5 kartu di bawah dihitung ulang live dari engine (Rule #1-#5) atas 6.000 staf. Exposure cutoff & reskill pass rate adalah asumsi perencanaan terpisah, belum memengaruhi triase ini.
+                  Geser slider mana pun untuk melihat 5 kartu di bawah dihitung ulang live dari engine (Rule #1-#5): Exposure Cutoff menyaring populasi yang masuk cakupan triase ({macroStats.total.toLocaleString('id-ID')} dari {macroStats.totalOutOfAll.toLocaleString('id-ID')} staf), Fit Threshold mengkalibrasi ulang skor fit, dan Reskill Pass Rate memproyeksikan lulusan pada 2 kartu reskilling.
                 </span>
                 <button
                   onClick={handleResetMacroSliders}
@@ -343,6 +366,9 @@ export const DecisionEngineView: React.FC<DecisionEngineViewProps> = ({
               <p className="text-[10px] text-slate-500 border-t border-slate-100 pt-1.5">
                 Pondasi baik dengan gap skill spesifik. Kurikulum 4-12 minggu BNSP.
               </p>
+              <p className="text-[10px] font-semibold text-blue-700">
+                Proyeksi lulus @{reskillPassRate}%: {macroStats.reskillRedeploy.projectedPass.toLocaleString('id-ID')} orang
+              </p>
             </div>
 
             {/* 3. Reskill */}
@@ -364,6 +390,9 @@ export const DecisionEngineView: React.FC<DecisionEngineViewProps> = ({
               </div>
               <p className="text-[10px] text-slate-500 border-t border-slate-100 pt-1.5">
                 Kombinasi fit/feasibility menengah, evidence terverifikasi. Program komprehensif 12-24 minggu.
+              </p>
+              <p className="text-[10px] font-semibold text-amber-700">
+                Proyeksi lulus @{reskillPassRate}%: {macroStats.reskill.projectedPass.toLocaleString('id-ID')} orang
               </p>
             </div>
 

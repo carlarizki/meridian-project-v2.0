@@ -154,12 +154,12 @@ export const TransformationImpactView: React.FC<TransformationImpactViewProps> =
         </div>
 
         {/* Reactive Scenario Selector */}
-        <div className="flex items-center gap-2 text-xs shrink-0">
+        <div className="flex flex-col items-start gap-1.5 text-xs w-full sm:w-auto sm:shrink-0 sm:items-end">
           <span className="text-slate-500 font-semibold">Pilih Skenario:</span>
           <select
             value={selectedScenarioKey}
             onChange={(e) => setSelectedScenarioKey(e.target.value as any)}
-            className="bg-slate-50 border border-slate-300 rounded-lg px-3 py-1.5 font-bold text-slate-800 focus:outline-none focus:border-blue-500 cursor-pointer shadow-2xs"
+            className="w-full sm:w-auto max-w-full bg-slate-50 border border-slate-300 rounded-lg px-3 py-1.5 font-bold text-slate-800 focus:outline-none focus:border-blue-500 cursor-pointer shadow-2xs"
           >
             <option value="base">Base Case (Realistis - Payback 11,4 Bln)</option>
             <option value="conservative">Conservative Case (Remedial & Union Friction)</option>
