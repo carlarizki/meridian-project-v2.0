@@ -13,7 +13,6 @@ import {
   Sparkles,
   MapPin,
   Clock,
-  Radio,
   Compass,
   Layers,
   Award,
@@ -208,7 +207,6 @@ export const WorkforceOverview: React.FC<WorkforceOverviewProps> = ({ onNavigate
         <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
           {/* Left Title & Status */}
           <div className="flex items-center gap-3">
-            <Radio className="w-4 h-4 text-emerald-400 shrink-0" />
             <div>
               <div className="flex items-center gap-2">
                 <span className="relative flex h-2 w-2 shrink-0" aria-hidden="true">
