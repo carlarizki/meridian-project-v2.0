@@ -406,7 +406,7 @@ export const CapabilityLibraryView: React.FC<CapabilityLibraryViewProps> = ({ on
         </div>
 
         <div className="flex items-center gap-2 text-xs text-slate-600">
-          <span>Standar Taksonomi:</span>
+          <span>Diinspirasi struktur:</span>
           <span className="font-semibold text-slate-900">SFIA, O*NET, & SKKNI Ketenagalistrikan</span>
         </div>
       </div>
@@ -498,7 +498,7 @@ export const CapabilityLibraryView: React.FC<CapabilityLibraryViewProps> = ({ on
                   <span>{activeCapability.subDomain}</span>
                   <span className="text-slate-300">·</span>
                   <span className="bg-blue-50 border border-blue-200 px-2 py-0.5 rounded text-[11px] text-blue-800 font-bold">
-                    Standardized Competency
+                    Internal Capability Model
                   </span>
                 </div>
                 <h2 className="text-lg font-bold text-slate-900 mt-1">
