@@ -360,13 +360,24 @@ export const CapabilityLibraryView: React.FC<CapabilityLibraryViewProps> = ({ on
   const [selectedCapabilityId, setSelectedCapabilityId] = useState('data-analysis');
   const [searchQuery, setSearchQuery] = useState('');
 
-  const domains = [
-    { id: 'technical', name: 'Technical & Digital', count: 48, icon: Code },
-    { id: 'business', name: 'Business & Commercial', count: 32, icon: Briefcase },
-    { id: 'people', name: 'People & Leadership', count: 26, icon: Users },
-    { id: 'domain', name: 'Energy Domain Specific', count: 42, icon: Compass },
-    { id: 'core', name: 'Core Foundations & Safety', count: 18, icon: Star },
-  ];
+  // Counts reflect how many capabilities are actually defined in
+  // CAPABILITY_CATALOG per domain — previously these were hand-typed
+  // numbers (48/32/26/42/18, summing to 166) that had no relationship to
+  // the catalog's real size (6 items total), so picking a domain and
+  // seeing 1-2 entries looked like broken data.
+  const domains = useMemo(
+    () => [
+      { id: 'technical', name: 'Technical & Digital', icon: Code },
+      { id: 'business', name: 'Business & Commercial', icon: Briefcase },
+      { id: 'people', name: 'People & Leadership', icon: Users },
+      { id: 'domain', name: 'Energy Domain Specific', icon: Compass },
+      { id: 'core', name: 'Core Foundations & Safety', icon: Star },
+    ].map((d) => ({
+      ...d,
+      count: CAPABILITY_CATALOG.filter((c) => c.domainId === d.id).length,
+    })),
+    []
+  );
 
   // Capabilities belonging to active domain (or filtered by search)
   const availableCapabilities = useMemo(() => {

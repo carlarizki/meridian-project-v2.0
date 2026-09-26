@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import {
   Search,
   Layers,
@@ -15,10 +15,15 @@ import {
   Database,
 } from 'lucide-react';
 import { NavTab } from '../../types/meridian';
+import { getWorkforce6000 } from '../../data/workforceGenerator';
+import { PILOT_METRICS } from '../../data/meridianData';
 
 interface JobArchitectureViewProps {
   onNavigate: (tab: NavTab) => void;
 }
+
+const slugify = (name: string) =>
+  name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
 
 interface TaskItem {
   id: number;
@@ -32,23 +37,34 @@ interface TaskItem {
   timeShare: string;
 }
 
+const PILOT_FAMILY_ID = slugify(PILOT_METRICS.jobFamilyName);
+
 export const JobArchitectureView: React.FC<JobArchitectureViewProps> = ({ onNavigate }) => {
-  const [selectedFamilyId, setSelectedFamilyId] = useState('operations');
+  const [selectedFamilyId, setSelectedFamilyId] = useState(PILOT_FAMILY_ID);
   const [activeJobTab, setActiveJobTab] = useState<'tasks' | 'overview' | 'capabilities'>('tasks');
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedTaskDetail, setSelectedTaskDetail] = useState<TaskItem | null>(null);
 
-  const jobFamiliesList = [
-    { id: 'operations', name: 'Operations (Pilot)', count: 142, isPilot: true },
-    { id: 'engineering', name: 'Engineering', count: 128 },
-    { id: 'corporate', name: 'Corporate Services', count: 120 },
-    { id: 'commercial', name: 'Commercial', count: 98 },
-    { id: 'hc', name: 'Human Capital', count: 96 },
-    { id: 'finance', name: 'Finance', count: 82 },
-    { id: 'it', name: 'IT & Digital', count: 76 },
-    { id: 'renewables', name: 'Renewable Generation', count: 64 },
-    { id: 'safety', name: 'Health, Safety & Environment', count: 58 },
-  ];
+  // Same 5-family taxonomy as the 6,000-employee dataset (JOB_FAMILIES in
+  // workforceGenerator.ts) — this list previously had its own 9 hand-typed
+  // families that didn't exist anywhere else in the app, so clicking "real"
+  // job families here showed nothing meaningful. Counts are the real
+  // headcount per family, not decorative numbers.
+  const jobFamiliesList = useMemo(() => {
+    const counts = new Map<string, number>();
+    for (const emp of getWorkforce6000()) {
+      const fam = emp.jobFamily || 'Unassigned';
+      counts.set(fam, (counts.get(fam) || 0) + 1);
+    }
+    return Array.from(counts.entries())
+      .map(([name, count]) => ({
+        id: slugify(name),
+        name: name === PILOT_METRICS.jobFamilyName ? `${name} (Pilot)` : name,
+        count,
+        isPilot: name === PILOT_METRICS.jobFamilyName,
+      }))
+      .sort((a, b) => b.count - a.count);
+  }, []);
 
   const meteringTasks: TaskItem[] = [
     {
@@ -145,7 +161,7 @@ export const JobArchitectureView: React.FC<JobArchitectureViewProps> = ({ onNavi
         <div className="flex items-center gap-2 text-xs text-slate-600">
           <span>Struktur Arsitektur:</span>
           <span className="font-semibold text-slate-900">
-            9 Job Families · 42 Sub-Families · 120+ Jabatan Spesifik
+            {jobFamiliesList.length} Job Families · Detail granular (L2/L3) tersedia untuk 1 pilot family
           </span>
         </div>
       </div>
@@ -155,7 +171,7 @@ export const JobArchitectureView: React.FC<JobArchitectureViewProps> = ({ onNavi
         {/* Left Column: Job Families (4 cols) */}
         <div className="lg:col-span-4 bg-white rounded-xl p-4 border border-slate-200 shadow-2xs space-y-2">
           <div className="px-2 py-1 text-xs font-bold text-slate-900 border-b border-slate-100 pb-2">
-            Level 1: Job Families (9)
+            Level 1: Job Families ({jobFamiliesList.length})
           </div>
 
           <div className="space-y-1">
@@ -191,7 +207,7 @@ export const JobArchitectureView: React.FC<JobArchitectureViewProps> = ({ onNavi
 
         {/* Right Column: Role Details & Tasks (8 cols) */}
         <div className="lg:col-span-8 bg-white rounded-xl p-4 border border-slate-200 shadow-2xs space-y-5 min-w-0">
-          {selectedFamilyId !== 'operations' ? (
+          {selectedFamilyId !== PILOT_FAMILY_ID ? (
             /* Non-pilot job family: no granular task/capability data exists for
                these yet — say so plainly instead of silently reusing the pilot
                family's content, which would misrepresent it as real data. */
@@ -208,7 +224,7 @@ export const JobArchitectureView: React.FC<JobArchitectureViewProps> = ({ onNavi
                 yang menjadi fokus pilot transformasi ini. Job family lain akan disusul setelah pilot ini divalidasi.
               </p>
               <button
-                onClick={() => setSelectedFamilyId('operations')}
+                onClick={() => setSelectedFamilyId(PILOT_FAMILY_ID)}
                 className="mt-4 text-xs font-semibold text-blue-600 hover:text-blue-800 flex items-center gap-1"
               >
                 <span>Lihat Job Family Pilot</span>
@@ -410,7 +426,7 @@ export const JobArchitectureView: React.FC<JobArchitectureViewProps> = ({ onNavi
                   <span>Asal & Metodologi Standar Kapabilitas:</span>
                 </span>
                 <p className="text-[11px] text-blue-950">
-                  Data requirement kapabilitas di bawah ini bersumber langsung dari <strong>Standar Kompetensi Jabatan (SKJ) PLN Bidang Distribusi</strong> serta sertifikasi resmi <strong>K3 Ketenagalistrikan Kementerian ESDM</strong>.
+                  Requirement kapabilitas di bawah ini diinspirasi struktur <strong>Standar Kompetensi Jabatan (SKJ) PLN Bidang Distribusi</strong> serta kerangka sertifikasi <strong>K3 Ketenagalistrikan Kementerian ESDM</strong>.
                 </p>
               </div>
 
