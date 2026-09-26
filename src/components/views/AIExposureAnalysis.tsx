@@ -165,12 +165,12 @@ export const AIExposureAnalysis: React.FC<AIExposureAnalysisProps> = ({ onNaviga
           </div>
 
           {/* Horizon toggle: projects High/Medium mix forward, Low stays untouched */}
-          <div className="flex items-center gap-3">
+          <div className="flex flex-wrap items-center gap-2 sm:gap-3">
             <span className="text-[11px] font-medium text-slate-500 flex items-center gap-1 shrink-0">
               <Clock className="w-3.5 h-3.5" />
               Proyeksi:
             </span>
-            <div className="flex items-center bg-slate-100 rounded-lg p-0.5 text-xs">
+            <div className="flex items-center bg-slate-100 rounded-lg p-0.5 text-xs flex-wrap">
               {YEAR_OPTIONS.map((y) => (
                 <button
                   key={y}
@@ -199,8 +199,8 @@ export const AIExposureAnalysis: React.FC<AIExposureAnalysisProps> = ({ onNaviga
           <div className="space-y-3.5">
             {familyExposure.map((fam) => (
               <div key={fam.name} className="space-y-1">
-                <div className="flex items-center justify-between text-xs">
-                  <span className="font-medium text-slate-800 flex items-center gap-2">
+                <div className="flex flex-col gap-1 sm:flex-row sm:items-center sm:justify-between text-xs">
+                  <span className="font-medium text-slate-800 flex flex-wrap items-center gap-2 min-w-0">
                     {fam.name}
                     {fam.isPilot && (
                       <span className="text-[10px] font-semibold text-rose-700 bg-rose-50 border border-rose-200 px-1.5 rounded">
@@ -208,7 +208,7 @@ export const AIExposureAnalysis: React.FC<AIExposureAnalysisProps> = ({ onNaviga
                       </span>
                     )}
                   </span>
-                  <span className="font-mono text-[11px] text-slate-600">
+                  <span className="font-mono text-[11px] text-slate-600 shrink-0">
                     High: {fam.high}% · Med: {fam.med}% · Low: {fam.low}%
                   </span>
                 </div>

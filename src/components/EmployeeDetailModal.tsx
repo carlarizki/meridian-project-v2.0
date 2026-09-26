@@ -104,7 +104,7 @@ export const EmployeeDetailModal: React.FC<EmployeeDetailModalProps> = ({
             {prevEmployee && (
               <button
                 onClick={() => onSelectAnother(prevEmployee.id)}
-                className="text-xs text-slate-700 hover:text-slate-900 px-2 py-1 rounded bg-slate-100 hover:bg-slate-200 transition-colors font-medium"
+                className="min-h-9 text-xs text-slate-700 hover:text-slate-900 px-2.5 py-2 rounded bg-slate-100 hover:bg-slate-200 transition-colors font-medium"
               >
                 &larr; Prev
               </button>
@@ -112,14 +112,14 @@ export const EmployeeDetailModal: React.FC<EmployeeDetailModalProps> = ({
             {nextEmployee && (
               <button
                 onClick={() => onSelectAnother(nextEmployee.id)}
-                className="text-xs text-slate-700 hover:text-slate-900 px-2 py-1 rounded bg-slate-100 hover:bg-slate-200 transition-colors font-medium"
+                className="min-h-9 text-xs text-slate-700 hover:text-slate-900 px-2.5 py-2 rounded bg-slate-100 hover:bg-slate-200 transition-colors font-medium"
               >
                 Next &rarr;
               </button>
             )}
             <button
               onClick={onClose}
-              className="p-1.5 rounded-lg text-slate-400 hover:text-slate-800 hover:bg-slate-200/60 transition-colors"
+              className="min-h-9 min-w-9 flex items-center justify-center p-2 rounded-lg text-slate-400 hover:text-slate-800 hover:bg-slate-200/60 transition-colors"
               aria-label="Tutup Detail"
             >
               <X className="w-5 h-5" />

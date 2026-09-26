@@ -124,7 +124,7 @@ export const FutureRolesView: React.FC<FutureRolesViewProps> = ({ onNavigate }) 
         <div className="lg:col-span-8 bg-white rounded-xl p-4 border border-slate-200 shadow-2xs space-y-5">
           <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-3 border-b border-slate-100 pb-4">
             <div className="space-y-1">
-              <div className="flex items-center gap-2">
+              <div className="flex flex-wrap items-center gap-2">
                 <span className="font-bold text-lg text-slate-900">{current.role}</span>
                 <span className="text-[11px] font-semibold text-emerald-700 bg-emerald-50 border border-emerald-200 px-2 py-0.5 rounded-full">
                   {current.badge}
@@ -142,7 +142,7 @@ export const FutureRolesView: React.FC<FutureRolesViewProps> = ({ onNavigate }) 
           </div>
 
           {/* Role Metadata Pills */}
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
             <div className="p-3 bg-slate-50 rounded-lg border border-slate-200 text-xs">
               <span className="text-slate-500 text-[10px] block">Target Roles</span>
               <span className="font-bold text-slate-900">{current.pills.targetRoles}</span>
@@ -183,13 +183,13 @@ export const FutureRolesView: React.FC<FutureRolesViewProps> = ({ onNavigate }) 
           </div>
 
           {/* Action button */}
-          <div className="pt-2 border-t border-slate-100 flex items-center justify-between">
+          <div className="pt-2 border-t border-slate-100 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
             <span className="text-[11px] text-slate-500">
               Jalur transisi ini dirancang untuk mempertahankan legal grade dan perlindungan hak pekerja.
             </span>
             <button
               onClick={() => onNavigate('learning')}
-              className="inline-flex items-center gap-1.5 px-4 py-2 text-xs font-semibold text-white bg-blue-600 hover:bg-blue-700 rounded-lg transition-colors shadow-xs"
+              className="inline-flex items-center justify-center gap-1.5 px-4 py-2 text-xs font-semibold text-white bg-blue-600 hover:bg-blue-700 rounded-lg transition-colors shadow-xs shrink-0"
             >
               <span>Lihat Kurikulum Reskilling</span>
               <ArrowRight className="w-3.5 h-3.5" />

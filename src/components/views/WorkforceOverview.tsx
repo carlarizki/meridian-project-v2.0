@@ -697,9 +697,9 @@ export const WorkforceOverview: React.FC<WorkforceOverviewProps> = ({ onNavigate
               <div className="space-y-2">
                 {regionalDistribution.map((reg) => (
                   <div key={reg.unit} className="p-2.5 rounded-lg border border-slate-200 bg-slate-50/50 space-y-1.5">
-                    <div className="flex items-center justify-between text-xs">
-                      <span className="font-semibold text-slate-800">{reg.unit}</span>
-                      <span className="font-mono font-bold text-slate-900">{reg.count.toLocaleString('id-ID')} Staf</span>
+                    <div className="flex flex-wrap items-center justify-between gap-x-2 gap-y-0.5 text-xs">
+                      <span className="font-semibold text-slate-800 min-w-0">{reg.unit}</span>
+                      <span className="font-mono font-bold text-slate-900 shrink-0">{reg.count.toLocaleString('id-ID')} Staf</span>
                     </div>
 
                     <div className="w-full h-2 rounded-full overflow-hidden flex bg-slate-200">
@@ -709,7 +709,7 @@ export const WorkforceOverview: React.FC<WorkforceOverviewProps> = ({ onNavigate
                       <div style={{ width: `${(reg.other / reg.count) * 100}%` }} className="bg-slate-400" title={`Asesmen/Sukarela: ${reg.other}`} />
                     </div>
 
-                    <div className="flex items-center justify-between text-[10px] text-slate-500 font-mono">
+                    <div className="flex flex-wrap items-center gap-x-2.5 gap-y-0.5 text-[10px] text-slate-500 font-mono">
                       <span className="text-emerald-700 font-medium">Redeploy: {reg.redeploy}</span>
                       <span className="text-sky-700 font-medium">Reskill: {reg.reskill}</span>
                       <span className="text-amber-700 font-medium">Upskill: {reg.upskill}</span>
@@ -741,11 +741,11 @@ export const WorkforceOverview: React.FC<WorkforceOverviewProps> = ({ onNavigate
               <div className="space-y-2">
                 {targetRoles.map((role) => (
                   <div key={role.role} className="p-2.5 rounded-lg border border-slate-200 bg-white space-y-1">
-                    <div className="flex items-center justify-between text-xs">
-                      <span className="font-semibold text-slate-900">{role.role}</span>
-                      <span className="font-mono font-bold text-slate-800">{role.count.toLocaleString('id-ID')}</span>
+                    <div className="flex flex-wrap items-center justify-between gap-x-2 gap-y-0.5 text-xs">
+                      <span className="font-semibold text-slate-900 min-w-0">{role.role}</span>
+                      <span className="font-mono font-bold text-slate-800 shrink-0">{role.count.toLocaleString('id-ID')}</span>
                     </div>
-                    <div className="flex items-center justify-between text-[10px] text-slate-500">
+                    <div className="flex flex-wrap items-center justify-between gap-x-2 gap-y-1 text-[10px] text-slate-500">
                       <span>Porsi: {role.percent}%</span>
                       <span className={`px-1.5 py-0.2 rounded border font-medium ${role.color}`}>
                         {role.status}
@@ -781,8 +781,8 @@ export const WorkforceOverview: React.FC<WorkforceOverviewProps> = ({ onNavigate
               <div className="space-y-2">
                 {jobFamilies.map((fam) => (
                   <div key={fam.name} className="space-y-1">
-                    <div className="flex items-center justify-between text-xs">
-                      <span className="font-medium text-slate-700 flex items-center gap-1.5">
+                    <div className="flex flex-wrap items-center justify-between gap-x-2 gap-y-1 text-xs">
+                      <span className="font-medium text-slate-700 flex flex-wrap items-center gap-1.5 min-w-0">
                         {fam.name}
                         {fam.isPilot && (
                           <span className="text-[10px] font-bold text-blue-700 bg-blue-50 border border-blue-200 px-1.5 py-0.2 rounded">
@@ -790,7 +790,7 @@ export const WorkforceOverview: React.FC<WorkforceOverviewProps> = ({ onNavigate
                           </span>
                         )}
                       </span>
-                      <span className="font-mono text-slate-600 text-xs">
+                      <span className="font-mono text-slate-600 text-xs shrink-0">
                         {fam.count.toLocaleString('id-ID')} ({fam.percent}%)
                       </span>
                     </div>
@@ -983,8 +983,8 @@ export const WorkforceOverview: React.FC<WorkforceOverviewProps> = ({ onNavigate
                   <span className="font-mono font-bold text-slate-400 text-[11px] shrink-0 mt-0.5">
                     {evt.time}
                   </span>
-                  <div className="flex-1">
-                    <div className="flex items-center gap-2">
+                  <div className="flex-1 min-w-0">
+                    <div className="flex flex-wrap items-center gap-x-2 gap-y-1">
                       <span className="font-bold text-slate-900">{evt.unit}</span>
                       <span className={`text-[9px] font-bold px-1.5 py-0.2 rounded border ${
                         evt.category === 'Certification'

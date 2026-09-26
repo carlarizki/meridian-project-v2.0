@@ -161,11 +161,11 @@ export const DecisionEngineView: React.FC<DecisionEngineViewProps> = ({
       {/* Top Header & Engine Mode Switcher */}
       <div className="bg-white rounded-xl p-5 border border-slate-200 shadow-2xs flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
-          <div className="flex items-center gap-2">
+          <div className="flex flex-wrap items-center gap-2">
             <h2 className="text-base font-bold text-slate-900 tracking-tight">
               Workforce Decision Engine: Deterministic Triage (6.000 Staf Pilot)
             </h2>
-            <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-blue-100 text-blue-800 border border-blue-200">
+            <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-blue-100 text-blue-800 border border-blue-200 whitespace-nowrap">
               Rule #1 s/d #5 Auditable
             </span>
           </div>
@@ -175,28 +175,28 @@ export const DecisionEngineView: React.FC<DecisionEngineViewProps> = ({
         </div>
 
         {/* Mode Switcher */}
-        <div className="flex items-center bg-slate-100 p-1 rounded-lg border border-slate-200 text-xs font-semibold shrink-0">
+        <div className="flex items-center w-full sm:w-auto bg-slate-100 p-1 rounded-lg border border-slate-200 text-xs font-semibold shrink-0">
           <button
             onClick={() => setEngineMode('macro')}
-            className={`px-3 py-1.5 rounded-md transition-all flex items-center gap-1.5 ${
+            className={`flex-1 sm:flex-initial min-h-9 px-3 py-1.5 rounded-md transition-all flex items-center justify-center gap-1.5 ${
               engineMode === 'macro'
                 ? 'bg-white text-blue-700 shadow-2xs font-bold'
                 : 'text-slate-600 hover:text-slate-900'
             }`}
           >
-            <Users className="w-3.5 h-3.5" />
-            <span>Triage Makro 6.000 Staf</span>
+            <Users className="w-3.5 h-3.5 shrink-0" />
+            <span className="truncate">Triage Makro 6.000 Staf</span>
           </button>
           <button
             onClick={() => setEngineMode('individual')}
-            className={`px-3 py-1.5 rounded-md transition-all flex items-center gap-1.5 ${
+            className={`flex-1 sm:flex-initial min-h-9 px-3 py-1.5 rounded-md transition-all flex items-center justify-center gap-1.5 ${
               engineMode === 'individual'
                 ? 'bg-white text-blue-700 shadow-2xs font-bold'
                 : 'text-slate-600 hover:text-slate-900'
             }`}
           >
-            <Eye className="w-3.5 h-3.5" />
-            <span>Audit Individual Pegawai</span>
+            <Eye className="w-3.5 h-3.5 shrink-0" />
+            <span className="truncate">Audit Individual Pegawai</span>
           </button>
         </div>
       </div>
@@ -524,11 +524,11 @@ export const DecisionEngineView: React.FC<DecisionEngineViewProps> = ({
               </table>
             </div>
 
-            <div className="flex items-center justify-between text-xs text-slate-500 pt-2 border-t border-slate-100">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-xs text-slate-500 pt-2 border-t border-slate-100">
               <span>Menampilkan 30 dari {filteredEmployees.length.toLocaleString('id-ID')} staf terfilter</span>
               <button
                 onClick={() => onNavigate('people')}
-                className="text-blue-600 hover:text-blue-800 font-semibold"
+                className="text-left text-blue-600 hover:text-blue-800 font-semibold"
               >
                 Buka Direktori Lengkap 6.000 Staf di Menu People &rarr;
               </button>

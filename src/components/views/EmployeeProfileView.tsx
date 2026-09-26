@@ -483,7 +483,7 @@ export const EmployeeProfileView: React.FC<EmployeeProfileViewProps> = ({
                 {searchQuery && (
                   <button
                     onClick={() => setSearchQuery('')}
-                    className="absolute right-2.5 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 p-0.5"
+                    className="absolute right-1.5 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 p-1.5"
                   >
                     <X className="w-3.5 h-3.5" />
                   </button>
@@ -491,12 +491,12 @@ export const EmployeeProfileView: React.FC<EmployeeProfileViewProps> = ({
               </div>
 
               {/* Department Filter (Explicit Requirement) */}
-              <div className="flex items-center gap-2">
+              <div className="flex items-center gap-2 w-full md:w-auto">
                 <Building2 className="w-4 h-4 text-slate-400 shrink-0 hidden sm:block" />
                 <select
                   value={selectedDepartment}
                   onChange={(e) => setSelectedDepartment(e.target.value)}
-                  className="bg-slate-50 border border-slate-200 text-xs font-medium text-slate-800 rounded-lg px-2.5 py-2 focus:outline-none focus:border-blue-500 cursor-pointer min-w-[200px]"
+                  className="w-full md:w-auto bg-slate-50 border border-slate-200 text-xs font-medium text-slate-800 rounded-lg px-2.5 py-2 focus:outline-none focus:border-blue-500 cursor-pointer md:min-w-[200px]"
                 >
                   <option value="all">Semua Departemen / UP3 ({allEmployees.length})</option>
                   {DEPARTMENTS.map((dept) => {
@@ -511,12 +511,12 @@ export const EmployeeProfileView: React.FC<EmployeeProfileViewProps> = ({
               </div>
 
               {/* Job Family Filter (Explicit Requirement) */}
-              <div className="flex items-center gap-2">
+              <div className="flex items-center gap-2 w-full md:w-auto">
                 <Layers className="w-4 h-4 text-slate-400 shrink-0 hidden sm:block" />
                 <select
                   value={selectedJobFamily}
                   onChange={(e) => setSelectedJobFamily(e.target.value)}
-                  className="bg-slate-50 border border-slate-200 text-xs font-medium text-slate-800 rounded-lg px-2.5 py-2 focus:outline-none focus:border-blue-500 cursor-pointer min-w-[190px]"
+                  className="w-full md:w-auto bg-slate-50 border border-slate-200 text-xs font-medium text-slate-800 rounded-lg px-2.5 py-2 focus:outline-none focus:border-blue-500 cursor-pointer md:min-w-[190px]"
                 >
                   <option value="all">Semua Job Family</option>
                   {JOB_FAMILIES.map((jf) => {
@@ -925,7 +925,7 @@ export const EmployeeProfileView: React.FC<EmployeeProfileViewProps> = ({
                               e.stopPropagation();
                               handleInspect(emp);
                             }}
-                            className="p-1 rounded text-slate-500 hover:text-blue-600 hover:bg-blue-50 transition-colors"
+                            className="p-2 -m-1 rounded text-slate-500 hover:text-blue-600 hover:bg-blue-50 transition-colors"
                             title="Buka Detail Inspector Pegawai"
                           >
                             <Eye className="w-4 h-4" />
@@ -942,20 +942,20 @@ export const EmployeeProfileView: React.FC<EmployeeProfileViewProps> = ({
             </div>
 
             {/* Table Footer with Summary Status */}
-            <div className="bg-slate-50 border-t border-slate-200 px-4 py-2.5 flex items-center justify-between text-xs text-slate-600">
-              <div className="flex items-center gap-3">
+            <div className="bg-slate-50 border-t border-slate-200 px-4 py-2.5 flex flex-col lg:flex-row lg:items-center justify-between gap-2 text-xs text-slate-600">
+              <div className="flex flex-wrap items-center gap-3">
                 <span className="flex items-center gap-1.5 font-medium">
                   <span className="w-2 h-2 rounded-full bg-emerald-500 inline-block animate-pulse" />
                   Virtualized Windowing Active: 60 FPS
                 </span>
-                <span className="text-slate-400">|</span>
+                <span className="text-slate-400 hidden sm:inline">|</span>
                 <span className="text-slate-500 text-[11px]">
                   Tiap baris memuat integrasi NIK & SAP/Moodle UID secara transparan.
                 </span>
               </div>
 
-              <div className="flex items-center gap-2">
-                <span className="text-slate-500 text-[11px]">
+              <div className="flex flex-wrap items-center gap-2">
+                <span className="text-slate-500 text-[11px] truncate max-w-full">
                   Terpilih:{' '}
                   <strong className="text-slate-900 font-mono">
                     {currentSelectedEmployee.name} ({currentSelectedEmployee.id})
@@ -963,7 +963,7 @@ export const EmployeeProfileView: React.FC<EmployeeProfileViewProps> = ({
                 </span>
                 <button
                   onClick={() => handleInspect(currentSelectedEmployee)}
-                  className="py-1 px-2.5 bg-blue-600 hover:bg-blue-700 text-white rounded text-[11px] font-semibold flex items-center gap-1 transition-colors"
+                  className="py-1 px-2.5 bg-blue-600 hover:bg-blue-700 text-white rounded text-[11px] font-semibold flex items-center gap-1 transition-colors shrink-0"
                 >
                   <span>Buka Inspector</span>
                   <ChevronRight className="w-3 h-3" />
@@ -984,7 +984,7 @@ export const EmployeeProfileView: React.FC<EmployeeProfileViewProps> = ({
                     .join('')}
                 </div>
                 <div>
-                  <div className="flex items-center gap-2">
+                  <div className="flex flex-wrap items-center gap-2">
                     <h3 className="font-bold text-slate-900 text-sm">
                       {currentSelectedEmployee.name}
                     </h3>
@@ -1004,7 +1004,7 @@ export const EmployeeProfileView: React.FC<EmployeeProfileViewProps> = ({
                 </div>
               </div>
 
-              <div className="flex items-center gap-2 shrink-0">
+              <div className="flex flex-wrap items-center justify-end gap-2 shrink-0 w-full md:w-auto">
                 <div className="text-right mr-2 hidden sm:block">
                   <span className="text-[11px] text-slate-400 block">Rekomendasi Keputusan</span>
                   <span className="font-bold text-xs text-blue-600">
@@ -1245,38 +1245,40 @@ export const EmployeeProfileView: React.FC<EmployeeProfileViewProps> = ({
                   <div className="bg-slate-50 px-4 py-2.5 border-b border-slate-200 text-xs font-bold text-slate-700">
                     Rincian Sinyal Kapabilitas & Sumber Bukti
                   </div>
-                  <table className="w-full text-left text-xs">
-                    <thead className="bg-white text-slate-500 border-b border-slate-100 text-[11px]">
-                      <tr>
-                        <th className="py-2.5 px-4 font-semibold">Kapabilitas</th>
-                        <th className="py-2.5 px-4 font-semibold text-center">Tingkat Kemahiran</th>
-                        <th className="py-2.5 px-4 font-semibold">Sumber Bukti Verifikasi</th>
-                        <th className="py-2.5 px-4 font-semibold text-right">Tipe Sinyal</th>
-                      </tr>
-                    </thead>
-                    <tbody className="divide-y divide-slate-100">
-                      {currentSelectedEmployee.skills.map((skill, idx) => (
-                        <tr key={idx} className="hover:bg-slate-50/60">
-                          <td className="py-2.5 px-4 font-medium text-slate-900">{skill.name}</td>
-                          <td className="py-2.5 px-4 text-center font-mono font-bold text-slate-700">
-                            {skill.level} / 5
-                          </td>
-                          <td className="py-2.5 px-4 text-slate-600">{skill.source || 'Log Sistem'}</td>
-                          <td className="py-2.5 px-4 text-right">
-                            <span
-                              className={`inline-block px-2 py-0.5 rounded text-[11px] font-semibold border ${
-                                skill.type === 'measured'
-                                  ? 'bg-emerald-50 text-emerald-700 border-emerald-200'
-                                  : 'bg-amber-50 text-amber-700 border-amber-200'
-                              }`}
-                            >
-                              {skill.type === 'measured' ? 'High (Measured BNSP)' : 'Medium (Inferred AI)'}
-                            </span>
-                          </td>
+                  <div className="overflow-x-auto overscroll-x-contain">
+                    <table className="w-full min-w-[560px] text-left text-xs">
+                      <thead className="bg-white text-slate-500 border-b border-slate-100 text-[11px]">
+                        <tr>
+                          <th className="py-2.5 px-4 font-semibold">Kapabilitas</th>
+                          <th className="py-2.5 px-4 font-semibold text-center">Tingkat Kemahiran</th>
+                          <th className="py-2.5 px-4 font-semibold">Sumber Bukti Verifikasi</th>
+                          <th className="py-2.5 px-4 font-semibold text-right">Tipe Sinyal</th>
                         </tr>
-                      ))}
-                    </tbody>
-                  </table>
+                      </thead>
+                      <tbody className="divide-y divide-slate-100">
+                        {currentSelectedEmployee.skills.map((skill, idx) => (
+                          <tr key={idx} className="hover:bg-slate-50/60">
+                            <td className="py-2.5 px-4 font-medium text-slate-900">{skill.name}</td>
+                            <td className="py-2.5 px-4 text-center font-mono font-bold text-slate-700">
+                              {skill.level} / 5
+                            </td>
+                            <td className="py-2.5 px-4 text-slate-600">{skill.source || 'Log Sistem'}</td>
+                            <td className="py-2.5 px-4 text-right">
+                              <span
+                                className={`inline-block px-2 py-0.5 rounded text-[11px] font-semibold border ${
+                                  skill.type === 'measured'
+                                    ? 'bg-emerald-50 text-emerald-700 border-emerald-200'
+                                    : 'bg-amber-50 text-amber-700 border-amber-200'
+                                }`}
+                              >
+                                {skill.type === 'measured' ? 'High (Measured BNSP)' : 'Medium (Inferred AI)'}
+                              </span>
+                            </td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
                 </div>
 
                 <div className="p-3 bg-blue-50/70 border border-blue-200 rounded-lg text-xs text-blue-900 flex items-start gap-2.5">
@@ -1292,14 +1294,14 @@ export const EmployeeProfileView: React.FC<EmployeeProfileViewProps> = ({
             {activeInspectorTab === 'role-match' && (
               <div className="space-y-4 text-xs">
                 <div className="p-4 bg-slate-50 border border-slate-200 rounded-xl space-y-3">
-                  <div className="flex items-center justify-between">
+                  <div className="flex flex-wrap items-center justify-between gap-2">
                     <div>
                       <span className="text-[11px] text-slate-500 block">Target Peran Baru Masa Depan</span>
                       <h4 className="text-base font-bold text-slate-900 mt-0.5">
                         {currentSelectedEmployee.futureRoleTarget || 'Tertunda (Menunggu Assessment Gate 14 Hari)'}
                       </h4>
                     </div>
-                    <span className="font-mono text-xs font-bold text-blue-700 bg-blue-100 px-2.5 py-1 rounded-lg">
+                    <span className="font-mono text-xs font-bold text-blue-700 bg-blue-100 px-2.5 py-1 rounded-lg shrink-0">
                       Fit: {currentSelectedEmployee.fitRaw}
                     </span>
                   </div>
@@ -1331,7 +1333,7 @@ export const EmployeeProfileView: React.FC<EmployeeProfileViewProps> = ({
             {activeInspectorTab === 'learning' && (
               <div className="space-y-4 text-xs">
                 <div className="p-4 bg-blue-50/50 border border-blue-200 rounded-xl space-y-3">
-                  <div className="flex items-center justify-between">
+                  <div className="flex flex-wrap items-center justify-between gap-2">
                     <div>
                       <h4 className="font-bold text-blue-950 text-sm">
                         Jalur Reskilling Akselerasi PLN Academy
@@ -1340,7 +1342,7 @@ export const EmployeeProfileView: React.FC<EmployeeProfileViewProps> = ({
                         Investasi pembelajaran korporat terakreditasi BNSP untuk transisi ke Smart Grid & Renewable Energy.
                       </p>
                     </div>
-                    <span className="text-[11px] font-semibold text-blue-700 bg-blue-100 px-2 py-0.5 rounded">
+                    <span className="text-[11px] font-semibold text-blue-700 bg-blue-100 px-2 py-0.5 rounded shrink-0">
                       Model Keekonomian Per Kapita
                     </span>
                   </div>
@@ -1398,7 +1400,7 @@ export const EmployeeProfileView: React.FC<EmployeeProfileViewProps> = ({
             {activeInspectorTab === 'reconciliation' && (
               <div className="space-y-4 text-xs">
                 <div className="p-4 bg-slate-50 border border-slate-200 rounded-xl space-y-3">
-                  <div className="flex items-center justify-between">
+                  <div className="flex flex-wrap items-center justify-between gap-2">
                     <div>
                       <h4 className="font-bold text-slate-900 text-sm">
                         Pemetaan Identitas Lintas Platform HR
@@ -1407,7 +1409,7 @@ export const EmployeeProfileView: React.FC<EmployeeProfileViewProps> = ({
                         Hasil audit rekonsiliasi ID heterogen dari 4 sistem eksisting yang disatukan ke Unified NIK & UID.
                       </p>
                     </div>
-                    <span className="px-2 py-0.5 bg-emerald-50 text-emerald-700 border border-emerald-200 rounded text-[11px] font-semibold flex items-center gap-1">
+                    <span className="px-2 py-0.5 bg-emerald-50 text-emerald-700 border border-emerald-200 rounded text-[11px] font-semibold flex items-center gap-1 shrink-0">
                       <CheckCircle2 className="w-3 h-3 text-emerald-600" />
                       Status: 100% Reconciled
                     </span>
@@ -1441,25 +1443,25 @@ export const EmployeeProfileView: React.FC<EmployeeProfileViewProps> = ({
                       ID Lama di Sistem HR Sebelum Integrasi
                     </div>
                     <div className="divide-y divide-slate-100 text-xs">
-                      <div className="px-3 py-2 flex items-center justify-between">
+                      <div className="px-3 py-2 flex flex-wrap items-center justify-between gap-x-3 gap-y-1">
                         <span className="text-slate-600">SAP HCM (Sistem Kepegawaian Utama)</span>
                         <span className="font-mono font-bold text-slate-900">
                           {currentSelectedEmployee.legacyIds?.sapHcm || 'SAP-88120'}
                         </span>
                       </div>
-                      <div className="px-3 py-2 flex items-center justify-between">
+                      <div className="px-3 py-2 flex flex-wrap items-center justify-between gap-x-3 gap-y-1">
                         <span className="text-slate-600">Moodle LMS (Portal Diklat & Pelatihan)</span>
                         <span className="font-mono font-bold text-slate-900">
                           {currentSelectedEmployee.legacyIds?.moodleLms || 'MDL-3412'}
                         </span>
                       </div>
-                      <div className="px-3 py-2 flex items-center justify-between">
+                      <div className="px-3 py-2 flex flex-wrap items-center justify-between gap-x-3 gap-y-1">
                         <span className="text-slate-600">Taleo ATS (Rekrutmen & Mobilitas Internal)</span>
                         <span className="font-mono font-bold text-slate-900">
                           {currentSelectedEmployee.legacyIds?.taleoAts || 'TAL-5102'}
                         </span>
                       </div>
-                      <div className="px-3 py-2 flex items-center justify-between">
+                      <div className="px-3 py-2 flex flex-wrap items-center justify-between gap-x-3 gap-y-1">
                         <span className="text-slate-600">Logbook Presensi & Operasi Regional Unit</span>
                         <span className="font-mono font-bold text-slate-900">
                           {currentSelectedEmployee.legacyIds?.regionalLog || 'REG-UP3-09'}
@@ -1481,7 +1483,7 @@ export const EmployeeProfileView: React.FC<EmployeeProfileViewProps> = ({
                       <FileText className="w-5 h-5" />
                     </div>
                     <div>
-                      <div className="flex items-center gap-2">
+                      <div className="flex flex-wrap items-center gap-2">
                         <h4 className="text-sm font-bold text-amber-950">
                           Perjanjian Kerja Waktu Tertentu (PKWT) Jasa Pelayanan Lapangan
                         </h4>
@@ -1539,7 +1541,7 @@ export const EmployeeProfileView: React.FC<EmployeeProfileViewProps> = ({
 
                 {/* Key Clauses & Union Alignment */}
                 <div className="border border-slate-200 rounded-xl overflow-hidden text-xs">
-                  <div className="bg-slate-50 px-4 py-2.5 border-b border-slate-200 font-bold text-slate-800 flex items-center justify-between">
+                  <div className="bg-slate-50 px-4 py-2.5 border-b border-slate-200 font-bold text-slate-800 flex flex-wrap items-center justify-between gap-1">
                     <span>Klausul Penting Hubungan Ketenagakerjaan & Transisi Digital</span>
                     <span className="text-[11px] font-normal text-slate-500">Standar Bipartit SP PLN</span>
                   </div>
@@ -1573,7 +1575,7 @@ export const EmployeeProfileView: React.FC<EmployeeProfileViewProps> = ({
                 Lanjutkan audit keputusan atau rencana pembelajaran untuk pegawai ini:
               </span>
 
-              <div className="flex items-center gap-2">
+              <div className="flex flex-wrap items-center gap-2">
                 <button
                   onClick={() => onOpenLearningForEmployee(currentSelectedEmployee.id)}
                   className="py-2 px-3 text-xs font-semibold text-slate-700 bg-slate-100 hover:bg-slate-200 rounded-lg transition-colors flex items-center gap-1.5"
@@ -1617,7 +1619,7 @@ export const EmployeeProfileView: React.FC<EmployeeProfileViewProps> = ({
               </div>
               <button
                 onClick={() => setReconciliationModalOpen(false)}
-                className="p-1 rounded-lg hover:bg-slate-100 text-slate-400 hover:text-slate-600"
+                className="p-2 rounded-lg hover:bg-slate-100 text-slate-400 hover:text-slate-600"
               >
                 <X className="w-4 h-4" />
               </button>
@@ -1656,14 +1658,14 @@ export const EmployeeProfileView: React.FC<EmployeeProfileViewProps> = ({
                 </div>
               </div>
 
-              <div className="p-3 bg-emerald-50 border border-emerald-200 rounded-xl flex items-center justify-between text-emerald-900">
+              <div className="p-3 bg-emerald-50 border border-emerald-200 rounded-xl flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-emerald-900">
                 <div>
                   <span className="font-bold block">Cakupan Data Terverifikasi:</span>
                   <span className="text-[11px] text-emerald-800">
                     6.000 dari 6.000 pegawai unit operasional lapangan telah terpetakan 100%.
                   </span>
                 </div>
-                <span className="font-mono text-base font-bold text-emerald-700 bg-white px-3 py-1 rounded-lg border border-emerald-300">
+                <span className="font-mono text-base font-bold text-emerald-700 bg-white px-3 py-1 rounded-lg border border-emerald-300 self-start sm:self-auto">
                   100% MATCH
                 </span>
               </div>

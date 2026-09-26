@@ -269,8 +269,8 @@ export const LearningPlanView: React.FC<LearningPlanViewProps> = ({
           </div>
         </div>
 
-        <div className="flex items-center gap-4 border-t sm:border-t-0 sm:border-l border-slate-100 pt-3 sm:pt-0 sm:pl-6">
-          <div>
+        <div className="flex flex-wrap items-center gap-3 sm:gap-4 border-t sm:border-t-0 sm:border-l border-slate-100 pt-3 sm:pt-0 sm:pl-6">
+          <div className="min-w-0">
             <span className="text-[11px] text-slate-500 block">Target Future Role:</span>
             <span className="text-xs font-bold text-slate-900">
               {employee.futureRoleTarget || 'Digital Metering Technician'}

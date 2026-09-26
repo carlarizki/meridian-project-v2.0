@@ -46,7 +46,8 @@ export const LaborRegulationModal: React.FC<LaborRegulationModalProps> = ({
           </div>
           <button
             onClick={onClose}
-            className="w-8 h-8 rounded-lg bg-white/10 hover:bg-white/20 text-white flex items-center justify-center transition-colors"
+            className="w-9 h-9 shrink-0 rounded-lg bg-white/10 hover:bg-white/20 text-white flex items-center justify-center transition-colors"
+            aria-label="Tutup"
           >
             <X className="w-4 h-4" />
           </button>
@@ -167,7 +168,7 @@ export const LaborRegulationModal: React.FC<LaborRegulationModalProps> = ({
               </p>
 
               {/* Compliance gate stepper */}
-              <div className="grid grid-cols-1 gap-2 pt-1 sm:grid-cols-5">
+              <div className="grid grid-cols-1 gap-2 pt-1 sm:grid-cols-2 md:grid-cols-5">
                 {[
                   { n: 1, t: 'Title Change Terdeteksi', d: 'Engine rekomendasikan target role dgn title ≠ kontrak existing.', gate: false },
                   { n: 2, t: 'Gate: Adendum Kontrak', d: 'Perubahan syarat kerja → wajib adendum PKWT/PKWTT tertulis.', gate: true },

@@ -140,11 +140,11 @@ export const TransformationImpactView: React.FC<TransformationImpactViewProps> =
       {/* Header Context & Scenario Dropdown */}
       <div className="bg-white rounded-xl p-5 border border-slate-200 shadow-2xs flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <div className="flex items-center gap-2">
+          <div className="flex flex-wrap items-center gap-2">
             <h2 className="text-base font-bold text-slate-900 tracking-tight">
               Kalkulasi Finansial & Business Case: 6.000 Staf Pilot
             </h2>
-            <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-100 text-emerald-800 border border-emerald-200">
+            <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-100 text-emerald-800 border border-emerald-200 whitespace-nowrap">
               {scenario.badge}
             </span>
           </div>
@@ -249,56 +249,56 @@ export const TransformationImpactView: React.FC<TransformationImpactViewProps> =
 
           <div className="space-y-2.5 text-xs">
             {/* Redeploy */}
-            <div className="flex items-center justify-between p-3 rounded-lg bg-emerald-50 border border-emerald-200">
-              <span className="flex items-center gap-2 font-semibold text-emerald-900">
-                <span className="w-2.5 h-2.5 rounded-full bg-emerald-600"></span>
+            <div className="flex flex-wrap items-center justify-between gap-1 p-3 rounded-lg bg-emerald-50 border border-emerald-200">
+              <span className="flex items-center gap-2 font-semibold text-emerald-900 min-w-0">
+                <span className="w-2.5 h-2.5 rounded-full bg-emerald-600 shrink-0"></span>
                 <span>Direct Redeploy (Langsung Penugasan Baru)</span>
               </span>
-              <span className="font-mono font-bold text-emerald-800">
+              <span className="font-mono font-bold text-emerald-800 shrink-0">
                 {scenario.outcomes.redeploy.count.toLocaleString('id-ID')} ({scenario.outcomes.redeploy.percent}%)
               </span>
             </div>
 
             {/* Reskill -> Redeploy */}
-            <div className="flex items-center justify-between p-3 rounded-lg bg-blue-50 border border-blue-200">
-              <span className="flex items-center gap-2 font-semibold text-blue-900">
-                <span className="w-2.5 h-2.5 rounded-full bg-blue-600"></span>
+            <div className="flex flex-wrap items-center justify-between gap-1 p-3 rounded-lg bg-blue-50 border border-blue-200">
+              <span className="flex items-center gap-2 font-semibold text-blue-900 min-w-0">
+                <span className="w-2.5 h-2.5 rounded-full bg-blue-600 shrink-0"></span>
                 <span>Reskill &rarr; Redeploy (Pelatihan 8-12 Minggu)</span>
               </span>
-              <span className="font-mono font-bold text-blue-800">
+              <span className="font-mono font-bold text-blue-800 shrink-0">
                 {scenario.outcomes.reskillRedeploy.count.toLocaleString('id-ID')} ({scenario.outcomes.reskillRedeploy.percent}%)
               </span>
             </div>
 
             {/* Upskill */}
-            <div className="flex items-center justify-between p-3 rounded-lg bg-amber-50 border border-amber-200">
-              <span className="flex items-center gap-2 font-semibold text-amber-900">
-                <span className="w-2.5 h-2.5 rounded-full bg-amber-600"></span>
+            <div className="flex flex-wrap items-center justify-between gap-1 p-3 rounded-lg bg-amber-50 border border-amber-200">
+              <span className="flex items-center gap-2 font-semibold text-amber-900 min-w-0">
+                <span className="w-2.5 h-2.5 rounded-full bg-amber-600 shrink-0"></span>
                 <span>Reskill (Rule #5, Program Komprehensif)</span>
               </span>
-              <span className="font-mono font-bold text-amber-800">
+              <span className="font-mono font-bold text-amber-800 shrink-0">
                 {scenario.outcomes.upskill.count.toLocaleString('id-ID')} ({scenario.outcomes.upskill.percent}%)
               </span>
             </div>
 
             {/* Assessment Gate */}
-            <div className="flex items-center justify-between p-3 rounded-lg bg-purple-50 border border-purple-200">
-              <span className="flex items-center gap-2 font-semibold text-purple-900">
-                <span className="w-2.5 h-2.5 rounded-full bg-purple-600"></span>
+            <div className="flex flex-wrap items-center justify-between gap-1 p-3 rounded-lg bg-purple-50 border border-purple-200">
+              <span className="flex items-center gap-2 font-semibold text-purple-900 min-w-0">
+                <span className="w-2.5 h-2.5 rounded-full bg-purple-600 shrink-0"></span>
                 <span>Further Assessment (Data Kosong / Stale)</span>
               </span>
-              <span className="font-mono font-bold text-purple-800">
+              <span className="font-mono font-bold text-purple-800 shrink-0">
                 {scenario.outcomes.assessment.count.toLocaleString('id-ID')} ({scenario.outcomes.assessment.percent}%)
               </span>
             </div>
 
             {/* Voluntary Transition */}
-            <div className="flex items-center justify-between p-3 rounded-lg bg-rose-50 border border-rose-200">
-              <span className="flex items-center gap-2 font-semibold text-rose-900">
-                <span className="w-2.5 h-2.5 rounded-full bg-rose-600"></span>
+            <div className="flex flex-wrap items-center justify-between gap-1 p-3 rounded-lg bg-rose-50 border border-rose-200">
+              <span className="flex items-center gap-2 font-semibold text-rose-900 min-w-0">
+                <span className="w-2.5 h-2.5 rounded-full bg-rose-600 shrink-0"></span>
                 <span>Voluntary Transition / Outplacement</span>
               </span>
-              <span className="font-mono font-bold text-rose-800">
+              <span className="font-mono font-bold text-rose-800 shrink-0">
                 {scenario.outcomes.voluntary.count.toLocaleString('id-ID')} ({scenario.outcomes.voluntary.percent}%)
               </span>
             </div>

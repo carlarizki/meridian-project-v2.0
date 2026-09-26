@@ -181,22 +181,22 @@ export const JobArchitectureView: React.FC<JobArchitectureViewProps> = ({ onNavi
                 <button
                   key={fam.id}
                   onClick={() => setSelectedFamilyId(fam.id)}
-                  className={`w-full flex items-center justify-between p-2.5 rounded-lg text-xs font-medium transition-all text-left ${
+                  className={`w-full flex flex-wrap items-center justify-between gap-y-1 p-2.5 rounded-lg text-xs font-medium transition-all text-left ${
                     isSelected
                       ? 'bg-blue-50 text-blue-700 font-semibold border border-blue-200'
                       : 'text-slate-700 hover:bg-slate-50 border border-transparent'
                   }`}
                 >
-                  <div className="flex items-center gap-2">
-                    <Briefcase className={`w-3.5 h-3.5 ${isSelected ? 'text-blue-600' : 'text-slate-400'}`} />
-                    <span>{fam.name}</span>
+                  <div className="flex items-center gap-2 min-w-0">
+                    <Briefcase className={`w-3.5 h-3.5 shrink-0 ${isSelected ? 'text-blue-600' : 'text-slate-400'}`} />
+                    <span className="truncate">{fam.name}</span>
                     {fam.isPilot && (
-                      <span className="text-[9px] font-bold text-blue-700 bg-blue-100 px-1.5 py-0.2 rounded">
+                      <span className="shrink-0 text-[9px] font-bold text-blue-700 bg-blue-100 px-1.5 py-0.2 rounded">
                         Pilot 6.000
                       </span>
                     )}
                   </div>
-                  <span className="font-mono text-[11px] text-slate-500">
+                  <span className="font-mono text-[11px] text-slate-500 shrink-0">
                     ({fam.count})
                   </span>
                 </button>
@@ -300,7 +300,7 @@ export const JobArchitectureView: React.FC<JobArchitectureViewProps> = ({ onNavi
               </div>
 
               <div className="overflow-x-auto">
-                <table className="w-full text-left text-xs">
+                <table className="w-full min-w-[640px] text-left text-xs">
                   <thead className="bg-slate-50 text-slate-600 border-b border-slate-200">
                     <tr>
                       <th className="py-2.5 px-3 font-semibold w-10">#</th>
@@ -355,8 +355,8 @@ export const JobArchitectureView: React.FC<JobArchitectureViewProps> = ({ onNavi
               {selectedTaskDetail && (
                 <div className="p-4 rounded-xl border border-blue-200 bg-blue-50/80 space-y-3 animate-in fade-in duration-150">
                   <div className="flex items-center justify-between border-b border-blue-200/80 pb-2">
-                    <div className="flex items-center gap-2">
-                      <span className="font-mono text-xs font-bold px-2 py-0.5 rounded bg-blue-200 text-blue-900">
+                    <div className="flex items-center gap-2 min-w-0">
+                      <span className="font-mono text-xs font-bold px-2 py-0.5 rounded bg-blue-200 text-blue-900 shrink-0">
                         Tugas #{selectedTaskDetail.id}
                       </span>
                       <h4 className="font-bold text-xs text-blue-950">
@@ -365,7 +365,7 @@ export const JobArchitectureView: React.FC<JobArchitectureViewProps> = ({ onNavi
                     </div>
                     <button
                       onClick={() => setSelectedTaskDetail(null)}
-                      className="text-slate-400 hover:text-slate-700"
+                      className="text-slate-400 hover:text-slate-700 shrink-0 ml-2 grid h-8 w-8 place-items-center"
                     >
                       <X className="w-4 h-4" />
                     </button>
@@ -430,39 +430,39 @@ export const JobArchitectureView: React.FC<JobArchitectureViewProps> = ({ onNavi
                 </p>
               </div>
 
-              <div className="p-3.5 bg-slate-50 rounded-xl border border-slate-200 flex items-center justify-between text-xs">
-                <div>
+              <div className="p-3.5 bg-slate-50 rounded-xl border border-slate-200 flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between text-xs">
+                <div className="min-w-0">
                   <div className="font-semibold text-slate-900">Keselamatan Kerja Lapangan & K3 Ketenagalistrikan</div>
                   <div className="text-[11px] text-slate-500">Sumber: Sertifikasi SKTTK / BNSP K3 ESDM</div>
                 </div>
-                <div className="text-right">
-                  <span className="font-mono font-bold text-emerald-700 bg-emerald-100 px-2 py-0.5 rounded">
+                <div className="text-left sm:text-right shrink-0">
+                  <span className="inline-block font-mono font-bold text-emerald-700 bg-emerald-100 px-2 py-0.5 rounded">
                     Level 4/5 (Required)
                   </span>
                   <div className="text-[10px] text-slate-500 mt-0.5">Mandatori untuk semua teknisi lapangan</div>
                 </div>
               </div>
 
-              <div className="p-3.5 bg-slate-50 rounded-xl border border-slate-200 flex items-center justify-between text-xs">
-                <div>
+              <div className="p-3.5 bg-slate-50 rounded-xl border border-slate-200 flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between text-xs">
+                <div className="min-w-0">
                   <div className="font-semibold text-slate-900">Digital Telemetry & IoT Gateway Diagnostics</div>
                   <div className="text-[11px] text-slate-500">Sumber: Baseline asesmen keterampilan digital 6.000 staf</div>
                 </div>
-                <div className="text-right">
-                  <span className="font-mono font-bold text-rose-700 bg-rose-100 px-2 py-0.5 rounded">
+                <div className="text-left sm:text-right shrink-0">
+                  <span className="inline-block font-mono font-bold text-rose-700 bg-rose-100 px-2 py-0.5 rounded">
                     Gap: +2 Levels (Saat ini Lvl 2 &rarr; Butuh Lvl 4)
                   </span>
                   <div className="text-[10px] text-rose-600 mt-0.5">Perlu reskilling 8 minggu</div>
                 </div>
               </div>
 
-              <div className="p-3.5 bg-slate-50 rounded-xl border border-slate-200 flex items-center justify-between text-xs">
-                <div>
+              <div className="p-3.5 bg-slate-50 rounded-xl border border-slate-200 flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between text-xs">
+                <div className="min-w-0">
                   <div className="font-semibold text-slate-900">Komunikasi & Negosiasi Pelanggan Lapangan</div>
                   <div className="text-[11px] text-slate-500">Sumber: SOP Pelayanan Pelanggan PLN</div>
                 </div>
-                <div className="text-right">
-                  <span className="font-mono font-bold text-blue-700 bg-blue-100 px-2 py-0.5 rounded">
+                <div className="text-left sm:text-right shrink-0">
+                  <span className="inline-block font-mono font-bold text-blue-700 bg-blue-100 px-2 py-0.5 rounded">
                     Level 3/5 (Required)
                   </span>
                   <div className="text-[10px] text-slate-500 mt-0.5">Untuk peran teknisi layanan kelistrikan</div>
