@@ -26,7 +26,7 @@ const TAB_TITLES: Record<
   workforce: {
     category: 'Populasi',
     title: 'Workforce',
-    subtitle: '52.000 karyawan, 8 job family, pilot 6.000 staf lapangan.',
+    subtitle: '52.000 karyawan, 9 job family, pilot 6.000 staf lapangan.',
     screenNum: 1,
   },
   exposure: {

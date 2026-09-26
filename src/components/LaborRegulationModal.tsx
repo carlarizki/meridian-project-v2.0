@@ -112,8 +112,13 @@ export const LaborRegulationModal: React.FC<LaborRegulationModalProps> = ({
                 <li>Uang penghargaan masa kerja (UPMK) sebesar 1 (satu) kali ketentuan Pasal 40 ayat (3);</li>
                 <li>Uang penggantian hak sesuai Pasal 40 ayat (4).</li>
               </ul>
-              <div className="text-[11px] text-blue-700 font-medium bg-blue-50 p-2 rounded border border-blue-200">
-                💡 <strong>Keunggulan Solusi Meridian:</strong> Dengan melakukan Reskilling & Redeployment (biaya Rp 9,0 Jt/orang), perusahaan <strong>menghindari beban pesangon efisiensi sebesar rata-rata Rp 48 Juta/orang</strong> dan terhindar dari sengketa Pengadilan Hubungan Industrial (PHI).
+              <div className="text-[11px] text-blue-700 font-medium bg-blue-50 p-2 rounded border border-blue-200 space-y-1">
+                <div>
+                  💡 <strong>Keunggulan Solusi Meridian:</strong> Dengan melakukan Reskilling & Redeployment (biaya Rp 9,0 Jt/orang), perusahaan <strong>menghindari beban pesangon efisiensi sebesar rata-rata Rp 48 Juta/orang</strong> dan terhindar dari sengketa Pengadilan Hubungan Industrial (PHI).
+                </div>
+                <div className="text-[10px] text-blue-500 italic font-normal">
+                  Kedua angka adalah estimasi (formula PP 35/2021 & benchmark vendor), bukan data payroll aktual — Legal mengonfirmasi akses Payroll off-limits.
+                </div>
               </div>
             </div>
 

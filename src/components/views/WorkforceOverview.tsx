@@ -190,7 +190,8 @@ export const WorkforceOverview: React.FC<WorkforceOverviewProps> = ({ onNavigate
     { name: 'Human Capital', count: 5400, percent: 10, isPilot: false },
     { name: 'Finance', count: 4800, percent: 9, isPilot: false },
     { name: 'IT & Digital', count: 3200, percent: 6, isPilot: false },
-    { name: 'Others', count: 3600, percent: 7, isPilot: false },
+    { name: 'Renewable Generation', count: 2000, percent: 4, isPilot: false },
+    { name: 'Health, Safety & Environment', count: 1600, percent: 3, isPilot: false },
   ];
 
   return (
@@ -405,7 +406,7 @@ export const WorkforceOverview: React.FC<WorkforceOverviewProps> = ({ onNavigate
             <span>Keluarga Jabatan</span>
           </div>
           <div className="text-3xl font-semibold text-slate-900 tracking-tight mt-1.5">
-            8 <span className="text-sm text-slate-400 font-normal">families</span>
+            9 <span className="text-sm text-slate-400 font-normal">families</span>
           </div>
           <p className="text-xs text-slate-500 mt-1">
             Standardisasi dari 1.800+ gelar jabatan
@@ -513,7 +514,7 @@ export const WorkforceOverview: React.FC<WorkforceOverviewProps> = ({ onNavigate
             }`}
           >
             <Compass className="w-3.5 h-3.5" />
-            <span>AI Exposure & 8 Job Families</span>
+            <span>AI Exposure & 9 Job Families</span>
           </button>
 
           <button
@@ -632,7 +633,7 @@ export const WorkforceOverview: React.FC<WorkforceOverviewProps> = ({ onNavigate
                   <h3 className="text-xs font-bold text-slate-900 uppercase tracking-wider">
                     Distribusi 52.000 Karyawan per Job Family
                   </h3>
-                  <p className="text-xs text-slate-500">Konsolidasi 8 rumpun jabatan korporasi</p>
+                  <p className="text-xs text-slate-500">Konsolidasi 9 rumpun jabatan korporasi</p>
                 </div>
                 <button
                   onClick={() => onNavigate('jobs')}

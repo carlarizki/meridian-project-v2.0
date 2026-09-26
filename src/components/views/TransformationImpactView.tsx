@@ -182,6 +182,9 @@ export const TransformationImpactView: React.FC<TransformationImpactViewProps> =
           <p className="text-[11px] text-slate-500 leading-relaxed">
             Pesangon PP 35/2021 rata-rata Rp 48 Jt/orang + Biaya rekrutmen talenta baru + Risiko mogok serikat pekerja.
           </p>
+          <p className="text-[10px] text-slate-400 italic leading-snug pt-0.5 border-t border-slate-100">
+            Estimasi formula PP 35/2021 × rata-rata masa kerja, bukan data payroll aktual (Payroll off-limits per Legal).
+          </p>
         </div>
 
         {/* Meridian Reskill Cost */}
@@ -199,6 +202,9 @@ export const TransformationImpactView: React.FC<TransformationImpactViewProps> =
           </div>
           <p className="text-[11px] text-slate-500 leading-relaxed">
             5 komponen biaya terinci (Lab simulator, assessor BNSP, LMS, OJT, APD keselamatan kerja).
+          </p>
+          <p className="text-[10px] text-slate-400 italic leading-snug pt-0.5 border-t border-slate-100">
+            Estimasi benchmark vendor & rate BNSP, bukan data payroll aktual (Payroll off-limits per Legal).
           </p>
         </div>
 

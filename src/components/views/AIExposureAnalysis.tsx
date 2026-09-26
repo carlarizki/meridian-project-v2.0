@@ -37,6 +37,8 @@ export const AIExposureAnalysis: React.FC<AIExposureAnalysisProps> = ({ onNaviga
     { name: 'Commercial', high: 32, med: 46, low: 22 },
     { name: 'Engineering', high: 20, med: 52, low: 28 },
     { name: 'IT & Digital', high: 20, med: 48, low: 32 },
+    { name: 'Renewable Generation', high: 24, med: 50, low: 26 },
+    { name: 'Health, Safety & Environment', high: 16, med: 40, low: 44 },
   ];
 
   const familyExposure = useMemo(() => {
