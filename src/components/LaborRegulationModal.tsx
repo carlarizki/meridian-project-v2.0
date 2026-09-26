@@ -9,6 +9,7 @@ import {
   AlertTriangle,
   ExternalLink,
   Users,
+  ArrowRight,
 } from 'lucide-react';
 
 interface LaborRegulationModalProps {
@@ -68,7 +69,7 @@ export const LaborRegulationModal: React.FC<LaborRegulationModalProps> = ({
           <div className="space-y-4">
             <h4 className="text-xs font-bold text-slate-900 uppercase tracking-wider flex items-center gap-2 border-b border-slate-200 pb-2">
               <BookOpen className="w-4 h-4 text-blue-600" />
-              <span>4 Pilar Regulasi Kunci yang Wajib Dipahami Saat Presentasi</span>
+              <span>5 Pilar Regulasi Kunci yang Wajib Dipahami Saat Presentasi</span>
             </h4>
 
             {/* Pillar 1 */}
@@ -144,6 +145,55 @@ export const LaborRegulationModal: React.FC<LaborRegulationModalProps> = ({
               <p className="text-xs text-slate-600">
                 Setiap tenaga teknik ketenagalistrikan (termasuk teknisi gardu, smart meter, dan instalasi tegangan rendah) <strong>wajib memiliki Sertifikat Kompetensi Tenaga Teknik Ketenagalistrikan (SKTTK)</strong>. Penempatan tanpa sertifikasi terukur melanggar UU Ketenagalistrikan No. 30/2009.
               </p>
+            </div>
+
+            {/* Pillar 5 */}
+            <div className="p-4 rounded-xl border border-slate-200 bg-slate-50/70 space-y-3">
+              <div className="flex items-center justify-between">
+                <span className="font-bold text-slate-900 text-xs">
+                  5. UU No. 13/2003 Pasal 1 & Pasal 55 (Perubahan Jabatan = Perubahan Syarat Kerja)
+                </span>
+                <span className="text-[10px] font-mono bg-amber-100 text-amber-800 px-2 py-0.5 rounded font-semibold">
+                  Adendum Kontrak Wajib
+                </span>
+              </div>
+              <p className="text-xs text-slate-600">
+                Title/jabatan tercantum eksplisit sebagai syarat kerja di PKWT/PKWTT karyawan. Redeployment ke role baru dengan title berbeda <strong>bukan sekadar pembaruan field di HRIS</strong> — secara hukum ini perubahan syarat kerja yang wajib melalui adendum kontrak tertulis & persetujuan karyawan, bukan mutasi sepihak oleh HC.
+              </p>
+
+              {/* Compliance gate stepper */}
+              <div className="flex items-stretch gap-1.5 pt-1">
+                {[
+                  { n: 1, t: 'Title Change Terdeteksi', d: 'Engine rekomendasikan target role dgn title ≠ kontrak existing.', gate: false },
+                  { n: 2, t: 'Gate: Adendum Kontrak', d: 'Perubahan syarat kerja → wajib adendum PKWT/PKWTT tertulis.', gate: true },
+                  { n: 3, t: 'Persetujuan Karyawan', d: 'Adendum ditandatangani sukarela, bukan mutasi sepihak.', gate: false },
+                  { n: 4, t: 'Notifikasi SP (jika berlaku)', d: 'Perubahan skala besar dilaporkan sesuai PKB.', gate: false },
+                  { n: 5, t: 'Efektif di HRIS', d: 'Title baru aktif di SAP HCM setelah adendum, bukan sebelum.', gate: false },
+                ].map((s, i, arr) => (
+                  <React.Fragment key={s.n}>
+                    <div
+                      className={`flex-1 rounded-lg p-2 ${
+                        s.gate
+                          ? 'bg-amber-50 border border-dashed border-amber-300'
+                          : 'bg-white border border-slate-200'
+                      }`}
+                    >
+                      <div
+                        className={`w-4.5 h-4.5 rounded-full flex items-center justify-center text-[9px] font-bold mb-1 ${
+                          s.gate ? 'bg-amber-400 text-amber-950' : 'bg-slate-800 text-white'
+                        }`}
+                      >
+                        {s.n}
+                      </div>
+                      <div className="text-[10.5px] font-bold text-slate-900 leading-tight">{s.t}</div>
+                      <div className="text-[9.5px] text-slate-500 leading-snug mt-0.5">{s.d}</div>
+                    </div>
+                    {i < arr.length - 1 && (
+                      <ArrowRight className="w-3 h-3 text-slate-300 shrink-0 self-center" />
+                    )}
+                  </React.Fragment>
+                ))}
+              </div>
             </div>
           </div>
         </div>

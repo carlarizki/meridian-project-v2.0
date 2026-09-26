@@ -35,7 +35,7 @@ interface ActivityEvent {
 }
 
 export const WorkforceOverview: React.FC<WorkforceOverviewProps> = ({ onNavigate }) => {
-  const [activeSubTab, setActiveSubTab] = useState<'regional' | 'exposure' | 'activity'>('regional');
+  const [activeSubTab, setActiveSubTab] = useState<'regional' | 'exposure' | 'process' | 'activity'>('regional');
   const [showMethodology, setShowMethodology] = useState(false);
   const [meterCounter, setMeterCounter] = useState(14820);
   const [lastSyncTime, setLastSyncTime] = useState<string>('Live');
@@ -517,6 +517,18 @@ export const WorkforceOverview: React.FC<WorkforceOverviewProps> = ({ onNavigate
           </button>
 
           <button
+            onClick={() => setActiveSubTab('process')}
+            className={`pb-2.5 px-3 font-semibold transition-colors border-b-2 flex items-center gap-1.5 ${
+              activeSubTab === 'process'
+                ? 'border-blue-600 text-blue-700 bg-white rounded-t-lg'
+                : 'border-transparent text-slate-500 hover:text-slate-800'
+            }`}
+          >
+            <GitMerge className="w-3.5 h-3.5" />
+            <span>Proses Bisnis: Sebelum vs Sesudah</span>
+          </button>
+
+          <button
             onClick={() => setActiveSubTab('activity')}
             className={`pb-2.5 px-3 font-semibold transition-colors border-b-2 flex items-center gap-1.5 ${
               activeSubTab === 'activity'
@@ -722,6 +734,94 @@ export const WorkforceOverview: React.FC<WorkforceOverviewProps> = ({ onNavigate
                 <span>Analisis Detail AI Exposure by Job Family</span>
                 <ArrowRight className="w-3.5 h-3.5" />
               </button>
+            </div>
+          </div>
+        )}
+
+        {/* Tab 3: Business Process Before / After */}
+        {activeSubTab === 'process' && (
+          <div className="p-5 space-y-4 animate-in fade-in duration-150">
+            <div className="pb-1 border-b border-slate-100">
+              <h3 className="text-xs font-bold text-slate-900 uppercase tracking-wider">
+                Proses Pencatatan & Rekonsiliasi Meter Pelanggan
+              </h3>
+              <p className="text-xs text-slate-500">
+                Satu proses bisnis konkret dari pilot Field Metering — langkah demi langkah, bukan cuma angka hasil akhir.
+              </p>
+            </div>
+
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-3 items-stretch">
+              {/* Before */}
+              <div className="lg:col-span-5 rounded-xl border border-slate-200 bg-slate-50/70 p-4 space-y-1">
+                <span className="text-[10px] font-bold text-slate-500 uppercase tracking-wider">
+                  Sebelum · Manual (Status Quo)
+                </span>
+                <div className="divide-y divide-dashed divide-slate-200 mt-2">
+                  {[
+                    { t: 'Teknisi kunjungan fisik per rumah', d: '1 teknisi ~350 pelanggan/bulan, jalan kaki/motor.' },
+                    { t: 'Catat angka meter di kertas', d: 'Rawan salah baca & data hilang di lapangan.' },
+                    { t: 'Input manual ke Excel UP3', d: 'Double entry, tanpa validasi real-time.' },
+                    { t: 'Rekonsiliasi billing 3-5 hari', d: 'Sebelum tagihan bisa terbit ke pelanggan.' },
+                  ].map((s, i) => (
+                    <div key={i} className="flex items-start gap-2.5 py-2">
+                      <span className="w-1.5 h-1.5 rounded-full bg-slate-400 mt-1.5 shrink-0"></span>
+                      <div>
+                        <div className="text-xs font-semibold text-slate-800">{s.t}</div>
+                        <div className="text-[11px] text-slate-500">{s.d}</div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* Arrow */}
+              <div className="lg:col-span-2 flex items-center justify-center">
+                <ArrowRight className="w-6 h-6 text-blue-500 rotate-90 lg:rotate-0" />
+              </div>
+
+              {/* After */}
+              <div className="lg:col-span-5 rounded-xl border border-blue-200 bg-blue-50/60 p-4 space-y-1">
+                <span className="text-[10px] font-bold text-blue-700 uppercase tracking-wider">
+                  Sesudah · Smart Meter (AMI)
+                </span>
+                <div className="divide-y divide-dashed divide-blue-200/70 mt-2">
+                  {[
+                    { t: 'Meter kirim data otomatis tiap jam', d: 'Tanpa kunjungan fisik rutin.' },
+                    { t: 'Sistem AMI validasi & agregasi', d: 'Deteksi anomali otomatis (kebocoran, tamper).' },
+                    { t: 'Billing rekonsiliasi same-day', d: 'Tanpa input manual.' },
+                    { t: 'Teknisi fokus exception handling', d: 'Hanya <5% kasus anomali/gangguan fisik.' },
+                  ].map((s, i) => (
+                    <div key={i} className="flex items-start gap-2.5 py-2">
+                      <span className="w-1.5 h-1.5 rounded-full bg-blue-500 mt-1.5 shrink-0"></span>
+                      <div>
+                        <div className="text-xs font-semibold text-slate-800">{s.t}</div>
+                        <div className="text-[11px] text-slate-500">{s.d}</div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+              <div className="rounded-lg border border-slate-200 bg-white p-3 text-center">
+                <div className="text-base font-extrabold text-slate-900 font-mono">
+                  5 Hari <span className="text-emerald-600">→</span> Same-Day
+                </div>
+                <div className="text-[10px] text-slate-500 uppercase tracking-wide mt-0.5">Siklus Billing</div>
+              </div>
+              <div className="rounded-lg border border-slate-200 bg-white p-3 text-center">
+                <div className="text-base font-extrabold text-slate-900 font-mono">
+                  350/bln <span className="text-emerald-600">→</span> 0
+                </div>
+                <div className="text-[10px] text-slate-500 uppercase tracking-wide mt-0.5">Kunjungan Fisik / Teknisi</div>
+              </div>
+              <div className="rounded-lg border border-slate-200 bg-white p-3 text-center">
+                <div className="text-base font-extrabold text-slate-900 font-mono">
+                  4.200 <span className="text-emerald-600">→</span> ~210
+                </div>
+                <div className="text-[10px] text-slate-500 uppercase tracking-wide mt-0.5">Teknisi Dibutuhkan utk Proses Ini</div>
+              </div>
             </div>
           </div>
         )}
