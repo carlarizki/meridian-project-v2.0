@@ -148,15 +148,24 @@ export function generateWorkforce6000(): EmployeeRecord[] {
     const lName = LAST_NAMES[Math.floor(rng() * LAST_NAMES.length)];
     const name = `${fName} ${lName}`;
 
-    // Job family: 70% Field Metering & Manual Operations (core affected pilot)
+    // Job family distribution across all 5 JOB_FAMILIES (must stay in sync
+    // with that constant — every family needs a non-zero share, or it shows
+    // up in filters/charts with a count of 0, which is its own consistency bug):
+    // 65% Field Metering & Manual Operations (core affected pilot)
+    // 15% Smart Grid & Automation
+    // 10% Distributed Renewable & Solar O&M
+    //  5% Grid Protection & Substation Maintenance
+    //  5% Customer Energy Services
     let jobFamily = 'Field Metering & Manual Operations';
     const jfRoll = rng();
-    if (jfRoll > 0.85) {
-      jobFamily = 'Smart Grid & Automation';
-    } else if (jfRoll > 0.75) {
-      jobFamily = 'Distributed Renewable & Solar O&M';
-    } else if (jfRoll > 0.70) {
+    if (jfRoll > 0.95) {
       jobFamily = 'Customer Energy Services';
+    } else if (jfRoll > 0.90) {
+      jobFamily = 'Grid Protection & Substation Maintenance';
+    } else if (jfRoll > 0.80) {
+      jobFamily = 'Distributed Renewable & Solar O&M';
+    } else if (jfRoll > 0.65) {
+      jobFamily = 'Smart Grid & Automation';
     }
 
     const role = ROLES_POOL[Math.floor(rng() * ROLES_POOL.length)];
@@ -245,10 +254,24 @@ export function generateWorkforce6000(): EmployeeRecord[] {
       reskillingCostJt = 12.0;
     }
 
-    // AI Exposure: Field metering gets 70-92% exposure
-    const exposure = jobFamily === 'Field Metering & Manual Operations'
-      ? 68 + Math.floor(rng() * 26)
-      : 30 + Math.floor(rng() * 35);
+    // AI Exposure: calibrated per job family, not just "pilot vs everyone else".
+    // Field Metering is highest (routine, manual, physically observable tasks —
+    // the AMI/vision-meter disruption named in the brief). The rest scale down
+    // roughly by how much of the role is routine/manual vs. judgment- or
+    // safety-critical.
+    let exposure: number;
+    if (jobFamily === 'Field Metering & Manual Operations') {
+      exposure = 68 + Math.floor(rng() * 25); // 68-92%
+    } else if (jobFamily === 'Customer Energy Services') {
+      exposure = 42 + Math.floor(rng() * 24); // 42-65% — service tasks AI-augmentable, not fully automatable
+    } else if (jobFamily === 'Distributed Renewable & Solar O&M') {
+      exposure = 32 + Math.floor(rng() * 24); // 32-55% — physical field maintenance
+    } else if (jobFamily === 'Smart Grid & Automation') {
+      exposure = 28 + Math.floor(rng() * 22); // 28-49% — already tooling-adjacent, more augmentation than replacement
+    } else {
+      // Grid Protection & Substation Maintenance
+      exposure = 18 + Math.floor(rng() * 20); // 18-37% — safety-critical, judgment-heavy
+    }
 
     // Evaluate official decision with engine
     const engineResult = evaluateDecision(fit, feasibility, evidence);

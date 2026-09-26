@@ -10,6 +10,7 @@ import {
 } from 'lucide-react';
 import { NavTab } from '../../types/meridian';
 import { PILOT_METRICS } from '../../data/meridianData';
+import { getWorkforce6000 } from '../../data/workforceGenerator';
 
 interface AIExposureAnalysisProps {
   onNavigate: (tab: NavTab) => void;
@@ -26,20 +27,71 @@ const YEAR_OPTIONS = [0, 1, 2, 3] as const;
 type YearOption = (typeof YEAR_OPTIONS)[number];
 const ADOPTION_RAMP: Record<YearOption, number> = { 0: 0, 1: 0.35, 2: 0.7, 3: 1.0 };
 
+// Exposure bucket thresholds applied to each employee's computed `exposure`
+// score (0-100). Anchored to the one concrete number in the brief: Field
+// Metering & Manual Operations sits at ~70% automation — that's the floor
+// for "High".
+const HIGH_THRESHOLD = 70;
+const MEDIUM_THRESHOLD = 40;
+
 export const AIExposureAnalysis: React.FC<AIExposureAnalysisProps> = ({ onNavigate }) => {
   const [year, setYear] = useState<YearOption>(0);
 
-  const baseFamilyExposure = [
-    { name: 'Operations', high: 68, med: 24, low: 8, isPilot: true },
-    { name: 'Corporate Services', high: 52, med: 36, low: 12 },
-    { name: 'Finance', high: 48, med: 40, low: 12 },
-    { name: 'Human Capital', high: 40, med: 42, low: 18 },
-    { name: 'Commercial', high: 32, med: 46, low: 22 },
-    { name: 'Engineering', high: 20, med: 52, low: 28 },
-    { name: 'IT & Digital', high: 20, med: 48, low: 32 },
-    { name: 'Renewable Generation', high: 24, med: 50, low: 26 },
-    { name: 'Health, Safety & Environment', high: 16, med: 40, low: 44 },
-  ];
+  const workforce = useMemo(() => getWorkforce6000(), []);
+
+  // Real aggregation over the 6,000-employee population: group by jobFamily,
+  // bucket each person's computed exposure score, express as % of that
+  // family's headcount. Replaces the previous hand-typed percentages, which
+  // used a 9-family taxonomy that didn't exist anywhere else in the data
+  // model and summed to a stale 52,000-headcount universe.
+  const baseFamilyExposure = useMemo(() => {
+    const byFamily = new Map<string, { high: number; med: number; low: number; total: number }>();
+    for (const emp of workforce) {
+      const fam = emp.jobFamily || 'Unassigned';
+      const bucket = byFamily.get(fam) || { high: 0, med: 0, low: 0, total: 0 };
+      const score = emp.exposure ?? 0;
+      if (score >= HIGH_THRESHOLD) bucket.high += 1;
+      else if (score >= MEDIUM_THRESHOLD) bucket.med += 1;
+      else bucket.low += 1;
+      bucket.total += 1;
+      byFamily.set(fam, bucket);
+    }
+
+    return Array.from(byFamily.entries())
+      .map(([name, b]) => ({
+        name,
+        high: Math.round((b.high / b.total) * 100),
+        med: Math.round((b.med / b.total) * 100),
+        low: Math.round((b.low / b.total) * 100),
+        count: b.total,
+        isPilot: name === PILOT_METRICS.jobFamilyName,
+      }))
+      .sort((a, b) => b.count - a.count);
+  }, [workforce]);
+
+  // Same three headline buckets, but summed once across the whole 6,000
+  // population rather than typed by hand — total always reconciles to
+  // PILOT_METRICS.headcount.
+  const overallExposure = useMemo(() => {
+    let high = 0;
+    let med = 0;
+    let low = 0;
+    for (const emp of workforce) {
+      const score = emp.exposure ?? 0;
+      if (score >= HIGH_THRESHOLD) high += 1;
+      else if (score >= MEDIUM_THRESHOLD) med += 1;
+      else low += 1;
+    }
+    const total = workforce.length || 1;
+    return {
+      high,
+      med,
+      low,
+      highPct: Math.round((high / total) * 100),
+      medPct: Math.round((med / total) * 100),
+      lowPct: Math.round((low / total) * 100),
+    };
+  }, [workforce]);
 
   const familyExposure = useMemo(() => {
     const ramp = ADOPTION_RAMP[year];
@@ -51,7 +103,7 @@ export const AIExposureAnalysis: React.FC<AIExposureAnalysisProps> = ({ onNaviga
         med: fam.med - shifted,
       };
     });
-  }, [year]);
+  }, [year, baseFamilyExposure]);
 
   return (
     <div className="space-y-6 pb-12">
@@ -59,25 +111,31 @@ export const AIExposureAnalysis: React.FC<AIExposureAnalysisProps> = ({ onNaviga
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
         <div className="bg-white rounded-xl p-5 border border-rose-200 shadow-2xs">
           <div className="text-2xl font-extrabold text-rose-600 font-mono tracking-tight">
-            13,000
+            {overallExposure.high.toLocaleString('en-US')}
           </div>
-          <div className="text-xs font-semibold text-slate-800 mt-1">High Exposure (25%)</div>
+          <div className="text-xs font-semibold text-slate-800 mt-1">
+            High Exposure ({overallExposure.highPct}%)
+          </div>
           <div className="text-[11px] text-slate-600 mt-0.5">Saat ini · tasks predominantly routine & manual</div>
         </div>
 
         <div className="bg-white rounded-xl p-5 border border-amber-200 shadow-2xs">
           <div className="text-2xl font-extrabold text-amber-600 font-mono tracking-tight">
-            20,800
+            {overallExposure.med.toLocaleString('en-US')}
           </div>
-          <div className="text-xs font-semibold text-slate-800 mt-1">Medium Exposure (40%)</div>
+          <div className="text-xs font-semibold text-slate-800 mt-1">
+            Medium Exposure ({overallExposure.medPct}%)
+          </div>
           <div className="text-[11px] text-slate-600 mt-0.5">Saat ini · AI augmented workflows & telemetry</div>
         </div>
 
         <div className="bg-white rounded-xl p-5 border border-emerald-200 shadow-2xs">
           <div className="text-2xl font-extrabold text-emerald-600 font-mono tracking-tight">
-            18,200
+            {overallExposure.low.toLocaleString('en-US')}
           </div>
-          <div className="text-xs font-semibold text-slate-800 mt-1">Low Exposure (35%)</div>
+          <div className="text-xs font-semibold text-slate-800 mt-1">
+            Low Exposure ({overallExposure.lowPct}%)
+          </div>
           <div className="text-[11px] text-slate-600 mt-0.5">Saat ini · physical field craft & strategic leadership</div>
         </div>
       </div>
