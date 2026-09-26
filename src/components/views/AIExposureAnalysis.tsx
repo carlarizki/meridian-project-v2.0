@@ -211,13 +211,13 @@ export const AIExposureAnalysis: React.FC<AIExposureAnalysisProps> = ({ onNaviga
           <div className="py-4 flex flex-col items-center justify-center">
             <div className="relative w-40 h-40 flex items-center justify-center">
               <svg className="w-full h-full -rotate-90" viewBox="0 0 100 100">
-                <circle cx="50" cy="50" r="40" fill="transparent" stroke="#FEE2E2" strokeWidth="12" />
+                <circle cx="50" cy="50" r="40" fill="transparent" stroke="#FDE8E6" strokeWidth="12" />
                 <circle
                   cx="50"
                   cy="50"
                   r="40"
                   fill="transparent"
-                  stroke="#EF4444"
+                  stroke="#E9827D"
                   strokeWidth="12"
                   strokeDasharray="251.2"
                   strokeDashoffset={251.2 * (1 - 0.7)}

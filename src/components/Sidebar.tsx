@@ -53,17 +53,17 @@ export const Sidebar: React.FC<SidebarProps> = ({
   onOpenLegal,
 }) => {
   return (
-    <aside className="w-60 bg-[#0B1220] border-r border-slate-800/60 flex flex-col shrink-0 h-screen sticky top-0 z-30 select-none">
+    <aside className="w-60 bg-navy border-r border-navy-light/70 flex flex-col shrink-0 h-screen sticky top-0 z-30 select-none">
       {/* Brand Header */}
-      <div className="h-16 flex items-center gap-3 px-5 border-b border-slate-800/60">
-        <div className="w-8 h-8 rounded-lg bg-blue-600 flex items-center justify-center text-white font-bold text-sm">
+      <div className="h-16 flex items-center gap-3 px-5 border-b border-navy-light/70">
+        <div className="w-8 h-8 rounded-lg bg-primary flex items-center justify-center text-white font-bold text-sm">
           M
         </div>
         <div className="flex flex-col">
           <span className="font-semibold text-white tracking-tight text-sm leading-none">
             Meridian
           </span>
-          <span className="text-[10px] text-slate-400 font-medium mt-1">
+          <span className="text-[10px] text-sidebar-text-muted font-medium mt-1">
             Workforce Intelligence
           </span>
         </div>
@@ -80,13 +80,13 @@ export const Sidebar: React.FC<SidebarProps> = ({
               onClick={() => setActiveTab(item.id)}
               className={`w-full flex items-center gap-2.5 px-3 py-2 rounded-lg text-[13px] font-medium transition-colors text-left ${
                 isActive
-                  ? 'bg-slate-800/80 text-white'
-                  : 'text-slate-400 hover:text-slate-100 hover:bg-slate-800/40'
+                  ? 'bg-navy-light text-white'
+                  : 'text-sidebar-text-muted hover:text-sidebar-text hover:bg-navy-light/60'
               }`}
             >
               <Icon
                 className={`w-4 h-4 shrink-0 ${
-                  isActive ? 'text-cyan-400' : 'text-slate-500'
+                  isActive ? 'text-primary' : 'text-sidebar-text-muted'
                 }`}
               />
               <span className="truncate">{item.label}</span>
@@ -94,7 +94,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
           );
         })}
 
-        <div className="pt-4 pb-1 px-3 text-[10px] font-semibold text-slate-500 uppercase tracking-wider">
+        <div className="pt-4 pb-1 px-3 text-[10px] font-semibold text-sidebar-text-muted uppercase tracking-wider">
           Resources
         </div>
 
@@ -102,44 +102,44 @@ export const Sidebar: React.FC<SidebarProps> = ({
           onClick={() => setActiveTab('deck')}
           className={`w-full flex items-center gap-2.5 px-3 py-2 rounded-lg text-[13px] font-medium transition-colors text-left ${
             activeTab === 'deck'
-              ? 'bg-slate-800/80 text-white'
-              : 'text-slate-400 hover:text-slate-100 hover:bg-slate-800/40'
+              ? 'bg-navy-light text-white'
+              : 'text-sidebar-text-muted hover:text-sidebar-text hover:bg-navy-light/60'
           }`}
         >
-          <Presentation className={`w-4 h-4 shrink-0 ${activeTab === 'deck' ? 'text-cyan-400' : 'text-slate-500'}`} />
+          <Presentation className={`w-4 h-4 shrink-0 ${activeTab === 'deck' ? 'text-primary' : 'text-sidebar-text-muted'}`} />
           <span className="truncate">Executive Deck</span>
         </button>
 
         <button
           onClick={onOpenBriefing}
-          className="w-full flex items-center gap-2.5 px-3 py-2 rounded-lg text-[13px] font-medium text-slate-400 hover:text-slate-100 hover:bg-slate-800/40 transition-colors text-left"
+          className="w-full flex items-center gap-2.5 px-3 py-2 rounded-lg text-[13px] font-medium text-sidebar-text-muted hover:text-sidebar-text hover:bg-navy-light/60 transition-colors text-left"
         >
-          <FileText className="w-4 h-4 text-slate-500 shrink-0" />
+          <FileText className="w-4 h-4 text-sidebar-text-muted shrink-0" />
           <span className="truncate">Briefing & PRD</span>
         </button>
 
         <button
           onClick={onOpenRoadmap}
-          className="w-full flex items-center gap-2.5 px-3 py-2 rounded-lg text-[13px] font-medium text-slate-400 hover:text-slate-100 hover:bg-slate-800/40 transition-colors text-left"
+          className="w-full flex items-center gap-2.5 px-3 py-2 rounded-lg text-[13px] font-medium text-sidebar-text-muted hover:text-sidebar-text hover:bg-navy-light/60 transition-colors text-left"
         >
-          <Calendar className="w-4 h-4 text-slate-500 shrink-0" />
+          <Calendar className="w-4 h-4 text-sidebar-text-muted shrink-0" />
           <span className="truncate">90-Day Plan</span>
         </button>
 
         <button
           onClick={onOpenLegal}
-          className="w-full flex items-center gap-2.5 px-3 py-2 rounded-lg text-[13px] font-medium text-slate-400 hover:text-slate-100 hover:bg-slate-800/40 transition-colors text-left"
+          className="w-full flex items-center gap-2.5 px-3 py-2 rounded-lg text-[13px] font-medium text-sidebar-text-muted hover:text-sidebar-text hover:bg-navy-light/60 transition-colors text-left"
         >
-          <Scale className="w-4 h-4 text-slate-500 shrink-0" />
+          <Scale className="w-4 h-4 text-sidebar-text-muted shrink-0" />
           <span className="truncate">Regulasi (PP 35/2021)</span>
         </button>
       </div>
 
       {/* Footer Info */}
-      <div className="p-4 border-t border-slate-800/60">
-        <div className="text-[11px] text-slate-500 flex items-center justify-between">
+      <div className="p-4 border-t border-navy-light/70">
+        <div className="text-[11px] text-sidebar-text-muted flex items-center justify-between">
           <span>Pilot Field Metering</span>
-          <span className="font-medium text-slate-300">6.000 staf</span>
+          <span className="font-medium text-sidebar-text">6.000 staf</span>
         </div>
       </div>
     </aside>

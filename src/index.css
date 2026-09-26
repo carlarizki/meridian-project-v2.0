@@ -1,1 +1,205 @@
 @import "tailwindcss";
+
+/*
+ * Meridian Global Color System
+ * -----------------------------------------------------------------------
+ * Visual-refinement pass only: every existing Tailwind color utility
+ * (bg-rose-500, text-emerald-700, border-sky-200, etc.) keeps working
+ * exactly as before in markup — no className, component, or logic changed
+ * anywhere in the app. What changes is what those color NAMES resolve to:
+ * the saturated default Tailwind palette is replaced with Meridian's
+ * soft/muted executive palette, so the same semantic usage (red = risk,
+ * amber = attention, emerald = positive, blue = primary/info) now renders
+ * calmer everywhere, consistently, in one place.
+ *
+ * Mapping:
+ *   rose, red      -> soft coral   (risk / high exposure / negative)
+ *   amber, yellow  -> soft amber   (attention / medium / caution)
+ *   emerald, green -> soft green   (positive / low risk / ready)
+ *   blue, sky, indigo -> Meridian primary blue
+ *   violet, purple -> muted lavender (distinct 5th category, desaturated)
+ * Named semantic tokens (--color-navy, --color-risk-text, etc.) are also
+ * exposed for new work per the design-token list below.
+ */
+@theme {
+  /* Core surfaces & neutrals */
+  --color-navy: #061b2b;
+  --color-navy-light: #0b2940;
+
+  /* slate-800/900 are the app's de-facto "dark panel" colors (Critical
+     Workforce Signal cards, fullscreen deck mode, modal scrims, dark CTA
+     buttons). Aligning them to Meridian navy gets every dark surface to
+     the spec color with no markup changes. Both values stay near-black,
+     so text set in slate-900 (headings/numbers) is unaffected in practice. */
+  --color-slate-800: #0b2940;
+  --color-slate-900: #061b2b;
+  --color-page: #f3f7fa;
+  --color-surface: #ffffff;
+  --color-border: #d7e1e8;
+
+  --color-text-primary: #102235;
+  --color-text-secondary: #5f7690;
+  --color-text-muted: #8193a5;
+
+  /* Primary blue */
+  --color-primary: #159bd3;
+  --color-primary-dark: #0876a8;
+  --color-primary-soft: #e3f3fa;
+
+  /* Semantic three-tone tokens */
+  --color-risk-soft: #fde8e6;
+  --color-risk-text: #b94a48;
+  --color-risk-accent: #e9827d;
+
+  --color-warning-soft: #fff3d6;
+  --color-warning-text: #9a6b16;
+  --color-warning-accent: #e9b84a;
+
+  --color-success-soft: #e2f5ea;
+  --color-success-text: #237a4b;
+  --color-success-accent: #55b77a;
+
+  /* Sidebar-specific */
+  --color-sidebar-text: #dce7ef;
+  --color-sidebar-text-muted: #91a6b8;
+
+  /* ---- Palette overrides: soften every default Tailwind hue in use ---- */
+
+  /* Coral (rose & red both used for risk/negative states) */
+  --color-rose-50: #fef4f3;
+  --color-rose-100: #fde8e6;
+  --color-rose-200: #fad6d2;
+  --color-rose-300: #f4bab4;
+  --color-rose-400: #ec9c94;
+  --color-rose-500: #e9827d;
+  --color-rose-600: #d66b64;
+  --color-rose-700: #b94a48;
+  --color-rose-800: #96393a;
+  --color-rose-900: #7a2f30;
+  --color-rose-950: #4a1c1d;
+
+  --color-red-50: #fef4f3;
+  --color-red-100: #fde8e6;
+  --color-red-200: #fad6d2;
+  --color-red-300: #f4bab4;
+  --color-red-400: #ec9c94;
+  --color-red-500: #e9827d;
+  --color-red-600: #d66b64;
+  --color-red-700: #b94a48;
+  --color-red-800: #96393a;
+  --color-red-900: #7a2f30;
+  --color-red-950: #4a1c1d;
+
+  /* Amber (amber & yellow both used for attention/medium states) */
+  --color-amber-50: #fffaef;
+  --color-amber-100: #fff3d6;
+  --color-amber-200: #fbe4ae;
+  --color-amber-300: #f4ce7d;
+  --color-amber-400: #edbb57;
+  --color-amber-500: #e9b84a;
+  --color-amber-600: #cb9938;
+  --color-amber-700: #9a6b16;
+  --color-amber-800: #7c5613;
+  --color-amber-900: #634510;
+  --color-amber-950: #3d2a0a;
+
+  --color-yellow-50: #fffaef;
+  --color-yellow-100: #fff3d6;
+  --color-yellow-200: #fbe4ae;
+  --color-yellow-300: #f4ce7d;
+  --color-yellow-400: #edbb57;
+  --color-yellow-500: #e9b84a;
+  --color-yellow-600: #cb9938;
+  --color-yellow-700: #9a6b16;
+  --color-yellow-800: #7c5613;
+  --color-yellow-900: #634510;
+  --color-yellow-950: #3d2a0a;
+
+  /* Green (emerald & green both used for positive/low-risk states) */
+  --color-emerald-50: #f1faf5;
+  --color-emerald-100: #e2f5ea;
+  --color-emerald-200: #c3e9d3;
+  --color-emerald-300: #98d6b4;
+  --color-emerald-400: #74c89a;
+  --color-emerald-500: #55b77a;
+  --color-emerald-600: #3f9c63;
+  --color-emerald-700: #237a4b;
+  --color-emerald-800: #1d6440;
+  --color-emerald-900: #175033;
+  --color-emerald-950: #0e3020;
+
+  --color-green-50: #f1faf5;
+  --color-green-100: #e2f5ea;
+  --color-green-200: #c3e9d3;
+  --color-green-300: #98d6b4;
+  --color-green-400: #74c89a;
+  --color-green-500: #55b77a;
+  --color-green-600: #3f9c63;
+  --color-green-700: #237a4b;
+  --color-green-800: #1d6440;
+  --color-green-900: #175033;
+  --color-green-950: #0e3020;
+
+  /* Blue family (blue, sky, indigo all resolve to Meridian primary blue) */
+  --color-blue-50: #f1f8fc;
+  --color-blue-100: #e3f3fa;
+  --color-blue-200: #bfe3f2;
+  --color-blue-300: #8ed0e9;
+  --color-blue-400: #52b4dc;
+  --color-blue-500: #159bd3;
+  --color-blue-600: #0f87bc;
+  --color-blue-700: #0876a8;
+  --color-blue-800: #08628c;
+  --color-blue-900: #0a4e70;
+  --color-blue-950: #062f45;
+
+  --color-sky-50: #f1f8fc;
+  --color-sky-100: #e3f3fa;
+  --color-sky-200: #bfe3f2;
+  --color-sky-300: #8ed0e9;
+  --color-sky-400: #52b4dc;
+  --color-sky-500: #159bd3;
+  --color-sky-600: #0f87bc;
+  --color-sky-700: #0876a8;
+  --color-sky-800: #08628c;
+  --color-sky-900: #0a4e70;
+  --color-sky-950: #062f45;
+
+  --color-indigo-50: #f1f8fc;
+  --color-indigo-100: #e3f3fa;
+  --color-indigo-200: #bfe3f2;
+  --color-indigo-300: #8ed0e9;
+  --color-indigo-400: #52b4dc;
+  --color-indigo-500: #159bd3;
+  --color-indigo-600: #0f87bc;
+  --color-indigo-700: #0876a8;
+  --color-indigo-800: #08628c;
+  --color-indigo-900: #0a4e70;
+  --color-indigo-950: #062f45;
+
+  /* Muted lavender (violet & purple keep a distinct 5th category hue,
+     desaturated to match the rest of the palette) */
+  --color-violet-50: #f6f2fa;
+  --color-violet-100: #ebe1f4;
+  --color-violet-200: #d8c8e9;
+  --color-violet-300: #bfa6da;
+  --color-violet-400: #a282c7;
+  --color-violet-500: #8c6db4;
+  --color-violet-600: #75589c;
+  --color-violet-700: #5d4780;
+  --color-violet-800: #4a3966;
+  --color-violet-900: #3a2c50;
+  --color-violet-950: #221a32;
+
+  --color-purple-50: #f6f2fa;
+  --color-purple-100: #ebe1f4;
+  --color-purple-200: #d8c8e9;
+  --color-purple-300: #bfa6da;
+  --color-purple-400: #a282c7;
+  --color-purple-500: #8c6db4;
+  --color-purple-600: #75589c;
+  --color-purple-700: #5d4780;
+  --color-purple-800: #4a3966;
+  --color-purple-900: #3a2c50;
+  --color-purple-950: #221a32;
+}

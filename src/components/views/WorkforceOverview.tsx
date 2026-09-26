@@ -198,7 +198,7 @@ export const WorkforceOverview: React.FC<WorkforceOverviewProps> = ({ onNavigate
       {/* ========================================================================= */}
       {/* 1. REFINED REAL-TIME OPERATIONAL PULSE BAR WITH HOVER TOOLTIPS           */}
       {/* ========================================================================= */}
-      <div className="bg-[#0B1220] text-white rounded-xl p-4">
+      <div className="bg-navy text-white rounded-xl p-4">
         <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
           {/* Left Title & Status */}
           <div className="flex items-center gap-3">
